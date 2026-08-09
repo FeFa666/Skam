@@ -100,7 +100,7 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;background:rgba(2
 
 <div id="auth-screen">
   <div class="logo">SKAM</div>
-  <div id="auth-title">Вход в аккаунт</div>
+  <div id="auth-title">Вход в аккаунт. Для обеспечения наилучшей безопасности рекомендуется создать новый Google аккаунт.</div>
   <div id="auth-box">
     <input id="name" type="text" placeholder="Имя (для профиля)" class="hidden">
     <input id="email" type="email" placeholder="Email">
@@ -119,7 +119,6 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;background:rgba(2
     <input id="otp-input" type="text" inputmode="numeric" maxlength="6" placeholder="Код">
     <button class="ac-btn" id="otp-btn">Войти</button>
     <div id="otp-error"></div>
-    <div class="link hidden" id="otp-show-local">📱 Показать код на этом устройстве</div>
     <div class="link" id="otp-resend">Отправить код ещё раз</div>
     <div class="link" id="otp-change-account" style="color:var(--ac)">🔄 Поменять аккаунт</div>
   </div>
@@ -264,7 +263,7 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;background:rgba(2
 </div>
 
 <script type="module">
-console.log('%cSKAM • сборка 7 (кнопка «Поменять аккаунт» в 2FA)','color:#0a84ff;font-size:16px;font-weight:bold');
+console.log('%cSKAM • сборка 8 (убрана дыра «показать код»)','color:#0a84ff;font-size:16px;font-weight:bold');
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { 
@@ -299,7 +298,8 @@ const ruErr = c => ({
   'auth/invalid-credential':'Неверный email или пароль','auth/email-already-in-use':'Email уже зарегистрирован',
   'auth/weak-password':'Пароль минимум 6 символов','auth/invalid-email':'Некорректный email',
   'auth/user-not-found':'Пользователь не найден','auth/wrong-password':'Неверный пароль',
-  'auth/too-many-requests':'Слишком много попыток, подожди'
+  'auth/too-many-requests':'Слишком много попыток, подожди',
+  'permission-denied':'Нет прав (обнови правила Firestore!)'
 }[c] || 'Ошибка: ' + c);
 
 let reg=false, myUid=null, myName='', myEmail='', myContacts=[], myBlocked=[], channel='general', currentPeer=null, currentChatMeta=null;
@@ -322,13 +322,12 @@ async function sendCode(){
   otpCode=String(Math.floor(100000+Math.random()*900000)); otpExp=Date.now()+5*60*1000;
   $('otp-hint').textContent=`Мы отправили 6-значный код на ${myEmail}`;
   $('otp-input').value='';$('otp-error').textContent='';
-  $('otp-show-local').classList.add('hidden');
   $('auth-screen').classList.add('hidden');$('app').classList.add('hidden');
   $('otp-screen').classList.remove('hidden');
   await sendEmail(myEmail,'SKAM: код для входа',`Твой код: ${otpCode}\nДействителен 5 минут.`);
 }
 
-/* ---------- 2FA ЧАТ ---------- */
+/* ---------- 2FA ЧАТ (код виден ТОЛЬКО в чате на доверенном устройстве) ---------- */
 const twofaChan = () => 'twofa_' + myUid;
 
 async function sendCodeChat(){
@@ -336,7 +335,6 @@ async function sendCodeChat(){
   otpCode=String(Math.floor(100000+Math.random()*900000)); otpExp=Date.now()+5*60*1000;
   $('otp-hint').textContent='Код находится в чате «SKAM 2FA» — открой его на другом устройстве, где ты уже вошёл';
   $('otp-input').value='';$('otp-error').textContent='';
-  $('otp-show-local').classList.remove('hidden');
   $('auth-screen').classList.add('hidden');$('app').classList.add('hidden');
   $('otp-screen').classList.remove('hidden');
   try{
@@ -346,25 +344,6 @@ async function sendCodeChat(){
     });
   }catch(e){console.error('2FA chat error:',e);}
 }
-
-$('otp-show-local').onclick=async()=>{
-  try{
-    const snap=await getDocs(collection(db,'chats',twofaChan(),'messages'));
-    let best=null;
-    snap.forEach(d=>{const m=d.data();
-      if(m.expiresAt&&m.expiresAt>Date.now()){
-        if(!best||(m.createdAt?.toMillis?.()||0)>(best.createdAt?.toMillis?.()||0))best=m;
-      }});
-    if(best)$('otp-hint').innerHTML='Твой код: <b style="color:var(--green);font-size:24px;letter-spacing:4px">'+esc(best.text)+'</b>';
-    else $('otp-hint').textContent='Код не найден или просрочен — нажми «Отправить код ещё раз».';
-  }catch(e){$('otp-hint').textContent='Ошибка чтения кода.';}
-};
-
-// ✅ НОВАЯ КНОПКА: Поменять аккаунт — выход и возврат на экран входа
-$('otp-change-account').onclick=async()=>{
-  $('otp-error').textContent='';
-  await signOut(auth); // onAuthStateChanged сам покажет экран входа
-};
 
 async function purgeCodes(){
   try{
@@ -392,6 +371,7 @@ $('otp-btn').onclick=async()=>{
   }else{$('otp-error').textContent='Неверный или просроченный код';}
 };
 $('otp-resend').onclick=()=>{ otpMethod==='chat'?sendCodeChat():sendCode(); };
+$('otp-change-account').onclick=async()=>{ $('otp-error').textContent=''; await signOut(auth); };
 
 /* ---------- AUTH ---------- */
 $('auth-toggle').onclick=()=>{reg=!reg;$('name').classList.toggle('hidden',!reg);
@@ -565,7 +545,7 @@ $('mp-confirm-2fa').onclick=async()=>{const pass=$('mp-2fa-pass').value;if(!pass
       alert(nv?'2FA по почте включена ✅':'2FA по почте выключена ✅');
     }else{
       const nv=!twoFaChatEnabled;await setDoc(doc(db,'profiles',myUid),{twoFaChatEnabled:nv},{merge:true});twoFaChatEnabled=nv;
-      if(nv)alert('2FA через чат включена ✅\n\nПри входе код появится в чате «SKAM 2FA» и по кнопке «Показать код».');
+      if(nv)alert('2FA через чат включена ✅\n\nКод читается ТОЛЬКО в чате «SKAM 2FA» на устройстве, где ты уже вошёл.');
       else alert('2FA через чат выключена ✅');
     }
     updateTwoFaUI();
