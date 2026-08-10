@@ -671,8 +671,10 @@ async function acquireMedia(type, preferScreen){
   const tracks=[];let source='black';
   if(type==='video'){
     let vs=null;
-    if(preferScreen){try{vs=await startScreenShare();source='screen';}catch(e){}}
+    // ✅ На телефонах НЕ предлагаем экран — сразу камера
+    if(preferScreen && !isMobile){try{vs=await startScreenShare();source='screen';}catch(e){}}
     if(!vs){try{vs=await getCameraStream();source='camera';}catch(e){}}
+    if(!vs){try{vs=await navigator.mediaDevices.getUserMedia({video:true});source='camera';}catch(e){}}
     if(!vs){vs=getBlackVideoStream();source='black';}
     tracks.push(...vs.getVideoTracks());
   }
