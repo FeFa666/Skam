@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <link rel="icon" type="image/png" href="Logo.png">
-<link rel="apple-touch-icon" href="Logo.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>SKAM</title>
 <meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="Logo.png">
+<link rel="apple-touch-icon" href="Logo.png">
 <style>
 :root{--bg:#000;--sf:#1c1c1e;--sf2:#2c2c2e;--ac:#0a84ff;--tx:#fff;--gr:#8e8e93;--red:#ff453a;--green:#30d158}
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,system-ui,Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
@@ -73,7 +73,7 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;background:rgba(2
 .ibtns{display:flex;gap:20px}
 .ibtns button{width:60px;height:60px;border-radius:50%;font-size:24px;color:#fff}
 #accept-btn{background:var(--green)} #decline-btn{background:var(--red)}
-#modal,#myprof-modal,#peerprof-modal,#create-chat-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:90;display:flex;align-items:center;justify-content:center}
+#modal,#myprof-modal,#peerprof-modal,#create-chat-modal,#contact-request-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:90;display:flex;align-items:center;justify-content:center}
 .modal-box{background:var(--sf);border-radius:20px;padding:20px;width:90%;max-width:340px;max-height:80%;overflow-y:auto}
 .modal-box h3{margin-bottom:14px}
 .urow{display:flex;align-items:center;gap:10px;padding:10px 0}
@@ -102,7 +102,7 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;background:rgba(2
 
 <div id="auth-screen">
   <div class="logo">SKAM</div>
-  <div id="auth-title">Вход в аккаунт. Для обеспечения наилучшей безопасности рекомендуется создать новый Google аккаунт.</div>
+  <div id="auth-title">Вход в аккаунт</div>
   <div id="auth-box">
     <input id="name" type="text" placeholder="Имя (для профиля)" class="hidden">
     <input id="email" type="email" placeholder="Email">
@@ -143,7 +143,7 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;background:rgba(2
     <div class="chat-list">
       <div class="chat-item" id="general-item">
         <div class="av" style="background:var(--green)">#</div>
-        <div class="ci-txt"><b>Общий чат</b><span>не рекомендуется для пользователей младше 16 лет</span></div>
+        <div class="ci-txt"><b>Общий чат</b><span>все пользователи</span></div>
       </div>
       <div class="chat-item hidden" id="twofa-item">
         <div class="av" style="background:var(--red)">🔐</div>
@@ -215,6 +215,19 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;background:rgba(2
   </div>
 </div>
 
+<!-- ✅ Заявка в контакты -->
+<div id="contact-request-modal" class="hidden">
+  <div class="modal-box" style="text-align:center">
+    <div class="av" id="cr-avatar" style="width:80px;height:80px;font-size:32px;margin:0 auto 12px">?</div>
+    <b id="cr-name" style="font-size:20px"></b>
+    <div style="color:var(--gr);font-size:14px;margin:6px 0 10px">хочет добавить тебя в контакты</div>
+    <b style="font-size:16px">Принять контакт?</b>
+    <button class="ac-btn" id="cr-accept" style="margin-top:14px;background:var(--green)">✅ Принять</button>
+    <button class="ac-btn" id="cr-decline" style="margin-top:8px;background:var(--sf2)">❌ Отклонить</button>
+    <button class="ac-btn" id="cr-block" style="margin-top:8px;background:var(--red)">🚫 Заблокировать и удалить</button>
+  </div>
+</div>
+
 <div id="create-chat-modal" class="hidden">
   <div class="modal-box">
     <h3>Создать чат</h3>
@@ -265,7 +278,7 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;background:rgba(2
 </div>
 
 <script type="module">
-console.log('%cSKAM • сборка 8 (убрана дыра «показать код»)','color:#0a84ff;font-size:16px;font-weight:bold');
+console.log('%cSKAM • сборка 9 (заявки в контакты + фикс 🔁 на телефонах)','color:#0a84ff;font-size:16px;font-weight:bold');
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { 
@@ -307,8 +320,8 @@ const ruErr = c => ({
 let reg=false, myUid=null, myName='', myEmail='', myContacts=[], myBlocked=[], channel='general', currentPeer=null, currentChatMeta=null;
 let appStarted=false, changingPass=false, deleting=false, freshLogin=false;
 let twoFaEnabled=false, twoFaChatEnabled=false, verified=false, otpCode='', otpExp=0, otpMethod='email', pending2fa='email';
-let unsubMsg=null, unsubUsers=null, unsubMine=null, unsubCalls=null, unsubChats=null;
-let allUsers={}, customChats=[], pc=null, localStream=null, currentCall=null, iceUnsub=null, callDocUnsub=null, pendingIncoming=null, addedIce=new Set();
+let unsubMsg=null, unsubUsers=null, unsubMine=null, unsubCalls=null, unsubChats=null, unsubReqsIn=null, unsubReqsOut=null;
+let allUsers={}, customChats=[], pc=null, localStream=null, currentCall=null, iceUnsub=null, callDocUnsub=null, pendingIncoming=null, pendingReq=null, addedIce=new Set();
 let currentSource='black', currentFacing='user';
 
 async function sendEmail(to, subject, message){
@@ -318,7 +331,7 @@ async function sendEmail(to, subject, message){
   }catch(e){console.warn('Email error:',e);}
 }
 
-/* ---------- 2FA EMAIL ---------- */
+/* ---------- 2FA ---------- */
 async function sendCode(){
   otpMethod='email';
   otpCode=String(Math.floor(100000+Math.random()*900000)); otpExp=Date.now()+5*60*1000;
@@ -328,10 +341,7 @@ async function sendCode(){
   $('otp-screen').classList.remove('hidden');
   await sendEmail(myEmail,'SKAM: код для входа',`Твой код: ${otpCode}\nДействителен 5 минут.`);
 }
-
-/* ---------- 2FA ЧАТ (код виден ТОЛЬКО в чате на доверенном устройстве) ---------- */
 const twofaChan = () => 'twofa_' + myUid;
-
 async function sendCodeChat(){
   otpMethod='chat';
   otpCode=String(Math.floor(100000+Math.random()*900000)); otpExp=Date.now()+5*60*1000;
@@ -346,14 +356,12 @@ async function sendCodeChat(){
     });
   }catch(e){console.error('2FA chat error:',e);}
 }
-
 async function purgeCodes(){
   try{
     const snap=await getDocs(collection(db,'chats',twofaChan(),'messages'));
     snap.forEach(d=>deleteDoc(d.ref));
   }catch(e){}
 }
-
 setInterval(async ()=>{
   if(!myUid||!twoFaChatEnabled)return;
   try{
@@ -414,12 +422,12 @@ onAuthStateChanged(auth,async user=>{
       verified=true;
       $('otp-screen').classList.add('hidden');$('app').classList.remove('hidden');startApp();
     }
-  }else{myUid=null;verified=false;twoFaEnabled=false;twoFaChatEnabled=false;appStarted=false;freshLogin=false;
-    [unsubMsg,unsubUsers,unsubMine,unsubCalls,unsubChats,iceUnsub,callDocUnsub].forEach(u=>u&&u());
-    $('app').classList.add('hidden');$('otp-screen').classList.add('hidden');$('auth-screen').classList.remove('hidden');}
+  }else{myUid=null;verified=false;twoFaEnabled=false;twoFaChatEnabled=false;appStarted=false;freshLogin=false;pendingReq=null;
+    [unsubMsg,unsubUsers,unsubMine,unsubCalls,unsubChats,unsubReqsIn,unsubReqsOut,iceUnsub,callDocUnsub].forEach(u=>u&&u());
+    $('app').classList.add('hidden');$('otp-screen').classList.add('hidden');$('contact-request-modal').classList.add('hidden');$('auth-screen').classList.remove('hidden');}
 });
 
-function startApp(){if(appStarted)return;appStarted=true;watchUsers();watchMine();watchCustomChats();watchIncoming();openChat('general','Общий чат',null,null);}
+function startApp(){if(appStarted)return;appStarted=true;watchUsers();watchMine();watchCustomChats();watchIncoming();watchContactRequests();openChat('general','Общий чат',null,null);}
 
 /* ---------- BLOCK ---------- */
 function isBlockedWith(uid){
@@ -446,8 +454,55 @@ function watchCustomChats(){
   },err=>console.error(err));
 }
 
-$('chat-search').addEventListener('input',renderContacts);
+/* ---------- ✅ ЗАЯВКИ В КОНТАКТЫ ---------- */
+function watchContactRequests(){
+  // Входящие заявки
+  unsubReqsIn=onSnapshot(query(collection(db,'contact_requests'),where('to','==',myUid),where('status','==','pending')),snap=>{
+    const docs=snap.docs.map(d=>({id:d.id,...d.data()}));
+    if(pendingReq&&!docs.find(d=>d.id===pendingReq.id)){pendingReq=null;$('contact-request-modal').classList.add('hidden');}
+    if(docs.length&&!pendingReq)showContactRequest(docs[0]);
+  },err=>console.error(err));
+  // Исходящие: если приняли — добавляем и себе, если отклонили — чистим
+  unsubReqsOut=onSnapshot(query(collection(db,'contact_requests'),where('from','==',myUid)),snap=>{
+    snap.forEach(async d=>{
+      const r=d.data();
+      if(r.status==='accepted'){
+        await setDoc(doc(db,'profiles',myUid),{contacts:arrayUnion(r.to)},{merge:true});
+        await deleteDoc(d.ref);
+      }else if(r.status==='declined'){
+        await deleteDoc(d.ref);
+      }
+    });
+  },err=>console.error(err));
+}
+function showContactRequest(r){
+  pendingReq=r;
+  $('cr-avatar').textContent=(r.fromName||'?')[0].toUpperCase();
+  $('cr-name').textContent=r.fromName||'Пользователь';
+  $('contact-request-modal').classList.remove('hidden');
+}
+$('cr-accept').onclick=async()=>{
+  if(!pendingReq)return;
+  const r=pendingReq;
+  await setDoc(doc(db,'profiles',myUid),{contacts:arrayUnion(r.from)},{merge:true});
+  await updateDoc(doc(db,'contact_requests',r.id),{status:'accepted'});
+  pendingReq=null;$('contact-request-modal').classList.add('hidden');
+};
+$('cr-decline').onclick=async()=>{
+  if(!pendingReq)return;
+  await updateDoc(doc(db,'contact_requests',pendingReq.id),{status:'declined'});
+  pendingReq=null;$('contact-request-modal').classList.add('hidden');
+};
+$('cr-block').onclick=async()=>{
+  if(!pendingReq)return;
+  const r=pendingReq;
+  await setDoc(doc(db,'profiles',myUid),{blocked:arrayUnion(r.from)},{merge:true});
+  await deleteDoc(doc(db,'contact_requests',r.id));
+  pendingReq=null;$('contact-request-modal').classList.add('hidden');
+};
 
+/* ---------- SEARCH + LIST ---------- */
+$('chat-search').addEventListener('input',renderContacts);
 function renderContacts(){
   const l=$('contacts-list');l.innerHTML='';
   const q=$('chat-search').value.trim().toLowerCase();
@@ -469,7 +524,6 @@ function renderContacts(){
     el.onclick=()=>openChat(cid,p.name,{uid,name:p.name,email:p.email},null);l.appendChild(el);
   });
 }
-
 $('twofa-item').onclick=()=>openChat(twofaChan(),'SKAM 2FA',null,{twofa:true,owner:myUid});
 
 function renderModal(){
@@ -482,7 +536,17 @@ function renderModal(){
   });
   if(!l.children.length)l.innerHTML='<div style="color:var(--gr);font-size:14px">Нет пользователей</div>';
 }
-async function addContact(uid){try{await setDoc(doc(db,'profiles',myUid),{contacts:arrayUnion(uid)},{merge:true});}catch(e){alert(e.message);}}
+// ✅ Теперь отправка заявки вместо мгновенного добавления
+async function addContact(uid){
+  if(myContacts.includes(uid))return alert('Уже в контактах');
+  if(isBlockedWith(uid))return alert('Пользователь заблокирован');
+  try{
+    await setDoc(doc(db,'contact_requests',myUid+'_'+uid),{
+      from:myUid, to:uid, fromName:myName, status:'pending', createdAt:serverTimestamp()
+    });
+    alert('Заявка в контакты отправлена ✅');
+  }catch(e){alert('Ошибка: '+e.message);}
+}
 $('add-contact-btn').onclick=()=>$('modal').classList.remove('hidden');
 $('modal-close').onclick=()=>$('modal').classList.add('hidden');
 const chanId=uid=>[uid,myUid].sort().join('_');
@@ -643,17 +707,22 @@ async function sendText(){
 }
 
 /* ---------- CALLS ---------- */
-const RTC={iceServers:[{urls:'stun:stun.l.google.com:19302'}]};
+const RTC={iceServers:[
+  {urls:'stun:stun.l.google.com:19302'},
+  {urls:'turn:openrelay.metered.ca:80',username:'openrelayproject',credential:'openrelayproject'},
+  {urls:'turn:openrelay.metered.ca:443',username:'openrelayproject',credential:'openrelayproject'},
+  {urls:'turn:openrelay.metered.ca:443?transport=tcp',username:'openrelayproject',credential:'openrelayproject'}
+]};
 $('call-audio-btn').onclick=()=>startCall('audio');
 $('call-video-btn').onclick=()=>startCall('video');
 $('end-call-btn').onclick=async()=>{if(currentCall)await updateDoc(doc(db,'calls',currentCall.id),{status:'ended'});endCallLocal();};
+$('remote-video').addEventListener('click',()=>$('remote-video').play().catch(()=>{}));
 
 function getBlackVideoStream(){
   const canvas=document.createElement('canvas');canvas.width=640;canvas.height=480;
   const ctx=canvas.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(0,0,640,480);
   return canvas.captureStream(5);
 }
-
 async function startScreenShare(){
   return await navigator.mediaDevices.getDisplayMedia({
     video:true,audio:false,
@@ -662,17 +731,14 @@ async function startScreenShare(){
     surfaceSwitching:'include'
   });
 }
-
 async function getCameraStream(){
   return await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});
 }
-
 async function acquireMedia(type, preferScreen){
   const tracks=[];let source='black';
   if(type==='video'){
     let vs=null;
-    // ✅ На телефонах НЕ предлагаем экран — сразу камера
-    if(preferScreen && !isMobile){try{vs=await startScreenShare();source='screen';}catch(e){}}
+    if(preferScreen&&!isMobile){try{vs=await startScreenShare();source='screen';}catch(e){}}
     if(!vs){try{vs=await getCameraStream();source='camera';}catch(e){}}
     if(!vs){try{vs=await navigator.mediaDevices.getUserMedia({video:true});source='camera';}catch(e){}}
     if(!vs){vs=getBlackVideoStream();source='black';}
@@ -683,14 +749,12 @@ async function acquireMedia(type, preferScreen){
 }
 
 function updateSourceBtn(){$('switch-source-btn').textContent=currentSource==='screen'?'🖥':(currentSource==='camera'?'📷':'');}
-
 function updateLocalPreview(){
   const vid=currentCall&&currentCall.type==='video';
   const sharing=currentSource==='screen';
   $('local-video').classList.toggle('hidden',!vid||sharing);
   $('screen-badge').classList.toggle('hidden',!vid||!sharing);
 }
-
 function updateCallButtons(){
   const vid=currentCall&&currentCall.type==='video';
   $('switch-source-btn').classList.toggle('hidden',!vid);
@@ -698,21 +762,44 @@ function updateCallButtons(){
   updateSourceBtn();updateLocalPreview();
 }
 
+// ✅ ФИКС 🔁: сначала освобождаем камеру, потом открываем новую (иначе на телефонах ошибка)
 $('flip-camera-btn').onclick=async()=>{
   if(!pc||!currentCall||currentSource!=='camera')return;
-  currentFacing=currentFacing==='user'?'environment':'user';
-  try{
-    const vs=await getCameraStream();
+  const old=currentFacing;
+  const target=old==='user'?'environment':'user';
+  if(localStream)localStream.getVideoTracks().forEach(t=>t.stop());
+  let vs=null;
+  try{vs=await navigator.mediaDevices.getUserMedia({video:{facingMode:{exact:target}},audio:false});}
+  catch(e){try{vs=await navigator.mediaDevices.getUserMedia({video:{facingMode:target},audio:false});}
+  catch(e2){try{vs=await navigator.mediaDevices.getUserMedia({video:true,audio:false});}catch(e3){}}}
+  if(vs){
+    currentFacing=target;
     const nt=vs.getVideoTracks()[0];
     const sender=pc.getSenders().find(s=>s.track&&s.track.kind==='video');
     if(sender)await sender.replaceTrack(nt);
-    if(localStream)localStream.getVideoTracks().forEach(t=>t.stop());
     const audioTracks=localStream?localStream.getAudioTracks():[];
     localStream=new MediaStream([nt,...audioTracks]);
     $('local-video').srcObject=localStream;
-  }catch(e){
-    currentFacing=currentFacing==='user'?'environment':'user';
-    alert('Не удалось переключить камеру (возможно, на устройстве только одна)');
+  }else{
+    try{
+      const back=await navigator.mediaDevices.getUserMedia({video:{facingMode:old},audio:false});
+      const nt=back.getVideoTracks()[0];
+      const sender=pc.getSenders().find(s=>s.track&&s.track.kind==='video');
+      if(sender)await sender.replaceTrack(nt);
+      const audioTracks=localStream?localStream.getAudioTracks():[];
+      localStream=new MediaStream([nt,...audioTracks]);
+      $('local-video').srcObject=localStream;
+      alert('На устройстве доступна только одна камера');
+    }catch(e){
+      const bs=getBlackVideoStream();const nt=bs.getVideoTracks()[0];
+      const sender=pc.getSenders().find(s=>s.track&&s.track.kind==='video');
+      if(sender)await sender.replaceTrack(nt);
+      const audioTracks=localStream?localStream.getAudioTracks():[];
+      localStream=new MediaStream([nt,...audioTracks]);
+      $('local-video').srcObject=localStream;
+      currentSource='black';updateCallButtons();
+      alert('Не удалось переключить камеру');
+    }
   }
 };
 
@@ -766,7 +853,7 @@ $('switch-source-btn').onclick=async()=>{
 function setupPC(){
   pc=new RTCPeerConnection(RTC);
   pc.onicecandidate=e=>{if(e.candidate)addDoc(collection(db,'calls',currentCall.id,'ice'),{from:myUid,candidate:e.candidate.toJSON()});};
-  pc.ontrack=e=>{$('remote-video').srcObject=e.streams[0];};
+  pc.ontrack=e=>{$('remote-video').srcObject=e.streams[0];$('remote-video').play().catch(()=>{});};
   pc.onconnectionstatechange=()=>{if(['failed','disconnected','closed'].includes(pc.connectionState))endCallLocal();};
 }
 function watchIce(id){iceUnsub=onSnapshot(collection(db,'calls',id,'ice'),snap=>{
