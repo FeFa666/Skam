@@ -16,14 +16,12 @@ body{background:var(--bg);color:var(--tx);height:100dvh;overflow:hidden;transiti
 input{width:100%;padding:15px;border-radius:14px;border:none;background:var(--sf2);color:var(--tx);font-size:16px;outline:none;margin-bottom:10px}
 button{cursor:pointer;border:none}
 
-/* ✅ ЗАГРУЗОЧНЫЙ ЭКРАН */
 #loading-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;transition:opacity .4s}
 #loading-screen.fade-out{opacity:0;pointer-events:none}
 .loading-logo{width:120px;height:120px;animation:pulse 1.5s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.7}}
 .loading-text{color:var(--gr);font-size:16px;letter-spacing:2px}
 
-/* ✅ КАСТОМНОЕ ОКНО ПОДТВЕРЖДЕНИЯ */
 #confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
 #confirm-box{background:var(--sf);border-radius:20px;padding:24px;width:100%;max-width:320px;text-align:center}
 #confirm-box .confirm-icon{font-size:48px;margin-bottom:12px}
@@ -34,7 +32,6 @@ button{cursor:pointer;border:none}
 #confirm-ok{background:var(--ac);color:#fff}
 #confirm-ok.danger{background:var(--red)}
 
-/* ✅ ОКНО УВЕДОМЛЕНИЯ */
 #alert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
 #alert-box{background:var(--sf);border-radius:20px;padding:24px;width:100%;max-width:320px;text-align:center}
 #alert-box .alert-icon{font-size:48px;margin-bottom:12px}
@@ -46,6 +43,7 @@ button{cursor:pointer;border:none}
 #auth-title{color:var(--gr);font-size:14px;margin-bottom:24px}
 #auth-box{width:100%;max-width:320px}
 .ac-btn{width:100%;padding:15px;border-radius:14px;background:var(--ac);color:#fff;font-size:16px;font-weight:700}
+.gray-btn{background:var(--sf2)!important;color:var(--tx)!important}
 .link{color:var(--gr);font-size:13px;text-align:center;margin-top:16px;text-decoration:underline;cursor:pointer}
 #auth-error,#otp-error{color:var(--red);font-size:13px;text-align:center;margin-top:10px;min-height:16px}
 
@@ -53,7 +51,7 @@ button{cursor:pointer;border:none}
 #sidebar{width:300px;background:var(--sf);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;transition:background .2s,border-color .2s}
 .side-head{padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
 .side-head .logo{font-size:20px;margin:0;flex:1}
-.av{width:36px;height:36px;border-radius:50%;background:var(--ac);display:grid;place-items:center;font-weight:700;font-size:15px;flex-shrink:0}
+.av{width:36px;height:36px;border-radius:50%;background:var(--ac);display:grid;place-items:center;font-weight:700;font-size:15px;flex-shrink:0;color:#fff}
 #my-avatar,#peer-avatar{cursor:pointer}
 .side-actions{display:flex;gap:6px;align-items:center}
 .icon-btn{width:34px;height:34px;border-radius:50%;background:var(--ac);color:#fff;font-size:18px;display:grid;place-items:center}
@@ -74,11 +72,12 @@ header{padding:calc(env(safe-area-inset-top) + 10px) 14px 10px;background:rgba(2
 body.light header{background:rgba(255,255,255,.9)}
 #back-btn{display:none;background:none;color:var(--ac);font-size:22px}
 #chat-title{font-weight:700;font-size:16px;flex:1}
-.hbtn{background:none;font-size:18px;padding:4px}
+.hbtn{background:none;font-size:18px;padding:4px;color:var(--tx)}
 #messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:6px}
 .msg{max-width:80%;padding:10px 14px;border-radius:18px;font-size:15px;line-height:1.4;word-break:break-word;animation:in .18s ease}
 .msg.me{cursor:pointer}
 .msg.code{align-self:center;background:var(--sf2);border:1px solid var(--green);color:var(--green);font-weight:700;letter-spacing:2px;text-align:center}
+.msg-img{max-width:220px;max-height:260px;border-radius:12px;display:block;object-fit:cover;margin-bottom:6px}
 @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
 .msg.me{align-self:flex-end;background:var(--ac);border-bottom-right-radius:4px}
 .msg.other{align-self:flex-start;background:var(--sf2);border-bottom-left-radius:4px}
@@ -86,8 +85,17 @@ body.light header{background:rgba(255,255,255,.9)}
 .bar{display:flex;gap:8px;padding:10px 12px calc(env(safe-area-inset-bottom) + 10px);background:var(--sf);align-items:center}
 .bar input{margin:0;flex:1;border-radius:22px;padding:12px 16px;font-size:15px}
 #send-btn{width:42px;height:42px;border-radius:50%;background:var(--ac);color:#fff;font-size:17px;flex-shrink:0}
+/* ✅ ИСПРАВЛЕНИЕ: кнопка 📎 теперь всегда видна */
+#attach-btn{width:42px;height:42px;border-radius:50%;background:var(--sf2);color:var(--tx);font-size:20px;flex-shrink:0;display:grid;place-items:center}
 .bar.disabled{opacity:.5;pointer-events:none}
 .bar-hint{text-align:center;font-size:12px;color:var(--gr);padding:6px;background:var(--sf)}
+
+#attach-preview{display:none;padding:8px 12px;background:var(--sf);border-top:1px solid var(--border);align-items:center;gap:10px}
+#attach-preview.visible{display:flex}
+#attach-preview img{width:60px;height:60px;border-radius:10px;object-fit:cover}
+#attach-preview .preview-info{flex:1;min-width:0;font-size:13px;color:var(--gr);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#attach-preview .preview-remove{background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;font-size:16px;display:grid;place-items:center}
+
 .overlay{position:fixed;inset:0;background:#000;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;overflow:hidden}
 #remote-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;background:#000}
 #remote-video.audio-mode{width:2px;height:2px;opacity:0}
@@ -96,16 +104,16 @@ body.light header{background:rgba(255,255,255,.9)}
 .call-top{position:absolute;top:20px;left:0;right:0;text-align:center;z-index:2}
 .call-top b{font-size:20px}
 .call-top div{color:var(--gr);font-size:14px;margin-top:4px}
-#call-avatar{width:110px;height:110px;border-radius:50%;background:var(--ac);display:grid;place-items:center;font-size:44px;font-weight:700}
+#call-avatar{width:110px;height:110px;border-radius:50%;background:var(--ac);display:grid;place-items:center;font-size:44px;font-weight:700;color:#fff}
 .call-controls{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:2}
 .call-btn{width:56px;height:56px;border-radius:50%;color:#fff;font-size:22px;display:grid;place-items:center}
 #end-call-btn{background:var(--red)}
-#switch-source-btn,#flip-camera-btn{background:var(--sf2);border:1px solid #555}
+#switch-source-btn,#flip-camera-btn{background:var(--sf2);border:1px solid #555;color:#fff}
 #incoming-card{background:var(--sf);padding:30px 40px;border-radius:24px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
 .ibtns{display:flex;gap:20px}
 .ibtns button{width:60px;height:60px;border-radius:50%;font-size:24px;color:#fff}
 #accept-btn{background:var(--green)} #decline-btn{background:var(--red)}
-#modal,#peerprof-modal,#create-chat-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:90;display:flex;align-items:center;justify-content:center}
+#modal,#peerprof-modal,#create-chat-modal,#attach-modal,#leave-chat-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:90;display:flex;align-items:center;justify-content:center}
 .modal-box{background:var(--sf);border-radius:20px;padding:20px;width:90%;max-width:340px;max-height:80%;overflow-y:auto}
 .modal-box h3{margin-bottom:14px}
 .urow{display:flex;align-items:center;gap:10px;padding:10px 0}
@@ -117,17 +125,18 @@ body.light header{background:rgba(255,255,255,.9)}
 .radio-group input[type="radio"]{width:auto;margin:0;accent-color:var(--ac)}
 .danger-btn{background:var(--red)!important}
 .lang-select,.theme-select{width:100%;padding:12px;border-radius:12px;border:none;background:var(--sf2);color:var(--tx);font-size:15px;margin-bottom:10px}
+.checkbox-label{display:flex;align-items:center;gap:10px;margin:10px 0;cursor:pointer;font-size:14px}
+.checkbox-label input[type="checkbox"]{width:20px;height:20px;accent-color:var(--red)}
 
-/* ✅ НОВЫЙ ПРОФИЛЬ (view / Settings / About) */
 #myprof-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:90;display:flex;align-items:center;justify-content:center}
 .prof-box{width:100%;height:100%;max-width:none;max-height:none;border-radius:0;padding:0;display:flex;flex-direction:column;overflow:hidden}
-.prof-header{background:var(--ac);height:130px;position:relative;flex-shrink:0}
-.prof-avatar{width:96px;height:96px;font-size:38px;border:3px solid #000;position:absolute;left:24px;bottom:-48px}
-.prof-tab-select{position:absolute;top:14px;right:14px;background:#fff;color:#000;border-radius:10px;padding:10px 18px;font-size:16px;font-weight:700;border:none;outline:none}
-.prof-body{flex:1;overflow-y:auto;padding:60px 20px 24px}
-.prof-id{margin-left:132px;margin-bottom:14px}
-.prof-id b{font-size:17px}
-.prof-id div{color:var(--gr);font-size:13px}
+.prof-header{background:var(--ac);padding:20px 24px;display:flex;align-items:center;gap:16px;position:relative;flex-shrink:0}
+.prof-avatar{width:80px;height:80px;font-size:32px;border:3px solid rgba(0,0,0,.2);flex-shrink:0;position:static}
+.prof-user-info{flex:1;min-width:0}
+.prof-user-info b{display:block;font-size:22px;font-weight:700;color:#fff;margin-bottom:4px}
+.prof-user-info div{font-size:14px;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prof-tab-select{position:absolute;top:14px;right:14px;background:#fff;color:#000;border-radius:10px;padding:8px 14px;font-size:14px;font-weight:700;border:none;outline:none}
+.prof-body{flex:1;overflow-y:auto;padding:20px}
 .res-box{background:var(--sf2);border-radius:12px;padding:12px;text-align:center;font-weight:700;font-size:18px;margin-bottom:6px}
 .res-range{text-align:center;color:var(--gr);font-size:12px;margin-bottom:12px}
 .prof-row{display:flex;flex-direction:column;gap:14px;margin-bottom:14px}
@@ -137,10 +146,9 @@ body.light header{background:rgba(255,255,255,.9)}
 .green-btn{width:100%;padding:12px;border-radius:12px;background:var(--green);color:#fff;font-size:15px;font-weight:600;margin-top:4px}
 .red-btn{display:block;margin-left:auto;background:var(--red);color:#fff;padding:12px 22px;border-radius:10px;font-weight:600}
 .about-line{font-size:16px;margin-bottom:14px;line-height:1.4}
-/* ✅ Большое устройство — широкий профиль с колонками */
+.temp-disabled{color:var(--red);font-size:12px;font-style:italic;margin-top:4px;font-weight:600}
 @media(min-width:768px){
   .prof-box{max-width:680px;height:auto;max-height:85%;border-radius:20px}
-  .prof-header{border-radius:20px 20px 0 0}
   .prof-row{flex-direction:row;gap:20px}
 }
 @media(max-width:768px){
@@ -153,16 +161,14 @@ body.light header{background:rgba(255,255,255,.9)}
 </head>
 <body>
 
-<!-- ✅ ЗАГРУЗОЧНЫЙ ЭКРАН -->
 <div id="loading-screen" class="hidden">
   <img src="Logo.png" class="loading-logo" alt="SKAM">
-  <div class="loading-text" data-i18n="loading">Загрузка...</div>
+  <div class="loading-text" id="i18n-loading">Загрузка...</div>
 </div>
 
-<!-- ✅ КАСТОМНОЕ ОКНО ПОДТВЕРЖДЕНИЯ -->
 <div id="confirm-overlay" class="hidden">
   <div id="confirm-box">
-    <div class="confirm-icon">⚠️</div>
+    <div class="confirm-icon">️</div>
     <div class="confirm-msg" id="confirm-msg"></div>
     <div class="confirm-btns">
       <button id="confirm-cancel" data-i18n="cancel">Отмена</button>
@@ -171,10 +177,9 @@ body.light header{background:rgba(255,255,255,.9)}
   </div>
 </div>
 
-<!-- ✅ КАСТОМНОЕ ОКНО УВЕДОМЛЕНИЯ -->
 <div id="alert-overlay" class="hidden">
   <div id="alert-box">
-    <div class="alert-icon">️</div>
+    <div class="alert-icon">ℹ️</div>
     <div class="alert-msg" id="alert-msg"></div>
     <button id="alert-ok" data-i18n="ok">OK</button>
   </div>
@@ -195,7 +200,7 @@ body.light header{background:rgba(255,255,255,.9)}
 
 <div id="otp-screen" class="hidden">
   <div class="logo">SKAM</div>
-  <div style="color:var(--gr);font-size:14px;margin-bottom:24px" data-i18n="otp_title">Двухфакторная защита</div>
+  <div id="otp-title-text" style="color:var(--gr);font-size:14px;margin-bottom:24px" data-i18n="otp_title">Двухфакторная защита</div>
   <div id="auth-box">
     <div id="otp-hint" style="color:var(--gr);font-size:13px;text-align:center;margin-bottom:12px" data-i18n="otp_hint">Мы отправили код</div>
     <input id="otp-input" type="text" inputmode="numeric" maxlength="6" placeholder="Код" data-i18n-ph="otp_input">
@@ -218,11 +223,13 @@ body.light header{background:rgba(255,255,255,.9)}
       </div>
     </div>
     <div class="search-box">
-      <input id="chat-search" type="text" placeholder="🔍 Поиск чатов..." data-i18n-ph="search_placeholder">
+      <input id="chat-search" type="text" placeholder=" Поиск чатов..." data-i18n-ph="search_placeholder">
     </div>
     <div class="chat-list">
       <div class="sec hidden" id="req-sec" data-i18n="contact_requests_sec">📩 Заявки в контакты</div>
       <div id="req-list"></div>
+      <div class="sec hidden" id="invite-sec">📨 Приглашения в чаты</div>
+      <div id="invite-list"></div>
       <div class="chat-item" id="general-item">
         <div class="av" style="background:var(--green)">#</div>
         <div class="ci-txt"><b data-i18n="general_chat">Общий чат</b><span data-i18n="general_chat_desc">все пользователи</span></div>
@@ -240,35 +247,79 @@ body.light header{background:rgba(255,255,255,.9)}
       <button id="back-btn">‹</button>
       <div class="av hidden" id="peer-avatar" style="width:32px;height:32px;font-size:13px" title="Профиль"></div>
       <div id="chat-title" data-i18n="general_chat">Общий чат</div>
-      <button class="hbtn hidden" id="chat-delete-btn" title="Удалить чат">🗑</button>
-      <button class="hbtn hidden" id="call-audio-btn" title="Звонок">📞</button>
+      <button class="hbtn hidden" id="chat-leave-btn" title="Выйти из чата"></button>
+      <button class="hbtn hidden" id="chat-delete-btn" title="Удалить чат">🗑️</button>
+      <button class="hbtn hidden" id="call-audio-btn" title="Звонок"></button>
       <button class="hbtn hidden" id="call-video-btn" title="Видеозвонок">📹</button>
     </header>
     <div id="messages"></div>
     <div id="bar-hint" class="bar-hint hidden"></div>
+    <div id="attach-preview">
+      <img id="preview-img" src="" alt="">
+      <div class="preview-info" id="preview-info">Прикреплено</div>
+      <button class="preview-remove" id="preview-remove" title="Убрать">✕</button>
+    </div>
     <div class="bar" id="msg-bar">
+      <button id="attach-btn" title="">📎</button>
       <input id="msg-input" type="text" placeholder="Сообщение..." autocomplete="off" data-i18n-ph="message_placeholder">
       <button id="send-btn">➤</button>
     </div>
   </main>
 </div>
 
-<!-- ✅ НОВЫЙ ПРОФИЛЬ (view / Settings / About) -->
 <div id="myprof-modal" class="hidden">
   <div class="modal-box prof-box">
     <div class="prof-header">
       <select id="prof-tab" class="prof-tab-select">
-        <option value="view">view</option>
-        <option value="settings">Settings</option>
         <option value="about">About</option>
+        <option value="settings">Settings</option>
+        <option value="view">view</option>
       </select>
       <div class="av prof-avatar" id="mp-avatar">?</div>
+      <div class="prof-user-info">
+        <b id="mp-name"></b>
+        <div id="mp-email"></div>
+      </div>
     </div>
     <div class="prof-body">
-      <div class="prof-id"><b id="mp-name"></b><div id="mp-email"></div></div>
-
-      <!-- ВКЛАДКА view -->
-      <div id="prof-view">
+      <div id="prof-about">
+        <div class="about-line"><b data-i18n="account_created">Аккаунт создан:</b> <span id="mp-created"></span></div>
+        <div class="about-line"><b data-i18n="current_theme">тема:</b> <span id="mp-theme"></span></div>
+        <div class="about-line"><b data-i18n="current_lang">язык:</b> <span id="mp-lang"></span></div>
+        <input id="mp-delpass" type="password" placeholder="Пароль для подтверждения" data-i18n-ph="confirm_password">
+        <button class="red-btn" id="mp-delete" data-i18n="delete_account">удалить аккаунт</button>
+      </div>
+      <div id="prof-settings" class="hidden">
+        <div class="prof-row">
+          <div class="prof-col">
+            <input id="mp-curpass" type="password" placeholder="Текущий пароль" data-i18n-ph="current_password">
+            <input id="mp-newpass" type="password" placeholder="Новый пароль (мин. 6)" data-i18n-ph="new_password">
+            <button class="green-btn" id="mp-savepass" data-i18n="change_btn">Изменить</button>
+            <div style="color:var(--gr);font-size:12px;margin-top:6px" data-i18n="warning_logout">️ Все устройства будут разлогинены</div>
+          </div>
+          <div class="prof-col">
+            <input id="mp-newname" placeholder="Новое имя" data-i18n-ph="new_name">
+            <button class="green-btn" id="mp-savename" data-i18n="change_btn">Изменить</button>
+          </div>
+        </div>
+        <div class="prof-row">
+          <div class="prof-col twofa-col">
+            <b data-i18n="twoFa_email">Код на почту (Email)</b>
+            <div class="twofa-status" id="twoFa-status"></div>
+            <button class="green-btn" id="mp-toggle-2fa" data-i18n="toggle_btn">Включить/Выключить</button>
+            <div class="temp-disabled">⚠️ временно отключён</div>
+          </div>
+          <div class="prof-col twofa-col">
+            <b data-i18n="twoFa_chat">Код в чат «SKAM 2FA»</b>
+            <div class="twofa-status" id="twoFaChat-status"></div>
+            <button class="green-btn" id="mp-toggle-2fa-chat" data-i18n="toggle_btn">Включить/Выключить</button>
+            <div class="temp-disabled">⚠️ временно отключён</div>
+          </div>
+        </div>
+        <input id="mp-2fa-pass" type="password" placeholder="Пароль для подтверждения" class="hidden" data-i18n-ph="confirm_password">
+        <button class="green-btn hidden" id="mp-confirm-2fa" data-i18n="confirm">Подтвердить</button>
+      </div>
+      <div id="prof-view" class="hidden">
         <div class="msec" data-i18n="interface_resolution">разрешение интерфейса</div>
         <div class="res-box" id="mp-resolution">…</div>
         <div class="res-range">640x480-3840x2160</div>
@@ -293,47 +344,7 @@ body.light header{background:rgba(255,255,255,.9)}
           </div>
         </div>
       </div>
-
-      <!-- ВКЛАДКА Settings -->
-      <div id="prof-settings" class="hidden">
-        <div class="prof-row">
-          <div class="prof-col">
-            <input id="mp-curpass" type="password" placeholder="Текущий пароль" data-i18n-ph="current_password">
-            <input id="mp-newpass" type="password" placeholder="Новый пароль (мин. 6)" data-i18n-ph="new_password">
-            <button class="green-btn" id="mp-savepass" data-i18n="change_btn">Изменить</button>
-            <div style="color:var(--gr);font-size:12px;margin-top:6px" data-i18n="warning_logout">⚠️ Все устройства будут разлогинены</div>
-          </div>
-          <div class="prof-col">
-            <input id="mp-newname" placeholder="Новое имя" data-i18n-ph="new_name">
-            <button class="green-btn" id="mp-savename" data-i18n="change_btn">Изменить</button>
-          </div>
-        </div>
-        <div class="prof-row">
-          <div class="prof-col twofa-col">
-            <b data-i18n="twoFa_email">Код на почту (Email)</b>
-            <div class="twofa-status" id="twoFa-status"></div>
-            <button class="green-btn" id="mp-toggle-2fa" data-i18n="toggle_btn">Включить/Выключить</button>
-          </div>
-          <div class="prof-col twofa-col">
-            <b data-i18n="twoFa_chat">Код в чат «SKAM 2FA»</b>
-            <div class="twofa-status" id="twoFaChat-status"></div>
-            <button class="green-btn" id="mp-toggle-2fa-chat" data-i18n="toggle_btn">Включить/Выключить</button>
-          </div>
-        </div>
-        <input id="mp-2fa-pass" type="password" placeholder="Пароль для подтверждения" class="hidden" data-i18n-ph="confirm_password">
-        <button class="green-btn hidden" id="mp-confirm-2fa" data-i18n="confirm">Подтвердить</button>
-      </div>
-
-      <!-- ВКЛАДКА About -->
-      <div id="prof-about" class="hidden">
-        <div class="about-line"><b data-i18n="account_created">Аккаунт создан:</b> <span id="mp-created"></span></div>
-        <div class="about-line"><b data-i18n="current_theme">тема:</b> <span id="mp-theme"></span></div>
-        <div class="about-line"><b data-i18n="current_lang">язык:</b> <span id="mp-lang"></span></div>
-        <input id="mp-delpass" type="password" placeholder="Пароль для подтверждения" data-i18n-ph="confirm_password">
-        <button class="red-btn" id="mp-delete" data-i18n="delete_account">удалить аккаунт</button>
-      </div>
-
-      <button class="ac-btn" id="mp-close" style="margin-top:16px;background:var(--sf2)" data-i18n="close">Закрыть</button>
+      <button class="ac-btn gray-btn" id="mp-close" style="margin-top:16px" data-i18n="close">Закрыть</button>
     </div>
   </div>
 </div>
@@ -344,25 +355,45 @@ body.light header{background:rgba(255,255,255,.9)}
     <b id="pp-name" style="font-size:20px"></b>
     <div id="pp-email" style="color:var(--gr);font-size:13px;margin:6px 0 16px"></div>
     <button class="ac-btn" id="pp-write" data-i18n="write">💬 Написать</button>
-    <button class="ac-btn" id="pp-block" style="margin-top:8px;background:var(--sf2)">🚫</button>
-    <button class="ac-btn" id="pp-remove" style="margin-top:8px;background:var(--sf2)" data-i18n="remove_contact">❌ Удалить контакт</button>
-    <button class="ac-btn" id="pp-close" style="margin-top:8px;background:var(--sf2)" data-i18n="close">Закрыть</button>
+    <button class="ac-btn gray-btn" id="pp-block" style="margin-top:8px">🚫</button>
+    <button class="ac-btn gray-btn" id="pp-remove" style="margin-top:8px" data-i18n="remove_contact">❌ Удалить контакт</button>
+    <button class="ac-btn gray-btn" id="pp-close" style="margin-top:8px" data-i18n="close">Закрыть</button>
   </div>
 </div>
 
 <div id="create-chat-modal" class="hidden">
   <div class="modal-box">
-    <h3 data-i18n="create_chat">Создать чат</h3>
+    <h3 id="cc-title" data-i18n="create_chat">Создать чат</h3>
     <input id="cc-name" placeholder="Название чата" data-i18n-ph="chat_name">
-    <div class="msec" data-i18n="permissions">Права доступа</div>
-    <div class="radio-group">
-      <label><input type="radio" name="cc-mode" value="all" checked> <span data-i18n="all_write">Все пишут</span></label>
-      <label><input type="radio" name="cc-mode" value="author"> <span data-i18n="author_write">Только автор пишет</span></label>
-    </div>
-    <div class="msec" data-i18n="add_participants">Добавить участников</div>
+    <div class="msec" id="cc-users-label" data-i18n="add_participants">Добавить участников</div>
     <div id="cc-users" style="max-height:150px;overflow-y:auto;margin-bottom:10px"></div>
     <button class="ac-btn" id="cc-save" data-i18n="save_chat">Сохранить чат</button>
-    <button class="ac-btn" id="cc-close" style="margin-top:8px;background:var(--sf2)" data-i18n="close">Закрыть</button>
+    <button class="ac-btn gray-btn" id="cc-close" style="margin-top:8px" data-i18n="close">Закрыть</button>
+  </div>
+</div>
+
+<div id="leave-chat-modal" class="hidden">
+  <div class="modal-box">
+    <h3>Выйти из чата</h3>
+    <p style="color:var(--gr);font-size:14px;margin-bottom:16px">Вы действительно хотите выйти из чата?</p>
+    <label class="checkbox-label">
+      <input type="checkbox" id="delete-messages-checkbox">
+      <span>Удалить все мои сообщения</span>
+    </label>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="ac-btn" id="leave-chat-confirm" style="flex:1">Выйти</button>
+      <button class="ac-btn gray-btn" id="leave-chat-cancel" style="flex:1">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<div id="attach-modal" class="hidden">
+  <div class="modal-box">
+    <h3 data-i18n="attach_title">Прикрепить медиа</h3>
+    <p style="color:var(--gr);font-size:13px;margin-bottom:12px">Вставьте URL картинки или GIF. Файл будет прикреплён к сообщению и отправится вместе с текстом.</p>
+    <input id="attach-url" type="text" placeholder="https://example.com/image.png" data-i18n-ph="attach_placeholder">
+    <button class="ac-btn" id="attach-send" data-i18n="upload_btn">📎 Прикрепить</button>
+    <button class="ac-btn gray-btn" id="attach-close" style="margin-top:8px" data-i18n="close">Отмена</button>
   </div>
 </div>
 
@@ -375,7 +406,7 @@ body.light header{background:rgba(255,255,255,.9)}
   <div class="call-controls">
     <button class="call-btn" id="flip-camera-btn" title="Фронтальная / задняя камера">🔁</button>
     <button class="call-btn" id="switch-source-btn" title="Экран / камера / чёрный">🔄</button>
-    <button class="call-btn" id="end-call-btn" title="Завершить">✕</button>
+    <button class="call-btn" id="end-call-btn" title="Завершить"></button>
   </div>
 </div>
 
@@ -400,7 +431,7 @@ body.light header{background:rgba(255,255,255,.9)}
 </div>
 
 <script type="module">
-console.log('%cSKAM • сборка 12 (профиль с вкладками view/Settings/About)','color:#0a84ff;font-size:16px;font-weight:bold');
+console.log('%cSKAM • сборка 23 (фикс языка и кнопки 📎)','color:#0a84ff;font-size:16px;font-weight:bold');
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { 
@@ -413,7 +444,6 @@ import {
   query, where, onSnapshot, serverTimestamp, arrayUnion, arrayRemove 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// ✅ $ и esc объявлены ДО первого использования
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
@@ -425,7 +455,24 @@ const firebaseConfig = {
   messagingSenderId: "90639296284",
   appId: "1:90639296284:web:ba8d911d93f1029d15fcd9"
 };
-const EJ_SERVICE="service_44z9vci", EJ_TEMPLATE="template_8212tvh", EJ_KEY="IteXYboDD-SgUcCRL";
+
+let currentLang = localStorage.getItem('skam_lang') || 'ru';
+let currentTheme = localStorage.getItem('skam_theme') || 'dark';
+
+const fb = initializeApp(firebaseConfig);
+const auth = getAuth(fb);
+const db = getFirestore(fb);
+setPersistence(auth, browserLocalPersistence).catch(e => console.error("Persistence error:", e));
+
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+let reg=false, myUid=null, myName='', myEmail='', myContacts=[], myBlocked=[], channel='general', currentPeer=null, currentChatMeta=null;
+let appStarted=false, changingPass=false, deleting=false, freshLogin=false;
+let twoFaEnabled=false, twoFaChatEnabled=false, verified=false, otpCode='', otpExp=0, otpMethod='email', pending2fa='email';
+let unsubMsg=null, unsubUsers=null, unsubMine=null, unsubCalls=null, unsubChats=null, unsubReqsIn=null, unsubReqsOut=null, unsubInvites=null;
+let allUsers={}, customChats=[], incomingReqs=[], incomingInvites=[], pc=null, localStream=null, currentCall=null, iceUnsub=null, callDocUnsub=null, pendingIncoming=null, addedIce=new Set();
+let currentSource='black', currentFacing='user';
+let attachedMediaUrl = null;
 
 /* ========== ПЕРЕВОДЫ ========== */
 const LANGS = {
@@ -437,37 +484,35 @@ const LANGS = {
     general_chat:'Общий чат',general_chat_desc:'все пользователи',twofa_desc:'коды для входа',
     contacts_sec:'Контакты и чаты',search_placeholder:'🔍 Поиск чатов...',
     contact_requests_sec:'📩 Заявки в контакты',
-    logout_btn:'Выйти',create_chat_btn:'Создать чат',add_contact_btn:'Добавить контакт',
+    logout_btn:'Выйти',
     language_sec:'Язык / Language',theme_sec:'Тема / Theme',
-    theme_dark:'🌙 Тёмная',theme_light:'☀️ Светлая',close:'Закрыть',
-    twoFa_sec:'Двухфакторная защита',twoFa_email:'Код на почту (Email)',twoFa_chat:'Код в чат «SKAM 2FA»',
-    twoFa_on:'🔒 Включено',twoFa_off:'Выключено',enable:'Включить',disable:'Выключить',toggle_btn:'Включить/Выключить',
+    theme_dark:'🌙 Тёмная',theme_light:'️ Светлая',close:'Закрыть',
+    twoFa_email:'Код на почту (Email)',twoFa_chat:'Код в чат «SKAM 2FA»',
+    twoFa_on:' Включено',twoFa_off:' Выключено',toggle_btn:'Включить/Выключить',
     confirm_password:'Пароль для подтверждения',confirm:'Подтвердить',cancel:'Отмена',ok:'OK',
-    change_name_sec:'Сменить имя',new_name:'Новое имя',save_name:'Сохранить имя',
-    change_pass_sec:'Сменить пароль',current_password:'Текущий пароль',new_password:'Новый пароль (мин. 6)',
-    save_password:'Сменить пароль',warning_logout:'⚠️ Все устройства будут разлогинены',
-    danger_zone:'Опасная зона',delete_account:'удалить аккаунт',
+    warning_logout:'⚠️ Все устройства будут разлогинены',
+    delete_account:'удалить аккаунт',
     write:'💬 Написать',block:'🚫 Заблокировать',unblock:'🔓 Разблокировать',
     remove_contact:'❌ Удалить контакт',
     create_chat:'Создать чат',chat_name:'Название чата',permissions:'Права доступа',
     all_write:'Все пишут',author_write:'Только автор пишет',add_participants:'Добавить участников',
     save_chat:'Сохранить чат',add_contact:'Добавить контакт',
-    message_placeholder:'Сообщение...',only_reading:'Только чтение',
-    only_author_hint:'Только автор может писать в этот чат',
+    message_placeholder:'Сообщение...',
     twofa_hint:'🔐 Только чтение — коды удаляются через 5 минут',
-    delete_message:'Удалить это сообщение?',delete_chat_confirm:'Удалить чат «{name}» и все сообщения?',
-    remove_contact_confirm:'Удалить контакт {name}?\nВы исчезнете из контактов друг у друга.',
-    delete_account_confirm:'Удалить аккаунт?',enter_password:'Введите пароль',enter_name:'Введи имя',
-    fill_both:'Заполни оба поля',password_changed:'Пароль изменён.',name_changed:'Имя изменено ✅',
+    only_author_hint:'Только автор может писать в этот чат',
+    delete_message:'Удалить это сообщение?',
+    account_created:'Аккаунт создан:',current_theme:'тема:',current_lang:'язык:',
+    interface_resolution:'разрешение интерфейса',change_btn:'Изменить',
+    attach_title:'Прикрепить медиа',attach_placeholder:'URL картинки или GIF',upload_btn:'📎 Прикрепить',
+    enter_name:'Введи имя',fill_both:'Заполни оба поля',
+    name_changed:'Имя изменено ✅',password_changed:'Пароль изменён.',
     twoFa_email_on:'2FA по почте включена ✅',twoFa_email_off:'2FA по почте выключена ✅',
-    twoFa_chat_on:'2FA через чат включена ✅\n\nКод читается ТОЛЬКО в чате «SKAM 2FA».',
-    twoFa_chat_off:'2FA через чат выключена ✅',
+    twoFa_chat_on:'2FA через чат включена ✅',twoFa_chat_off:'2FA через чат выключена ✅',
     wrong_code:'Неверный или просроченный код',account_deleted:'Аккаунт удалён.',
     password_changed_logout:'Пароль изменён.',no_users:'Нет пользователей',
     already_contact:'Уже в контактах',user_blocked:'Пользователь заблокирован',
     request_sent:'Заявка в контакты отправлена ✅',
     calling:'Вызов…',conversation:'Разговор',
-    screen_share:'Демонстрация',screen:'экрана',
     video_call:'📹 Видеозвонок',audio_call:'📞 Аудиозвонок',
     cannot_call_blocked:'Нельзя позвонить: пользователь заблокирован',
     cannot_write_blocked:'Нельзя писать: пользователь заблокирован',
@@ -475,11 +520,12 @@ const LANGS = {
     cannot_write_twofa:'В этот чат нельзя писать',
     error_sending:'Ошибка отправки: ',error:'Ошибка: ',
     accept:'Принять',decline:'Отклонить',block_delete:'Заблокировать и удалить',
-    wants_contact:'хочет добавить тебя в контакты',accept_contact:'Принять контакт?',
+    wants_contact:'хочет добавить тебя в контакты',
     camera_switch_fail:'Не удалось переключить камеру',single_camera:'На устройстве доступна только одна камера',
     no_permission:'Нет прав (обнови правила Firestore!)',
-    interface_resolution:'разрешение интерфейса',change_btn:'Изменить',
-    account_created:'Аккаунт создан:',current_theme:'тема:',current_lang:'язык:'
+    delete_account_confirm:'Удалить аккаунт?',remove_contact_confirm:'Удалить контакт {name}?',
+    delete_chat_confirm:'Удалить чат «{name}» и все сообщения?',
+    screen_share:'Демонстрация',screen:'экрана'
   },
   en: {
     loading:'Loading...',login_title:'Sign in',login_email:'Email',login_password:'Password (min. 6 chars)',
@@ -489,268 +535,63 @@ const LANGS = {
     general_chat:'General chat',general_chat_desc:'all users',twofa_desc:'login codes',
     contacts_sec:'Contacts and chats',search_placeholder:'🔍 Search chats...',
     contact_requests_sec:'📩 Contact requests',
-    logout_btn:'Log out',create_chat_btn:'Create chat',add_contact_btn:'Add contact',
+    logout_btn:'Log out',
     language_sec:'Language',theme_sec:'Theme',
     theme_dark:'🌙 Dark',theme_light:'☀️ Light',close:'Close',
-    twoFa_sec:'Two-factor authentication',twoFa_email:'Code via Email',twoFa_chat:'Code in «SKAM 2FA» chat',
-    twoFa_on:'🔒 Enabled',twoFa_off:'Disabled',enable:'Enable',disable:'Disable',toggle_btn:'Enable/Disable',
+    twoFa_email:'Code via Email',twoFa_chat:'Code in «SKAM 2FA» chat',
+    twoFa_on:'🔒 Enabled',twoFa_off:'🔒 Disabled',toggle_btn:'Enable/Disable',
     confirm_password:'Password to confirm',confirm:'Confirm',cancel:'Cancel',ok:'OK',
-    change_name_sec:'Change name',new_name:'New name',save_name:'Save name',
-    change_pass_sec:'Change password',current_password:'Current password',new_password:'New password (min. 6)',
-    save_password:'Change password',warning_logout:'⚠️ All devices will be logged out',
-    danger_zone:'Danger zone',delete_account:'Delete account',
+    warning_logout:'⚠️ All devices will be logged out',
+    delete_account:'Delete account',
     write:'💬 Write',block:'🚫 Block',unblock:'🔓 Unblock',
     remove_contact:'❌ Remove contact',
     create_chat:'Create chat',chat_name:'Chat name',permissions:'Permissions',
     all_write:'Everyone writes',author_write:'Only author writes',add_participants:'Add participants',
     save_chat:'Save chat',add_contact:'Add contact',
-    message_placeholder:'Message...',only_reading:'Read only',
+    message_placeholder:'Message...',
+    twofa_hint:' Read only — codes are deleted in 5 min',
     only_author_hint:'Only the author can write in this chat',
-    twofa_hint:'🔐 Read only — codes are deleted in 5 min',
-    delete_message:'Delete this message?',delete_chat_confirm:'Delete chat «{name}» and all messages?',
-    remove_contact_confirm:'Remove contact {name}?\nYou will disappear from each other\'s contacts.',
-    delete_account_confirm:'Delete account?',enter_password:'Enter password',enter_name:'Enter name',
-    fill_both:'Fill both fields',password_changed:'Password changed.',name_changed:'Name changed ✅',
+    delete_message:'Delete this message?',
+    account_created:'Account created:',current_theme:'theme:',current_lang:'language:',
+    interface_resolution:'Interface resolution',change_btn:'Change',
+    attach_title:'Attach media',attach_placeholder:'Image or GIF URL',upload_btn:'📎 Attach',
+    enter_name:'Enter name',fill_both:'Fill both fields',
+    name_changed:'Name changed ✅',password_changed:'Password changed.',
     twoFa_email_on:'Email 2FA enabled ✅',twoFa_email_off:'Email 2FA disabled ✅',
-    twoFa_chat_on:'Chat 2FA enabled ✅\n\nCode is read ONLY in «SKAM 2FA» chat.',
-    twoFa_chat_off:'Chat 2FA disabled ✅',
+    twoFa_chat_on:'Chat 2FA enabled ✅',twoFa_chat_off:'Chat 2FA disabled ✅',
     wrong_code:'Wrong or expired code',account_deleted:'Account deleted.',
     password_changed_logout:'Password changed.',no_users:'No users',
     already_contact:'Already in contacts',user_blocked:'User is blocked',
     request_sent:'Contact request sent ✅',
     calling:'Calling…',conversation:'Conversation',
-    screen_share:'Screen',screen:'sharing',
-    video_call:'📹 Video call',audio_call:'📞 Audio call',
+    video_call:'📹 Video call',audio_call:' Audio call',
     cannot_call_blocked:'Cannot call: user is blocked',
     cannot_write_blocked:'Cannot write: user is blocked',
     only_author_write:'Only the author can write in this chat',
     cannot_write_twofa:'Cannot write in this chat',
     error_sending:'Send error: ',error:'Error: ',
     accept:'Accept',decline:'Decline',block_delete:'Block and remove',
-    wants_contact:'wants to add you to contacts',accept_contact:'Accept contact?',
-    camera_switch_fail:'Failed to switch camera',single_camera:'Only one camera available on device',
+    wants_contact:'wants to add you to contacts',
+    camera_switch_fail:'Failed to switch camera',single_camera:'Only one camera available',
     no_permission:'No permission (update Firestore rules!)',
-    interface_resolution:'Interface resolution',change_btn:'Change',
-    account_created:'Account created:',current_theme:'theme:',current_lang:'language:'
-  },
-  es: {
-    loading:'Cargando...',login_title:'Iniciar sesión',login_email:'Correo',login_password:'Contraseña (mín. 6)',
-    login_name:'Nombre (perfil)',login_button:'Entrar',register_toggle:'¿Sin cuenta? Regístrate',
-    otp_title:'Autenticación de dos factores',otp_hint:'Enviamos un código',otp_input:'Código',otp_button:'Entrar',
-    otp_resend:'Reenviar código',otp_change_account:'🔄 Cambiar cuenta',
-    general_chat:'Chat general',general_chat_desc:'todos los usuarios',twofa_desc:'códigos de acceso',
-    contacts_sec:'Contactos y chats',search_placeholder:'🔍 Buscar chats...',
-    contact_requests_sec:'📩 Solicitudes de contacto',
-    logout_btn:'Salir',create_chat_btn:'Crear chat',add_contact_btn:'Añadir contacto',
-    language_sec:'Idioma',theme_sec:'Tema',
-    theme_dark:'🌙 Oscuro',theme_light:'☀️ Claro',close:'Cerrar',
-    twoFa_sec:'Autenticación de dos factores',twoFa_email:'Código por correo',twoFa_chat:'Código en chat «SKAM 2FA»',
-    twoFa_on:'🔒 Activado',twoFa_off:'Desactivado',enable:'Activar',disable:'Desactivar',toggle_btn:'Activar/Desactivar',
-    confirm_password:'Contraseña para confirmar',confirm:'Confirmar',cancel:'Cancelar',ok:'OK',
-    change_name_sec:'Cambiar nombre',new_name:'Nuevo nombre',save_name:'Guardar nombre',
-    change_pass_sec:'Cambiar contraseña',current_password:'Contraseña actual',new_password:'Nueva contraseña (mín. 6)',
-    save_password:'Cambiar contraseña',warning_logout:'⚠️ Todos los dispositivos se desconectarán',
-    danger_zone:'Zona peligrosa',delete_account:'Eliminar cuenta',
-    write:'💬 Escribir',block:'🚫 Bloquear',unblock:'🔓 Desbloquear',
-    remove_contact:'❌ Eliminar contacto',
-    create_chat:'Crear chat',chat_name:'Nombre del chat',permissions:'Permisos',
-    all_write:'Todos escriben',author_write:'Solo el autor escribe',add_participants:'Añadir participantes',
-    save_chat:'Guardar chat',add_contact:'Añadir contacto',
-    message_placeholder:'Mensaje...',only_reading:'Solo lectura',
-    only_author_hint:'Solo el autor puede escribir en este chat',
-    twofa_hint:'🔐 Solo lectura — los códigos se eliminan en 5 min',
-    delete_message:'¿Eliminar este mensaje?',delete_chat_confirm:'¿Eliminar chat «{name}» y todos los mensajes?',
-    remove_contact_confirm:'¿Eliminar contacto {name}?\nDesaparecerán de los contactos del otro.',
-    delete_account_confirm:'¿Eliminar cuenta?',enter_password:'Introduce la contraseña',enter_name:'Introduce el nombre',
-    fill_both:'Rellena ambos campos',password_changed:'Contraseña cambiada.',name_changed:'Nombre cambiado ✅',
-    twoFa_email_on:'2FA por correo activado ✅',twoFa_email_off:'2FA por correo desactivado ✅',
-    twoFa_chat_on:'2FA por chat activado ✅\n\nEl código se lee SOLO en el chat «SKAM 2FA».',
-    twoFa_chat_off:'2FA por chat desactivado ✅',
-    wrong_code:'Código incorrecto o caducado',account_deleted:'Cuenta eliminada.',
-    password_changed_logout:'Contraseña cambiada.',no_users:'Sin usuarios',
-    already_contact:'Ya está en contactos',user_blocked:'Usuario bloqueado',
-    request_sent:'Solicitud de contacto enviada ✅',
-    calling:'Llamando…',conversation:'Conversación',
-    screen_share:'Compartir',screen:'pantalla',
-    video_call:'📹 Videollamada',audio_call:'📞 Llamada de voz',
-    cannot_call_blocked:'No se puede llamar: usuario bloqueado',
-    cannot_write_blocked:'No se puede escribir: usuario bloqueado',
-    only_author_write:'Solo el autor puede escribir en este chat',
-    cannot_write_twofa:'No se puede escribir en este chat',
-    error_sending:'Error al enviar: ',error:'Error: ',
-    accept:'Aceptar',decline:'Rechazar',block_delete:'Bloquear y eliminar',
-    wants_contact:'quiere añadirte a contactos',accept_contact:'¿Aceptar contacto?',
-    camera_switch_fail:'No se pudo cambiar la cámara',single_camera:'Solo hay una cámara en el dispositivo',
-    no_permission:'Sin permisos (¡actualiza las reglas de Firestore!)',
-    interface_resolution:'Resolución de la interfaz',change_btn:'Cambiar',
-    account_created:'Cuenta creada:',current_theme:'tema:',current_lang:'idioma:'
-  },
-  fr: {
-    loading:'Chargement...',login_title:'Connexion',login_email:'E-mail',login_password:'Mot de passe (min. 6)',
-    login_name:'Nom (profil)',login_button:'Se connecter',register_toggle:'Pas de compte ? S\'inscrire',
-    otp_title:'Authentification à deux facteurs',otp_hint:'Nous avons envoyé un code',otp_input:'Code',otp_button:'Se connecter',
-    otp_resend:'Renvoyer le code',otp_change_account:'🔄 Changer de compte',
-    general_chat:'Chat général',general_chat_desc:'tous les utilisateurs',twofa_desc:'codes de connexion',
-    contacts_sec:'Contacts et discussions',search_placeholder:'🔍 Rechercher...',
-    contact_requests_sec:'📩 Demandes de contact',
-    logout_btn:'Déconnexion',create_chat_btn:'Créer un chat',add_contact_btn:'Ajouter contact',
-    language_sec:'Langue',theme_sec:'Thème',
-    theme_dark:'🌙 Sombre',theme_light:'☀️ Clair',close:'Fermer',
-    twoFa_sec:'Authentification à deux facteurs',twoFa_email:'Code par e-mail',twoFa_chat:'Code dans le chat « SKAM 2FA »',
-    twoFa_on:'🔒 Activé',twoFa_off:'Désactivé',enable:'Activer',disable:'Désactiver',toggle_btn:'Activer/Désactiver',
-    confirm_password:'Mot de passe de confirmation',confirm:'Confirmer',cancel:'Annuler',ok:'OK',
-    change_name_sec:'Changer le nom',new_name:'Nouveau nom',save_name:'Enregistrer',
-    change_pass_sec:'Changer le mot de passe',current_password:'Mot de passe actuel',new_password:'Nouveau mot de passe (min. 6)',
-    save_password:'Changer',warning_logout:'⚠️ Tous les appareils seront déconnectés',
-    danger_zone:'Zone dangereuse',delete_account:'Supprimer le compte',
-    write:'💬 Écrire',block:'🚫 Bloquer',unblock:'🔓 Débloquer',
-    remove_contact:'❌ Supprimer le contact',
-    create_chat:'Créer un chat',chat_name:'Nom du chat',permissions:'Permissions',
-    all_write:'Tout le monde écrit',author_write:'Seul l\'auteur écrit',add_participants:'Ajouter participants',
-    save_chat:'Enregistrer',add_contact:'Ajouter contact',
-    message_placeholder:'Message...',only_reading:'Lecture seule',
-    only_author_hint:'Seul l\'auteur peut écrire dans ce chat',
-    twofa_hint:'🔐 Lecture seule — les codes sont supprimés en 5 min',
-    delete_message:'Supprimer ce message ?',delete_chat_confirm:'Supprimer le chat « {name} » et tous les messages ?',
-    remove_contact_confirm:'Supprimer le contact {name} ?\nVous disparaîtrez des contacts de l\'autre.',
-    delete_account_confirm:'Supprimer le compte ?',enter_password:'Entrez le mot de passe',enter_name:'Entrez le nom',
-    fill_both:'Remplissez les deux champs',password_changed:'Mot de passe changé.',name_changed:'Nom changé ✅',
-    twoFa_email_on:'2FA par e-mail activé ✅',twoFa_email_off:'2FA par e-mail désactivé ✅',
-    twoFa_chat_on:'2FA par chat activé ✅\n\nLe code est lu UNIQUEMENT dans le chat « SKAM 2FA ».',
-    twoFa_chat_off:'2FA par chat désactivé ✅',
-    wrong_code:'Code incorrect ou expiré',account_deleted:'Compte supprimé.',
-    password_changed_logout:'Mot de passe changé.',no_users:'Aucun utilisateur',
-    already_contact:'Déjà dans les contacts',user_blocked:'Utilisateur bloqué',
-    request_sent:'Demande de contact envoyée ✅',
-    calling:'Appel…',conversation:'Conversation',
-    screen_share:'Partage',screen:'d\'écran',
-    video_call:'📹 Appel vidéo',audio_call:'📞 Appel audio',
-    cannot_call_blocked:'Impossible d\'appeler : utilisateur bloqué',
-    cannot_write_blocked:'Impossible d\'écrire : utilisateur bloqué',
-    only_author_write:'Seul l\'auteur peut écrire dans ce chat',
-    cannot_write_twofa:'Impossible d\'écrire dans ce chat',
-    error_sending:'Erreur d\'envoi : ',error:'Erreur : ',
-    accept:'Accepter',decline:'Refuser',block_delete:'Bloquer et supprimer',
-    wants_contact:'veut vous ajouter aux contacts',accept_contact:'Accepter le contact ?',
-    camera_switch_fail:'Impossible de changer de caméra',single_camera:'Une seule caméra disponible',
-    no_permission:'Pas d\'autorisation (mettez à jour les règles Firestore !)',
-    interface_resolution:'Résolution de l\'interface',change_btn:'Changer',
-    account_created:'Compte créé :',current_theme:'thème :',current_lang:'langue :'
-  },
-  de: {
-    loading:'Laden...',login_title:'Anmelden',login_email:'E-Mail',login_password:'Passwort (min. 6)',
-    login_name:'Name (Profil)',login_button:'Anmelden',register_toggle:'Kein Konto? Registrieren',
-    otp_title:'Zwei-Faktor-Authentifizierung',otp_hint:'Wir haben einen Code gesendet',otp_input:'Code',otp_button:'Anmelden',
-    otp_resend:'Code erneut senden',otp_change_account:'🔄 Konto wechseln',
-    general_chat:'Allgemeiner Chat',general_chat_desc:'alle Benutzer',twofa_desc:'Anmeldecodes',
-    contacts_sec:'Kontakte und Chats',search_placeholder:'🔍 Chats suchen...',
-    contact_requests_sec:'📩 Kontaktanfragen',
-    logout_btn:'Abmelden',create_chat_btn:'Chat erstellen',add_contact_btn:'Kontakt hinzufügen',
-    language_sec:'Sprache',theme_sec:'Design',
-    theme_dark:'🌙 Dunkel',theme_light:'☀️ Hell',close:'Schließen',
-    twoFa_sec:'Zwei-Faktor-Authentifizierung',twoFa_email:'Code per E-Mail',twoFa_chat:'Code im Chat «SKAM 2FA»',
-    twoFa_on:'🔒 Aktiviert',twoFa_off:'Deaktiviert',enable:'Aktivieren',disable:'Deaktivieren',toggle_btn:'Aktivieren/Deaktivieren',
-    confirm_password:'Passwort zur Bestätigung',confirm:'Bestätigen',cancel:'Abbrechen',ok:'OK',
-    change_name_sec:'Name ändern',new_name:'Neuer Name',save_name:'Name speichern',
-    change_pass_sec:'Passwort ändern',current_password:'Aktuelles Passwort',new_password:'Neues Passwort (min. 6)',
-    save_password:'Passwort ändern',warning_logout:'⚠️ Alle Geräte werden abgemeldet',
-    danger_zone:'Gefahrenzone',delete_account:'Konto löschen',
-    write:'💬 Schreiben',block:'🚫 Blockieren',unblock:'🔓 Entsperren',
-    remove_contact:'❌ Kontakt entfernen',
-    create_chat:'Chat erstellen',chat_name:'Chat-Name',permissions:'Berechtigungen',
-    all_write:'Alle schreiben',author_write:'Nur Autor schreibt',add_participants:'Teilnehmer hinzufügen',
-    save_chat:'Chat speichern',add_contact:'Kontakt hinzufügen',
-    message_placeholder:'Nachricht...',only_reading:'Nur lesen',
-    only_author_hint:'Nur der Autor kann in diesem Chat schreiben',
-    twofa_hint:'🔐 Nur lesen — Codes werden in 5 Min. gelöscht',
-    delete_message:'Diese Nachricht löschen?',delete_chat_confirm:'Chat «{name}» und alle Nachrichten löschen?',
-    remove_contact_confirm:'Kontakt {name} entfernen?\nIhr verschwindet aus den Kontakten des anderen.',
-    delete_account_confirm:'Konto löschen?',enter_password:'Passwort eingeben',enter_name:'Name eingeben',
-    fill_both:'Beide Felder ausfüllen',password_changed:'Passwort geändert.',name_changed:'Name geändert ✅',
-    twoFa_email_on:'E-Mail-2FA aktiviert ✅',twoFa_email_off:'E-Mail-2FA deaktiviert ✅',
-    twoFa_chat_on:'Chat-2FA aktiviert ✅\n\nCode wird NUR im Chat «SKAM 2FA» gelesen.',
-    twoFa_chat_off:'Chat-2FA deaktiviert ✅',
-    wrong_code:'Falscher oder abgelaufener Code',account_deleted:'Konto gelöscht.',
-    password_changed_logout:'Passwort geändert.',no_users:'Keine Benutzer',
-    already_contact:'Bereits in Kontakten',user_blocked:'Benutzer blockiert',
-    request_sent:'Kontaktanfrage gesendet ✅',
-    calling:'Anruf…',conversation:'Gespräch',
-    screen_share:'Bildschirm',screen:'freigeben',
-    video_call:'📹 Videoanruf',audio_call:'📞 Sprachanruf',
-    cannot_call_blocked:'Anruf nicht möglich: Benutzer blockiert',
-    cannot_write_blocked:'Schreiben nicht möglich: Benutzer blockiert',
-    only_author_write:'Nur der Autor kann in diesem Chat schreiben',
-    cannot_write_twofa:'In diesem Chat kann nicht geschrieben werden',
-    error_sending:'Sendefehler: ',error:'Fehler: ',
-    accept:'Akzeptieren',decline:'Ablehnen',block_delete:'Blockieren und entfernen',
-    wants_contact:'möchte dich zu Kontakten hinzufügen',accept_contact:'Kontakt akzeptieren?',
-    camera_switch_fail:'Kamera konnte nicht gewechselt werden',single_camera:'Nur eine Kamera verfügbar',
-    no_permission:'Keine Berechtigung (Firestore-Regeln aktualisieren!)',
-    interface_resolution:'Oberflächenauflösung',change_btn:'Ändern',
-    account_created:'Konto erstellt:',current_theme:'Design:',current_lang:'Sprache:'
-  },
-  zh: {
-    loading:'加载中...',login_title:'登录',login_email:'电子邮件',login_password:'密码（至少6位）',
-    login_name:'姓名（个人资料）',login_button:'登录',register_toggle:'没有账号？注册',
-    otp_title:'双重认证',otp_hint:'我们已发送验证码',otp_input:'验证码',otp_button:'登录',
-    otp_resend:'重新发送验证码',otp_change_account:'🔄 切换账号',
-    general_chat:'公共聊天',general_chat_desc:'所有用户',twofa_desc:'登录验证码',
-    contacts_sec:'联系人和聊天',search_placeholder:'🔍 搜索聊天...',
-    contact_requests_sec:'📩 联系人请求',
-    logout_btn:'退出',create_chat_btn:'创建聊天',add_contact_btn:'添加联系人',
-    language_sec:'语言',theme_sec:'主题',
-    theme_dark:'🌙 深色',theme_light:'☀️ 浅色',close:'关闭',
-    twoFa_sec:'双重认证',twoFa_email:'通过电子邮件验证码',twoFa_chat:'在 «SKAM 2FA» 聊天中验证码',
-    twoFa_on:'🔒 已启用',twoFa_off:'已禁用',enable:'启用',disable:'禁用',toggle_btn:'启用/禁用',
-    confirm_password:'确认密码',confirm:'确认',cancel:'取消',ok:'确定',
-    change_name_sec:'更改姓名',new_name:'新姓名',save_name:'保存姓名',
-    change_pass_sec:'更改密码',current_password:'当前密码',new_password:'新密码（至少6位）',
-    save_password:'更改密码',warning_logout:'⚠️ 所有设备将被登出',
-    danger_zone:'危险区域',delete_account:'删除账号',
-    write:'💬 发送消息',block:'🚫 拉黑',unblock:'🔓 解除拉黑',
-    remove_contact:'❌ 删除联系人',
-    create_chat:'创建聊天',chat_name:'聊天名称',permissions:'权限',
-    all_write:'所有人可写',author_write:'仅作者可写',add_participants:'添加参与者',
-    save_chat:'保存聊天',add_contact:'添加联系人',
-    message_placeholder:'消息...',only_reading:'只读',
-    only_author_hint:'只有作者可以在此聊天中发言',
-    twofa_hint:'🔐 只读 — 验证码将在5分钟后删除',
-    delete_message:'删除此消息？',delete_chat_confirm:'删除聊天 «{name}» 和所有消息？',
-    remove_contact_confirm:'删除联系人 {name}？\n你们将从彼此的联系人中消失。',
-    delete_account_confirm:'删除账号？',enter_password:'输入密码',enter_name:'输入姓名',
-    fill_both:'请填写两个字段',password_changed:'密码已更改。',name_changed:'姓名已更改 ✅',
-    twoFa_email_on:'邮件双重认证已启用 ✅',twoFa_email_off:'邮件双重认证已禁用 ✅',
-    twoFa_chat_on:'聊天双重认证已启用 ✅\n\n验证码仅在 «SKAM 2FA» 聊天中读取。',
-    twoFa_chat_off:'聊天双重认证已禁用 ✅',
-    wrong_code:'验证码错误或已过期',account_deleted:'账号已删除。',
-    password_changed_logout:'密码已更改。',no_users:'没有用户',
-    already_contact:'已在联系人中',user_blocked:'用户已被拉黑',
-    request_sent:'联系人请求已发送 ✅',
-    calling:'呼叫中…',conversation:'通话中',
-    screen_share:'屏幕',screen:'共享',
-    video_call:'📹 视频通话',audio_call:'📞 语音通话',
-    cannot_call_blocked:'无法呼叫：用户已被拉黑',
-    cannot_write_blocked:'无法发送：用户已被拉黑',
-    only_author_write:'只有作者可以在此聊天中发言',
-    cannot_write_twofa:'无法在此聊天中发言',
-    error_sending:'发送错误：',error:'错误：',
-    accept:'接受',decline:'拒绝',block_delete:'拉黑并删除',
-    wants_contact:'想把你添加到联系人',accept_contact:'接受联系人请求？',
-    camera_switch_fail:'无法切换摄像头',single_camera:'设备上只有一个摄像头',
-    no_permission:'没有权限（请更新 Firestore 规则！）',
-    interface_resolution:'界面分辨率',change_btn:'更改',
-    account_created:'账号创建时间：',current_theme:'主题：',current_lang:'语言：'
+    delete_account_confirm:'Delete account?',remove_contact_confirm:'Remove contact {name}?',
+    delete_chat_confirm:'Delete chat «{name}» and all messages?',
+    screen_share:'Screen',screen:'sharing'
   }
 };
 
-let currentLang = localStorage.getItem('skam_lang') || 'ru';
-let currentTheme = localStorage.getItem('skam_theme') || 'dark';
-
 function t(key){ return (LANGS[currentLang] && LANGS[currentLang][key]) || LANGS.ru[key] || key; }
 
+// ✅ Функция применения переводов — работает через data-i18n и data-i18n-ph
 function applyTranslations(){
-  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = t(el.dataset.i18n); });
-  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ 
+    const key = el.dataset.i18n;
+    el.textContent = t(key); 
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ 
+    const key = el.dataset.i18nPh;
+    el.placeholder = t(key); 
+  });
   document.documentElement.lang = currentLang;
   $('lang-select').value = currentLang;
   $('theme-select').value = currentTheme;
@@ -760,6 +601,7 @@ function applyTranslations(){
   updateTwoFaUI();
 }
 
+// ✅ Функция применения темы
 function applyTheme(){
   if(currentTheme==='light') document.body.classList.add('light');
   else document.body.classList.remove('light');
@@ -775,55 +617,13 @@ async function savePreferences(){
   }
 }
 
+// ✅ Обработчики смены языка и темы
 $('lang-select').onchange = async (e) => { currentLang = e.target.value; applyTranslations(); await savePreferences(); fillAbout(); };
 $('theme-select').onchange = async (e) => { currentTheme = e.target.value; applyTheme(); await savePreferences(); fillAbout(); };
 
-/* ========== КАСТОМНЫЕ ОКНА ========== */
-let confirmResolve = null;
-function confirmAction(message, danger=false){
-  return new Promise(resolve=>{
-    confirmResolve = resolve;
-    $('confirm-msg').textContent = message;
-    $('confirm-ok').classList.toggle('danger', danger);
-    $('confirm-overlay').classList.remove('hidden');
-  });
-}
-$('confirm-ok').onclick = ()=>{ $('confirm-overlay').classList.add('hidden'); if(confirmResolve) confirmResolve(true); confirmResolve=null; };
-$('confirm-cancel').onclick = ()=>{ $('confirm-overlay').classList.add('hidden'); if(confirmResolve) confirmResolve(false); confirmResolve=null; };
-
-function showAlert(message){
-  $('alert-msg').textContent = message;
-  $('alert-overlay').classList.remove('hidden');
-}
-$('alert-ok').onclick = ()=>{ $('alert-overlay').classList.add('hidden'); };
-
-/* ========== FB INIT ========== */
-const fb = initializeApp(firebaseConfig);
-const auth = getAuth(fb);
-const db = getFirestore(fb);
-setPersistence(auth, browserLocalPersistence).catch(e => console.error("Persistence error:", e));
-
-const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-const ruErr = c => ({
-  'auth/invalid-credential':t('login_title'),'auth/email-already-in-use':t('login_email'),
-  'auth/weak-password':t('login_password'),'auth/invalid-email':t('login_email'),
-  'auth/user-not-found':t('login_title'),'auth/wrong-password':t('login_password'),
-  'auth/too-many-requests':'...',
-  'permission-denied':t('no_permission')
-}[c] || t('error') + ' ' + c);
-
-let reg=false, myUid=null, myName='', myEmail='', myContacts=[], myBlocked=[], channel='general', currentPeer=null, currentChatMeta=null;
-let appStarted=false, changingPass=false, deleting=false, freshLogin=false;
-let twoFaEnabled=false, twoFaChatEnabled=false, verified=false, otpCode='', otpExp=0, otpMethod='email', pending2fa='email';
-let unsubMsg=null, unsubUsers=null, unsubMine=null, unsubCalls=null, unsubChats=null, unsubReqsIn=null, unsubReqsOut=null;
-let allUsers={}, customChats=[], incomingReqs=[], pc=null, localStream=null, currentCall=null, iceUnsub=null, callDocUnsub=null, pendingIncoming=null, addedIce=new Set();
-let currentSource='black', currentFacing='user';
-
+/* ========== EmailJS ОТКЛЮЧЁН ========== */
 async function sendEmail(to, subject, message){
-  try{
-    await fetch("https://api.emailjs.com/api/v1.0/email/send",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({service_id:EJ_SERVICE,template_id:EJ_TEMPLATE,user_id:EJ_KEY,template_params:{to_email:to,subject:subject,message:message}})});
-  }catch(e){console.warn('Email error:',e);}
+  console.log('[EmailJS отключён] Письмо не отправлено:', {to, subject});
 }
 
 /* ========== 2FA ========== */
@@ -866,7 +666,7 @@ $('otp-btn').onclick=async()=>{
     localStorage.setItem('skam_sv_'+myUid,String(p.exists()?(p.data().sessionVersion||1):1));
     $('otp-screen').classList.add('hidden');$('app').classList.remove('hidden'); startApp();
     if(otpMethod==='chat')purgeCodes();
-    else sendEmail(myEmail,'🔐 SKAM login',`${new Date().toLocaleString()}`);
+    else sendEmail(myEmail,' SKAM login',`${new Date().toLocaleString()}`);
   }else{$('otp-error').textContent=t('wrong_code');}
 };
 $('otp-resend').onclick=()=>{ otpMethod==='chat'?sendCodeChat():sendCode(); };
@@ -885,16 +685,28 @@ $('auth-btn').onclick=async()=>{
     freshLogin=true;
     const cred=await createUserWithEmailAndPassword(auth,email,pass);
     await updateProfile(cred.user,{displayName:name});
-    await setDoc(doc(db,'profiles',cred.user.uid),{uid:cred.user.uid,name,email,contacts:[],blocked:[],sessionVersion:1,twoFactorEnabled:false,twoFaChatEnabled:false,language:currentLang,theme:currentTheme});
+    await setDoc(doc(db,'profiles',cred.user.uid),{uid:cred.user.uid,name,email,contacts:[],blocked:[],sessionVersion:1,twoFactorEnabled:false,twoFaChatEnabled:false,createdAt:Date.now()});
   }else{
     freshLogin=true;
     await signInWithEmailAndPassword(auth,email,pass);
-  }}catch(e){$('auth-error').textContent=ruErr(e.code);freshLogin=false;}
+  }}catch(e){
+    const errors = {
+      'auth/invalid-credential': 'Неверный email или пароль',
+      'auth/user-not-found': 'Аккаунт не найден. Зарегистрируйтесь',
+      'auth/wrong-password': 'Неверный пароль',
+      'auth/email-already-in-use': 'Этот email уже занят',
+      'auth/weak-password': 'Пароль должен быть минимум 6 символов',
+      'auth/invalid-email': 'Некорректный email',
+      'auth/too-many-requests': 'Слишком много попыток. Подождите'
+    };
+    $('auth-error').textContent = errors[e.code] || 'Ошибка: ' + e.code;
+    freshLogin=false;
+  }
 };
 async function fullLogout(){if(myUid){localStorage.removeItem('skam_sv_'+myUid);localStorage.removeItem('skam_verified_'+myUid);}verified=false;await signOut(auth);}
 $('logout').onclick=fullLogout;
 
-/* ========== ✅ ЛОГИКА ЗАГРУЗКИ И СЕССИИ ========== */
+/* ========== ЛОГИКА ЗАГРУЗКИ ========== */
 onAuthStateChanged(auth, async user => {
   if (user) {
     $('loading-screen').classList.remove('hidden');
@@ -903,7 +715,7 @@ onAuthStateChanged(auth, async user => {
     myUid = user.uid; myEmail = user.email; myName = user.displayName;
     let mine = await getDoc(doc(db, 'profiles', user.uid));
     if (!mine.exists()) {
-      await setDoc(doc(db, 'profiles', user.uid), { uid: user.uid, name: myName || user.email.split('@')[0], email: myEmail, contacts: [], blocked: [], sessionVersion: 1, twoFactorEnabled: false, twoFaChatEnabled: false, language: currentLang, theme: currentTheme, createdAt: Date.now() });
+      await setDoc(doc(db, 'profiles', user.uid), { uid: user.uid, name: myName || user.email.split('@')[0], email: myEmail, contacts: [], blocked: [], sessionVersion: 1, twoFactorEnabled: false, twoFaChatEnabled: false, createdAt: Date.now() });
       mine = await getDoc(doc(db, 'profiles', user.uid));
     } else if (!mine.data().email) {
       await setDoc(doc(db, 'profiles', user.uid), { email: myEmail }, { merge: true });
@@ -944,33 +756,31 @@ onAuthStateChanged(auth, async user => {
     $('loading-screen').classList.remove('fade-out');
     
     myUid = null; verified = false; twoFaEnabled = false; twoFaChatEnabled = false; 
-    appStarted = false; freshLogin = false; incomingReqs = [];
-    [unsubMsg, unsubUsers, unsubMine, unsubCalls, unsubChats, unsubReqsIn, unsubReqsOut, iceUnsub, callDocUnsub].forEach(u => u && u());
+    appStarted = false; freshLogin = false; incomingReqs = []; incomingInvites = [];
+    [unsubMsg, unsubUsers, unsubMine, unsubCalls, unsubChats, unsubReqsIn, unsubReqsOut, unsubInvites, iceUnsub, callDocUnsub].forEach(u => u && u());
     $('app').classList.add('hidden');
     $('otp-screen').classList.add('hidden');
     $('auth-screen').classList.remove('hidden');
   }
 });
 
-function startApp(){if(appStarted)return;appStarted=true;watchUsers();watchMine();watchCustomChats();watchIncoming();watchContactRequests();openChat('general',t('general_chat'),null,null);}
+function startApp(){if(appStarted)return;appStarted=true;watchUsers();watchMine();watchCustomChats();watchIncoming();watchContactRequests();watchInvites();openChat('general',t('general_chat'),null,null);}
 
-/* ========== BLOCK ========== */
 function isBlockedWith(uid){
   if(myBlocked.includes(uid))return true;
   const p=allUsers[uid];
   return !!(p&&p.blocked&&p.blocked.includes(myUid));
 }
 
-/* ========== DATA ========== */
-function watchUsers(){unsubUsers=onSnapshot(collection(db,'profiles'),snap=>{allUsers={};snap.forEach(d=>allUsers[d.id]=d.data());renderContacts();renderModal();},err=>console.error(err));}
+function watchUsers(){unsubUsers=onSnapshot(collection(db,'profiles'),snap=>{allUsers={};snap.forEach(d=>allUsers[d.id]=d.data());renderContacts();renderModal();renderInviteUsers();},err=>console.error(err));}
 function watchMine(){unsubMine=onSnapshot(doc(db,'profiles',myUid),s=>{
-  if(!s.exists()){showAlert(t('account_deleted'));fullLogout();return;}
+  if(!s.exists()){alert('Аккаунт удалён.');fullLogout();return;}
   const d=s.data();myContacts=d.contacts||[];myBlocked=d.blocked||[];if(d.name)myName=d.name;
   twoFaEnabled=!!d.twoFactorEnabled;twoFaChatEnabled=!!d.twoFaChatEnabled;
   const sv=d.sessionVersion||1,key='skam_sv_'+myUid,stored=localStorage.getItem(key);
   if(stored===null)localStorage.setItem(key,String(sv));
-  else if(parseInt(stored)!==sv&&!changingPass){showAlert(t('password_changed_logout'));fullLogout();return;}
-  renderContacts();renderModal();
+  else if(parseInt(stored)!==sv&&!changingPass){alert('Пароль изменён.');fullLogout();return;}
+  renderContacts();renderModal();renderInviteUsers();
 },err=>console.error(err));}
 
 function watchCustomChats(){
@@ -979,9 +789,67 @@ function watchCustomChats(){
   },err=>console.error(err));
 }
 
-/* ========== ЗАЯВКИ ========== */
+/* ========== ПРИГЛАШЕНИЯ В ЧАТЫ ========== */
+function watchInvites(){
+  unsubInvites=onSnapshot(query(collection(db,'contact_requests'),where('to','==',myUid),where('type','==','chat_invite'),where('status','==','pending')),snap=>{
+    incomingInvites=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderInvites();
+  },err=>console.error(err));
+}
+
+function renderInvites(){
+  const l=$('invite-list');l.innerHTML='';
+  $('invite-sec').classList.toggle('hidden',!incomingInvites.length);
+  incomingInvites.forEach(inv=>{
+    const el=document.createElement('div');el.className='chat-item';el.style.cursor='default';
+    el.innerHTML=`<div class="av" style="background:var(--ac)">📨</div>
+      <div class="ci-txt"><b>${esc(inv.chatName||'Чат')}</b><span>${esc(inv.fromName||'')} приглашает вас</span></div>
+      <div class="req-btns">
+        <button class="req-btn" style="background:var(--green)" title="${t('accept')}">✓</button>
+        <button class="req-btn" style="background:var(--sf2);color:var(--tx)" title="${t('decline')}">✕</button>
+        <button class="req-btn" style="background:var(--red)" title="${t('block_delete')}"></button>
+      </div>`;
+    const [bAcc,bDec,bBlk]=el.querySelectorAll('button');
+    bAcc.onclick=async()=>{
+      await updateDoc(doc(db,'custom_chats',inv.chatId),{members:arrayUnion(myUid)});
+      await updateDoc(doc(db,'contact_requests',inv.id),{status:'accepted'});
+      alert('Вы добавлены в чат ✅');
+    };
+    bDec.onclick=async()=>{ await updateDoc(doc(db,'contact_requests',inv.id),{status:'declined'}); };
+    bBlk.onclick=async()=>{
+      await setDoc(doc(db,'profiles',myUid),{blocked:arrayUnion(inv.from)},{merge:true});
+      await updateDoc(doc(db,'contact_requests',inv.id),{status:'declined'});
+    };
+    l.appendChild(el);
+  });
+}
+
+async function inviteToChat(chatId,chatName,userId){
+  try{
+    await setDoc(doc(db,'contact_requests',myUid+'_'+userId+'_chat_'+chatId),{
+      from:myUid, to:userId, fromName:myName,
+      type:'chat_invite', chatId, chatName,
+      status:'pending', createdAt:serverTimestamp()
+    });
+    return true;
+  }catch(e){console.error('Invite error:',e);return false;}
+}
+
+function renderInviteUsers(){
+  const ul=$('cc-users');if(!ul)return;
+  ul.innerHTML='';
+  myContacts.forEach(uid=>{
+    const p=allUsers[uid];if(!p)return;
+    const lbl=document.createElement('label');lbl.className='urow';lbl.style.cursor='pointer';
+    lbl.innerHTML=`<input type="checkbox" value="${uid}" style="width:auto;margin:0"><div class="av" style="width:28px;height:28px;font-size:12px">${esc(p.name[0].toUpperCase())}</div><b>${esc(p.name)}</b>`;
+    ul.appendChild(lbl);
+  });
+  if(!ul.children.length)ul.innerHTML=`<div style="color:var(--gr);font-size:13px">${t('no_users')}</div>`;
+}
+
+/* ========== ЗАЯВКИ В КОНТАКТЫ ========== */
 function watchContactRequests(){
-  unsubReqsIn=onSnapshot(query(collection(db,'contact_requests'),where('to','==',myUid),where('status','==','pending')),snap=>{
+  unsubReqsIn=onSnapshot(query(collection(db,'contact_requests'),where('to','==',myUid),where('status','==','pending'),where('type','==','contact')),snap=>{
     incomingReqs=snap.docs.map(d=>({id:d.id,...d.data()}));
     renderRequests();
   },err=>console.error(err));
@@ -989,7 +857,9 @@ function watchContactRequests(){
     snap.forEach(async d=>{
       const r=d.data();
       if(r.status==='accepted'){
-        await setDoc(doc(db,'profiles',myUid),{contacts:arrayUnion(r.to)},{merge:true});
+        if(r.type==='contact'){
+          await setDoc(doc(db,'profiles',myUid),{contacts:arrayUnion(r.to)},{merge:true});
+        }
         await deleteDoc(d.ref);
       }else if(r.status==='declined'){
         await deleteDoc(d.ref);
@@ -1007,7 +877,7 @@ function renderRequests(){
       <div class="ci-txt"><b>${esc(r.fromName||'')}</b><span>${t('wants_contact')}</span></div>
       <div class="req-btns">
         <button class="req-btn" style="background:var(--green)" title="${t('accept')}">✓</button>
-        <button class="req-btn" style="background:var(--sf2)" title="${t('decline')}">✕</button>
+        <button class="req-btn" style="background:var(--sf2);color:var(--tx)" title="${t('decline')}"></button>
         <button class="req-btn" style="background:var(--red)" title="${t('block_delete')}">🚫</button>
       </div>`;
     const [bAcc,bDec,bBlk]=el.querySelectorAll('button');
@@ -1024,7 +894,6 @@ function renderRequests(){
   });
 }
 
-/* ========== SEARCH + LIST ========== */
 $('chat-search').addEventListener('input',renderContacts);
 function renderContacts(){
   const l=$('contacts-list');l.innerHTML='';
@@ -1033,9 +902,20 @@ function renderContacts(){
   $('twofa-item').classList.toggle('hidden',!(twoFaChatEnabled&&twofaMatch));
   customChats.forEach(c=>{
     if(q&&!c.name.toLowerCase().includes(q))return;
+    const isOwner=c.owner===myUid;
     const el=document.createElement('div');el.className='chat-item'+(channel===c.id?' active':'');
-    el.innerHTML=`<div class="av" style="background:var(--sf2)">💬</div><div class="ci-txt"><b>${esc(c.name)}</b><span>${c.mode==='author'?t('author_write'):t('all_write')}</span></div>`;
-    el.onclick=()=>openChat(c.id,c.name,null,c);l.appendChild(el);
+    el.innerHTML=`<div class="av" style="background:var(--sf2)">💬</div><div class="ci-txt"><b>${esc(c.name)}</b><span>чат</span></div>`;
+    el.onclick=()=>openChat(c.id,c.name,null,c);
+    
+    if(isOwner){
+      const inviteBtn=document.createElement('button');
+      inviteBtn.innerHTML='+';
+      inviteBtn.style.cssText='width:24px;height:24px;border-radius:50%;background:var(--ac);color:#fff;font-size:14px;display:grid;place-items:center;margin-left:8px;flex-shrink:0';
+      inviteBtn.onclick=(e)=>{e.stopPropagation();openInviteModal(c.id,c.name);};
+      el.appendChild(inviteBtn);
+    }
+    
+    l.appendChild(el);
   });
   myContacts.forEach(uid=>{
     const p=allUsers[uid];if(!p)return;
@@ -1060,24 +940,77 @@ function renderModal(){
   if(!l.children.length)l.innerHTML=`<div style="color:var(--gr);font-size:14px">${t('no_users')}</div>`;
 }
 async function addContact(uid){
-  if(myContacts.includes(uid))return showAlert(t('already_contact'));
-  if(isBlockedWith(uid))return showAlert(t('user_blocked'));
+  if(myContacts.includes(uid))return alert(t('already_contact'));
+  if(isBlockedWith(uid))return alert(t('user_blocked'));
   try{
     await setDoc(doc(db,'contact_requests',myUid+'_'+uid),{
-      from:myUid, to:uid, fromName:myName, status:'pending', createdAt:serverTimestamp()
+      from:myUid, to:uid, fromName:myName, type:'contact', status:'pending', createdAt:serverTimestamp()
     });
-    showAlert(t('request_sent'));
-  }catch(e){showAlert(t('error')+e.message);}
+    alert(t('request_sent'));
+  }catch(e){alert(t('error')+e.message);}
 }
 $('add-contact-btn').onclick=()=>$('modal').classList.remove('hidden');
 $('modal-close').onclick=()=>$('modal').classList.add('hidden');
 const chanId=uid=>[uid,myUid].sort().join('_');
 
-/* ========== ✅ НОВЫЙ ПРОФИЛЬ (view / Settings / About) ========== */
+/* ✅ СОЗДАНИЕ ЧАТА И ПРИГЛАШЕНИЯ */
+let currentInviteChatId=null;
+
+$('edit-chat-btn').onclick=()=>{
+  currentInviteChatId=null;
+  $('cc-title').textContent=t('create_chat');
+  $('cc-name').value='';
+  $('cc-name').classList.remove('hidden');
+  $('cc-users-label').textContent=t('add_participants');
+  renderInviteUsers();
+  $('cc-save').textContent=t('save_chat');
+  $('create-chat-modal').classList.remove('hidden');
+};
+
+function openInviteModal(chatId,chatName){
+  currentInviteChatId=chatId;
+  $('cc-title').textContent='Пригласить в «'+chatName+'»';
+  $('cc-name').value='';
+  $('cc-name').classList.add('hidden');
+  $('cc-users-label').textContent='Выберите контакты для приглашения';
+  renderInviteUsers();
+  $('cc-save').textContent='Пригласить';
+  $('create-chat-modal').classList.remove('hidden');
+}
+
+$('cc-save').onclick=async()=>{
+  const selected=[];
+  $('cc-users').querySelectorAll('input[type="checkbox"]:checked').forEach(cb=>selected.push(cb.value));
+  
+  if(currentInviteChatId){
+    if(!selected.length)return alert('Выберите хотя бы одного пользователя');
+    const chatName=currentChatMeta?.name||'Чат';
+    let success=0;
+    for(const uid of selected){
+      const ok=await inviteToChat(currentInviteChatId,chatName,uid);
+      if(ok)success++;
+    }
+    alert(`Приглашения отправлены: ${success}/${selected.length} ✅`);
+    $('create-chat-modal').classList.add('hidden');
+    currentInviteChatId=null;
+  }else{
+    const name=$('cc-name').value.trim();
+    if(!name)return alert(t('enter_name'));
+    const members=[myUid,...selected];
+    try{
+      await addDoc(collection(db,'custom_chats'),{name,owner:myUid,members,createdAt:serverTimestamp()});
+      $('create-chat-modal').classList.add('hidden');
+      alert('Чат создан ✅');
+    }catch(e){alert(t('error')+e.message);}
+  }
+};
+$('cc-close').onclick=()=>{$('create-chat-modal').classList.add('hidden');currentInviteChatId=null;};
+
+/* ========== ПРОФИЛЬ ========== */
 function showProfTab(v){
-  $('prof-view').classList.toggle('hidden',v!=='view');
-  $('prof-settings').classList.toggle('hidden',v!=='settings');
   $('prof-about').classList.toggle('hidden',v!=='about');
+  $('prof-settings').classList.toggle('hidden',v!=='settings');
+  $('prof-view').classList.toggle('hidden',v!=='view');
 }
 $('prof-tab').onchange=e=>showProfTab(e.target.value);
 
@@ -1094,9 +1027,9 @@ function fillAbout(){
 
 function updateTwoFaUI(){
   const s1=$('twoFa-status');
-  if(s1){s1.textContent=twoFaEnabled?t('twoFa_on'):'🔒 '+t('twoFa_off');s1.style.color=twoFaEnabled?'var(--green)':'var(--red)';}
+  if(s1){s1.textContent=twoFaEnabled?t('twoFa_on'):t('twoFa_off');s1.style.color=twoFaEnabled?'var(--green)':'var(--red)';}
   const s2=$('twoFaChat-status');
-  if(s2){s2.textContent=twoFaChatEnabled?t('twoFa_on'):'🔒 '+t('twoFa_off');s2.style.color=twoFaChatEnabled?'var(--green)':'var(--red)';}
+  if(s2){s2.textContent=twoFaChatEnabled?t('twoFa_on'):t('twoFa_off');s2.style.color=twoFaChatEnabled?'var(--green)':'var(--red)';}
 }
 
 $('my-avatar').onclick=()=>{
@@ -1106,51 +1039,50 @@ $('my-avatar').onclick=()=>{
   $('mp-newname').value='';$('mp-curpass').value='';$('mp-newpass').value='';$('mp-delpass').value='';$('mp-2fa-pass').value='';
   $('mp-2fa-pass').classList.add('hidden');$('mp-confirm-2fa').classList.add('hidden');
   updateTwoFaUI();updateRes();fillAbout();
-  $('prof-tab').value='view';showProfTab('view');
+  $('prof-tab').value='about';showProfTab('about');
   $('myprof-modal').classList.remove('hidden');
 };
 $('mp-close').onclick=()=>$('myprof-modal').classList.add('hidden');
 
 $('mp-toggle-2fa').onclick=()=>{pending2fa='email';$('mp-2fa-pass').classList.remove('hidden');$('mp-confirm-2fa').classList.remove('hidden');$('mp-2fa-pass').focus();};
 $('mp-toggle-2fa-chat').onclick=()=>{pending2fa='chat';$('mp-2fa-pass').classList.remove('hidden');$('mp-confirm-2fa').classList.remove('hidden');$('mp-2fa-pass').focus();};
-$('mp-confirm-2fa').onclick=async()=>{const pass=$('mp-2fa-pass').value;if(!pass)return showAlert(t('enter_password'));
+$('mp-confirm-2fa').onclick=async()=>{const pass=$('mp-2fa-pass').value;if(!pass)return alert('Введите пароль');
   try{const cred=EmailAuthProvider.credential(myEmail,pass);await reauthenticateWithCredential(auth.currentUser,cred);
     if(pending2fa==='email'){
       const nv=!twoFaEnabled;await setDoc(doc(db,'profiles',myUid),{twoFactorEnabled:nv},{merge:true});twoFaEnabled=nv;
-      showAlert(nv?t('twoFa_email_on'):t('twoFa_email_off'));
+      alert(nv?t('twoFa_email_on'):t('twoFa_email_off'));
     }else{
       const nv=!twoFaChatEnabled;await setDoc(doc(db,'profiles',myUid),{twoFaChatEnabled:nv},{merge:true});twoFaChatEnabled=nv;
-      showAlert(nv?t('twoFa_chat_on'):t('twoFa_chat_off'));
+      alert(nv?t('twoFa_chat_on'):t('twoFa_chat_off'));
     }
     updateTwoFaUI();
     $('mp-2fa-pass').value='';$('mp-2fa-pass').classList.add('hidden');$('mp-confirm-2fa').classList.add('hidden');
-  }catch(e){showAlert(ruErr(e.code));}};
-$('mp-savename').onclick=async()=>{const n=$('mp-newname').value.trim();if(!n)return showAlert(t('enter_name'));
+  }catch(e){alert('Ошибка: '+e.code);}};
+$('mp-savename').onclick=async()=>{const n=$('mp-newname').value.trim();if(!n)return alert(t('enter_name'));
   await updateProfile(auth.currentUser,{displayName:n});await setDoc(doc(db,'profiles',myUid),{name:n},{merge:true});
-  myName=n;$('my-avatar').textContent=n[0].toUpperCase();$('mp-name').textContent=n;$('mp-avatar').textContent=n[0].toUpperCase();showAlert(t('name_changed'));};
-$('mp-savepass').onclick=async()=>{const cur=$('mp-curpass').value,nw=$('mp-newpass').value;if(!cur||!nw)return showAlert(t('fill_both'));
+  myName=n;$('my-avatar').textContent=n[0].toUpperCase();$('mp-name').textContent=n;$('mp-avatar').textContent=n[0].toUpperCase();alert(t('name_changed'));};
+$('mp-savepass').onclick=async()=>{const cur=$('mp-curpass').value,nw=$('mp-newpass').value;if(!cur||!nw)return alert(t('fill_both'));
   try{const cred=EmailAuthProvider.credential(myEmail,cur);await reauthenticateWithCredential(auth.currentUser,cred);await updatePassword(auth.currentUser,nw);
     changingPass=true;const p=await getDoc(doc(db,'profiles',myUid));await setDoc(doc(db,'profiles',myUid),{sessionVersion:((p.data().sessionVersion||1)+1)},{merge:true});
-    showAlert(t('password_changed'));await fullLogout();}catch(e){showAlert(ruErr(e.code));}};
-$('mp-delete').onclick=async()=>{const pass=$('mp-delpass').value;if(!pass)return showAlert(t('enter_password'));
-  const ok = await confirmAction(t('delete_account_confirm'), true);
+    alert(t('password_changed'));await fullLogout();}catch(e){alert('Ошибка: '+e.code);}};
+$('mp-delete').onclick=async()=>{const pass=$('mp-delpass').value;if(!pass)return alert('Введите пароль');
+  const ok = confirm(t('delete_account_confirm'));
   if(!ok)return;
   try{const cred=EmailAuthProvider.credential(myEmail,pass);await reauthenticateWithCredential(auth.currentUser,cred);deleting=true;
-    await deleteDoc(doc(db,'profiles',myUid));await deleteUser(auth.currentUser);await fullLogout();}catch(e){showAlert(ruErr(e.code));}};
+    await deleteDoc(doc(db,'profiles',myUid));await deleteUser(auth.currentUser);await fullLogout();}catch(e){alert('Ошибка: '+e.code);}};
 
-/* ========== PEER ========== */
 function openPeerProfile(peer){
   $('pp-avatar').textContent=(peer.name||'?')[0].toUpperCase();$('pp-name').textContent=peer.name;$('pp-email').textContent=peer.email||'';
   const blocked=myBlocked.includes(peer.uid);
   $('pp-block').textContent=blocked?t('unblock'):t('block');
   $('pp-write').onclick=()=>{$('peerprof-modal').classList.add('hidden');openChat(chanId(peer.uid),peer.name,peer,null);};
   $('pp-remove').onclick=async()=>{
-    const ok = await confirmAction(t('remove_contact_confirm').replace('{name}',peer.name), true);
+    const ok = confirm(t('remove_contact_confirm').replace('{name}',peer.name));
     if(!ok)return;
     try{
       await setDoc(doc(db,'profiles',myUid),{contacts:arrayRemove(peer.uid)},{merge:true});
       await setDoc(doc(db,'profiles',peer.uid),{contacts:arrayRemove(myUid)},{merge:true});
-    }catch(e){showAlert(t('error')+e.message);}
+    }catch(e){alert(t('error')+e.message);}
     $('peerprof-modal').classList.add('hidden');
   };
   $('pp-block').onclick=async()=>{
@@ -1162,20 +1094,119 @@ function openPeerProfile(peer){
 }
 $('pp-close').onclick=()=>$('peerprof-modal').classList.add('hidden');
 
-/* ========== CHAT ========== */
 $('back-btn').onclick=()=>$('app').classList.remove('chat-open');
 $('general-item').onclick=()=>openChat('general',t('general_chat'),null,null);
 $('send-btn').onclick=sendText;
 $('msg-input').addEventListener('keypress',e=>{if(e.key==='Enter')sendText();});
 
+$('attach-btn').onclick=()=>{ 
+  $('attach-url').value=''; 
+  $('attach-modal').classList.remove('hidden'); 
+};
+$('attach-close').onclick=()=>$('attach-modal').classList.add('hidden');
+
+$('attach-send').onclick=()=>{
+  const url=$('attach-url').value.trim();
+  if(!url){alert('Введите URL');return;}
+  if(channel.startsWith('twofa_')){alert(t('cannot_write_twofa'));return;}
+  if(currentPeer&&isBlockedWith(currentPeer.uid)){alert(t('cannot_write_blocked'));return;}
+  
+  const isImage = /\.(png|jpe?g|gif|webp|svg|bmp|avif)(\?.*)?$/i.test(url) || url.includes('giphy') || url.includes('tenor');
+  if(!isImage && !url.startsWith('http')){
+    if(!confirm('URL не похож на картинку/GIF. Всё равно прикрепить?'))return;
+  }
+  
+  attachedMediaUrl = url;
+  $('preview-img').src = url;
+  $('preview-info').textContent = url.length > 40 ? url.substring(0,40)+'...' : url;
+  $('attach-preview').classList.add('visible');
+  $('attach-modal').classList.add('hidden');
+  $('msg-input').focus();
+};
+
+$('preview-remove').onclick=()=>{
+  attachedMediaUrl = null;
+  $('preview-img').src = '';
+  $('attach-preview').classList.remove('visible');
+};
+
+async function sendText(){
+  const text=$('msg-input').value.trim();
+  
+  if(!text && !attachedMediaUrl) return;
+  
+  if(channel.startsWith('twofa_'))return alert(t('cannot_write_twofa'));
+  if(currentPeer&&isBlockedWith(currentPeer.uid)){alert(t('cannot_write_blocked'));return;}
+  
+  const msgData = {
+    uid: myUid,
+    author: myName || '?',
+    createdAt: serverTimestamp()
+  };
+  
+  if(attachedMediaUrl){
+    msgData.kind = 'image';
+    msgData.url = attachedMediaUrl;
+    if(text) msgData.caption = text;
+  } else {
+    msgData.kind = 'text';
+    msgData.text = text;
+  }
+  
+  try{
+    await addDoc(collection(db,'chats',channel,'messages'), msgData);
+    $('msg-input').value='';
+    attachedMediaUrl = null;
+    $('preview-img').src = '';
+    $('attach-preview').classList.remove('visible');
+  }catch(e){
+    alert(t('error_sending')+e.message);
+  }
+}
+
 $('messages').addEventListener('click',e=>{
   const el=e.target.closest('.msg.me');
   if(!el||!el.dataset.mid)return;
   if(channel.startsWith('twofa_'))return;
-  confirmAction(t('delete_message')).then(ok=>{
-    if(ok) deleteDoc(doc(db,'chats',channel,'messages',el.dataset.mid)).catch(err=>showAlert(err.message));
-  });
+  const ok = confirm(t('delete_message'));
+  if(ok) deleteDoc(doc(db,'chats',channel,'messages',el.dataset.mid)).catch(err=>alert(err.message));
 });
+
+/* ✅ ВЫХОД ИЗ ЧАТА */
+$('chat-leave-btn').onclick=()=>{$('leave-chat-modal').classList.remove('hidden');};
+$('leave-chat-cancel').onclick=()=>{$('leave-chat-modal').classList.add('hidden');};
+$('leave-chat-confirm').onclick=async()=>{
+  const deleteMessages=$('delete-messages-checkbox').checked;
+  $('leave-chat-modal').classList.add('hidden');
+  
+  if(deleteMessages && channel!=='general' && !channel.startsWith('twofa_')){
+    const snap=await getDocs(collection(db,'chats',channel,'messages'));
+    for(const d of snap.docs){
+      const m=d.data();
+      if(m.uid===myUid) await deleteDoc(d.ref);
+    }
+  }
+  
+  if(channel!=='general' && !channel.startsWith('twofa_') && currentChatMeta && currentChatMeta.members){
+    await updateDoc(doc(db,'custom_chats',channel),{members:arrayRemove(myUid)});
+  }
+  
+  openChat('general',t('general_chat'),null,null);
+};
+
+/* ✅ УДАЛЕНИЕ ЧАТА */
+$('chat-delete-btn').onclick=async()=>{
+  if(!currentChatMeta || currentChatMeta.owner!==myUid || currentChatMeta.twofa) return;
+  const ok = confirm(t('delete_chat_confirm').replace('{name}',currentChatMeta.name));
+  if(!ok) return;
+  try{
+    const snap=await getDocs(collection(db,'chats',currentChatMeta.id,'messages'));
+    for(const d of snap.docs) await deleteDoc(d.ref);
+    await deleteDoc(doc(db,'custom_chats',currentChatMeta.id));
+    openChat('general',t('general_chat'),null,null);
+    alert('Чат удалён ✅');
+  }catch(e){alert(t('error')+e.message);}
+};
 
 function openChat(ch,title,peer,meta){
   channel=ch;currentPeer=peer;currentChatMeta=meta;
@@ -1184,12 +1215,18 @@ function openChat(ch,title,peer,meta){
   $('call-video-btn').classList.toggle('hidden',!peer);
   $('peer-avatar').classList.toggle('hidden',!peer);
   $('chat-delete-btn').classList.toggle('hidden',!(meta&&meta.owner===myUid&&!meta.twofa));
+  $('chat-leave-btn').classList.toggle('hidden',!meta||!meta.members||meta.owner===myUid);
   if(peer){$('peer-avatar').textContent=(peer.name||'?')[0].toUpperCase();$('peer-avatar').onclick=()=>openPeerProfile(peer);}
-  const canWrite=meta?.twofa?false:(!meta||meta.mode==='all'||meta.owner===myUid);
+  const canWrite=!meta?.twofa;
   $('msg-bar').classList.toggle('disabled',!canWrite);
   $('bar-hint').classList.toggle('hidden',canWrite);
-  $('bar-hint').textContent=meta?.twofa?t('twofa_hint'):t('only_author_hint');
-  $('msg-input').placeholder=canWrite?t('message_placeholder'):t('only_reading');
+  $('bar-hint').textContent=meta?.twofa?t('twofa_hint'):'';
+  $('msg-input').placeholder=canWrite?t('message_placeholder'):'Только чтение';
+  
+  attachedMediaUrl = null;
+  $('preview-img').src = '';
+  $('attach-preview').classList.remove('visible');
+  
   if(unsubMsg)unsubMsg();
   unsubMsg=onSnapshot(collection(db,'chats',ch,'messages'),{serverTimestamps:'estimate'},snap=>{
     let arr=[];snap.forEach(d=>arr.push({id:d.id,...d.data()}));
@@ -1200,6 +1237,13 @@ function openChat(ch,title,peer,meta){
     }
     $('messages').innerHTML=arr.map(m=>{
       if(m.kind==='code')return `<div class="msg code">🔐 ${esc(m.text)}<div class="meta">${t('twofa_desc')}</div></div>`;
+      if(m.kind==='image'){
+        const caption = m.caption ? `<div style="margin-top:6px;font-size:14px">${esc(m.caption)}</div>` : '';
+        return `<div class="msg ${m.uid===myUid?'me':'other'}" ${m.uid===myUid?`data-mid="${m.id}" title="${t('delete_message')}"`:''}>
+          <img class="msg-img" src="${esc(m.url)}" alt="" onerror="this.style.display='none'">
+          ${caption}
+          <div class="meta">${m.createdAt?.toDate?.()?.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})||'…'}</div></div>`;
+      }
       return `<div class="msg ${m.uid===myUid?'me':'other'}" ${m.uid===myUid?`data-mid="${m.id}" title="${t('delete_message')}"`:''}>
         ${m.uid===myUid?'':'<b style="font-size:12px;color:var(--gr)">'+esc(m.author||'?')+'</b><br>'}
         ${esc(m.text||'')}<div class="meta">${m.createdAt?.toDate?.()?.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})||'…'}</div></div>`;
@@ -1209,18 +1253,6 @@ function openChat(ch,title,peer,meta){
   $('app').classList.add('chat-open');renderContacts();
 }
 
-async function sendText(){
-  const t2=$('msg-input').value.trim();if(!t2||!myUid)return;
-  if(channel.startsWith('twofa_'))return showAlert(t('cannot_write_twofa'));
-  if(currentChatMeta&&currentChatMeta.mode==='author'&&currentChatMeta.owner!==myUid){showAlert(t('only_author_write'));return;}
-  if(currentPeer&&isBlockedWith(currentPeer.uid)){showAlert(t('cannot_write_blocked'));return;}
-  $('msg-input').value='';
-  try{
-    await addDoc(collection(db,'chats',channel,'messages'),{kind:'text',text:t2,uid:myUid,author:myName||'?',createdAt:serverTimestamp()});
-  }catch(e){showAlert(t('error_sending')+e.message);$('msg-input').value=t2;}
-}
-
-/* ========== CALLS ========== */
 const RTC={iceServers:[
   {urls:'stun:stun.l.google.com:19302'},
   {urls:'turn:openrelay.metered.ca:80',username:'openrelayproject',credential:'openrelayproject'},
@@ -1302,7 +1334,7 @@ $('flip-camera-btn').onclick=async()=>{
       const audioTracks=localStream?localStream.getAudioTracks():[];
       localStream=new MediaStream([nt,...audioTracks]);
       $('local-video').srcObject=localStream;
-      showAlert(t('single_camera'));
+      alert(t('single_camera'));
     }catch(e){
       const bs=getBlackVideoStream();const nt=bs.getVideoTracks()[0];
       const sender=pc.getSenders().find(s=>s.track&&s.track.kind==='video');
@@ -1311,7 +1343,7 @@ $('flip-camera-btn').onclick=async()=>{
       localStream=new MediaStream([nt,...audioTracks]);
       $('local-video').srcObject=localStream;
       currentSource='black';updateCallButtons();
-      showAlert(t('camera_switch_fail'));
+      alert(t('camera_switch_fail'));
     }
   }
 };
@@ -1374,7 +1406,7 @@ function watchIce(id){iceUnsub=onSnapshot(collection(db,'calls',id,'ice'),snap=>
 
 async function startCall(type){
   if(!currentPeer)return;
-  if(isBlockedWith(currentPeer.uid))return showAlert(t('cannot_call_blocked'));
+  if(isBlockedWith(currentPeer.uid))return alert(t('cannot_call_blocked'));
   const {stream,source}=await acquireMedia(type,type==='video');
   localStream=stream;currentSource=type==='video'?source:'none';
   if(currentSource==='screen')attachScreenEnd();
@@ -1437,7 +1469,7 @@ function endCallLocal(){
   $('call-overlay').classList.add('hidden');
 }
 
-// ✅ Применить тему и язык сразу при загрузке
+// ✅ Применяем тему и язык при загрузке
 applyTheme();
 applyTranslations();
 </script>
