@@ -22,6 +22,39 @@ button{cursor:pointer;border:none}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.7}}
 .loading-text{color:var(--gr);font-size:16px;letter-spacing:2px}
 
+#reg-wizard{position:fixed;inset:0;background:var(--bg);z-index:9500;display:flex;flex-direction:column}
+.wz-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
+.wz-step{display:flex;flex-direction:column;align-items:center;width:100%;max-width:560px}
+.wz-step.leaving{animation:wzOut .35s ease forwards}
+@keyframes wzOut{to{opacity:0;transform:translateX(-60px)}}
+.wz-gif{width:280px;max-width:60vw;border-radius:12px;margin-bottom:28px;pointer-events:none;user-select:none}
+.wz-step h2{font-size:26px;font-weight:700;margin-bottom:18px;text-align:center}
+.wz-lang-list{display:flex;flex-direction:column;gap:8px;width:100%;max-width:340px}
+.wz-lang-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:var(--sf);cursor:pointer;border:2px solid transparent}
+.wz-lang-item.sel{border-color:var(--ac)}
+.wz-lang-item input{width:auto;margin:0;accent-color:var(--ac)}
+.wz-err{color:var(--red);font-size:13px;min-height:18px;text-align:center;margin-top:4px}
+.wz-keys{display:flex;flex-direction:column;gap:10px;margin:10px 0}
+.key-row{background:var(--sf2);color:var(--tx);font-family:monospace;font-size:20px;letter-spacing:3px;padding:12px 22px;border-radius:12px;text-align:center;font-weight:700}
+.wz-note{color:var(--gr);font-size:13px;text-align:center;max-width:400px}
+.wz-footer{display:flex;justify-content:flex-end;gap:12px;padding:18px 28px calc(env(safe-area-inset-bottom) + 18px);border-top:1px solid var(--border)}
+.wz-btn{padding:12px 28px;border-radius:12px;background:var(--ac);color:#fff;font-size:15px;font-weight:600}
+.wz-btn.ghost{background:var(--sf2);color:var(--tx)}
+@media(max-width:768px){
+  .wz-gif{display:none}
+  .wz-step h2{font-size:20px;margin-bottom:14px}
+  .wz-body{justify-content:flex-start;padding-top:48px}
+  .wz-step{max-width:420px}
+  .wz-footer{flex-wrap:wrap;gap:10px;padding:14px 16px calc(env(safe-area-inset-bottom) + 14px)}
+  .wz-btn{flex:1 1 45%;padding:13px 8px;font-size:14px}
+  #wz-next,#wz-finish{order:-1;flex:1 1 100%}
+}
+
+#reg-progress{position:fixed;inset:0;background:var(--bg);z-index:9600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+.spinner{width:44px;height:44px;border:4px solid var(--sf2);border-top-color:var(--ac);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#reg-progress-text{color:var(--gr);font-size:16px}
+
 #confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
 #confirm-box{background:var(--sf);border-radius:20px;padding:24px;width:100%;max-width:320px;text-align:center}
 #confirm-box .confirm-icon{font-size:48px;margin-bottom:12px}
@@ -85,17 +118,14 @@ body.light header{background:rgba(255,255,255,.9)}
 .bar{display:flex;gap:8px;padding:10px 12px calc(env(safe-area-inset-bottom) + 10px);background:var(--sf);align-items:center}
 .bar input{margin:0;flex:1;border-radius:22px;padding:12px 16px;font-size:15px}
 #send-btn{width:42px;height:42px;border-radius:50%;background:var(--ac);color:#fff;font-size:17px;flex-shrink:0}
-/* ✅ ИСПРАВЛЕНИЕ: кнопка 📎 теперь всегда видна */
 #attach-btn{width:42px;height:42px;border-radius:50%;background:var(--sf2);color:var(--tx);font-size:20px;flex-shrink:0;display:grid;place-items:center}
 .bar.disabled{opacity:.5;pointer-events:none}
 .bar-hint{text-align:center;font-size:12px;color:var(--gr);padding:6px;background:var(--sf)}
-
 #attach-preview{display:none;padding:8px 12px;background:var(--sf);border-top:1px solid var(--border);align-items:center;gap:10px}
 #attach-preview.visible{display:flex}
 #attach-preview img{width:60px;height:60px;border-radius:10px;object-fit:cover}
 #attach-preview .preview-info{flex:1;min-width:0;font-size:13px;color:var(--gr);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #attach-preview .preview-remove{background:var(--red);color:#fff;width:32px;height:32px;border-radius:50%;font-size:16px;display:grid;place-items:center}
-
 .overlay{position:fixed;inset:0;background:#000;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;overflow:hidden}
 #remote-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;background:#000}
 #remote-video.audio-mode{width:2px;height:2px;opacity:0}
@@ -113,16 +143,13 @@ body.light header{background:rgba(255,255,255,.9)}
 .ibtns{display:flex;gap:20px}
 .ibtns button{width:60px;height:60px;border-radius:50%;font-size:24px;color:#fff}
 #accept-btn{background:var(--green)} #decline-btn{background:var(--red)}
-#modal,#peerprof-modal,#create-chat-modal,#attach-modal,#leave-chat-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:90;display:flex;align-items:center;justify-content:center}
+#modal,#peerprof-modal,#create-chat-modal,#attach-modal,#leave-chat-modal,#keys-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:90;display:flex;align-items:center;justify-content:center}
 .modal-box{background:var(--sf);border-radius:20px;padding:20px;width:90%;max-width:340px;max-height:80%;overflow-y:auto}
 .modal-box h3{margin-bottom:14px}
 .urow{display:flex;align-items:center;gap:10px;padding:10px 0}
 .urow b{flex:1;font-size:15px}
 .urow button{background:var(--ac);color:#fff;border-radius:12px;padding:8px 12px;font-size:13px}
 .msec{padding:10px 0 4px;font-size:11px;color:var(--gr);text-transform:uppercase;letter-spacing:1px}
-.radio-group{display:flex;gap:12px;margin:8px 0 12px}
-.radio-group label{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--gr);cursor:pointer}
-.radio-group input[type="radio"]{width:auto;margin:0;accent-color:var(--ac)}
 .danger-btn{background:var(--red)!important}
 .lang-select,.theme-select{width:100%;padding:12px;border-radius:12px;border:none;background:var(--sf2);color:var(--tx);font-size:15px;margin-bottom:10px}
 .checkbox-label{display:flex;align-items:center;gap:10px;margin:10px 0;cursor:pointer;font-size:14px}
@@ -146,7 +173,6 @@ body.light header{background:rgba(255,255,255,.9)}
 .green-btn{width:100%;padding:12px;border-radius:12px;background:var(--green);color:#fff;font-size:15px;font-weight:600;margin-top:4px}
 .red-btn{display:block;margin-left:auto;background:var(--red);color:#fff;padding:12px 22px;border-radius:10px;font-weight:600}
 .about-line{font-size:16px;margin-bottom:14px;line-height:1.4}
-.temp-disabled{color:var(--red);font-size:12px;font-style:italic;margin-top:4px;font-weight:600}
 @media(min-width:768px){
   .prof-box{max-width:680px;height:auto;max-height:85%;border-radius:20px}
   .prof-row{flex-direction:row;gap:20px}
@@ -163,12 +189,54 @@ body.light header{background:rgba(255,255,255,.9)}
 
 <div id="loading-screen" class="hidden">
   <img src="Logo.png" class="loading-logo" alt="SKAM">
-  <div class="loading-text" id="i18n-loading">Загрузка...</div>
+  <div class="loading-text" data-i18n="loading">Загрузка...</div>
+</div>
+
+<div id="reg-wizard" class="hidden">
+  <div class="wz-body">
+    <div class="wz-step" id="wz-step-1">
+      <img class="wz-gif" src="Translate.gif" data-alts="translate.gif" alt="" draggable="false">
+      <h2 data-i18n="wz_title_lang">Выбор языка перевода</h2>
+      <div class="wz-lang-list" id="wz-lang-list"></div>
+    </div>
+    <div class="wz-step hidden" id="wz-step-2">
+      <img class="wz-gif" src="Gmail.gif" data-alts="gmail.gif" alt="" draggable="false">
+      <h2 data-i18n="wz_title_email">Электронная почта Gmail</h2>
+      <input id="wz-email" type="email" placeholder="yourname@gmail.com" autocomplete="off">
+      <div class="wz-err" id="wz-email-err"></div>
+    </div>
+    <div class="wz-step hidden" id="wz-step-3">
+      <img class="wz-gif" src="Name%20and%20passworld.gif" data-alts="Name and passworld.gif|NameAndPassword.gif|NameAndPassworld.gif|name and passworld.gif" alt="" draggable="false">
+      <h2 data-i18n="wz_title_name">Имя и пароль</h2>
+      <input id="wz-name" placeholder="Имя аккаунта" autocomplete="off" data-i18n-ph="login_name">
+      <input id="wz-pass" type="password" placeholder="Пароль (мин. 6 символов)" data-i18n-ph="login_password">
+      <div class="wz-err" id="wz-name-err"></div>
+    </div>
+    <div class="wz-step hidden" id="wz-step-4">
+      <img class="wz-gif" src="Additionally.gif" data-alts="additionally.gif|Additional.gif" alt="" draggable="false">
+      <h2 data-i18n="wz_title_keys">Ключи восстановления</h2>
+      <div class="wz-keys" id="wz-keys"></div>
+      <p class="wz-note" data-i18n="wz_note_keys">Сохраните эти ключи! С их помощью вы сможете доказать, что аккаунт ваш. Больше они нигде не будут показаны.</p>
+      <div class="wz-err" id="wz-email-show" style="color:var(--gr)"></div>
+    </div>
+  </div>
+  <div class="wz-footer">
+    <button class="wz-btn ghost hidden" id="wz-back" data-i18n="wz_back">Назад</button>
+    <button class="wz-btn ghost" id="wz-cancel" data-i18n="wz_cancel">Отмена</button>
+    <button class="wz-btn ghost hidden" id="wz-skip" data-i18n="wz_skip">Пропустить</button>
+    <button class="wz-btn" id="wz-next" data-i18n="wz_next">Далее</button>
+    <button class="wz-btn hidden" id="wz-finish" data-i18n="wz_finish">Закончить</button>
+  </div>
+</div>
+
+<div id="reg-progress" class="hidden">
+  <div class="spinner"></div>
+  <div id="reg-progress-text">Мы подготавливаемся</div>
 </div>
 
 <div id="confirm-overlay" class="hidden">
   <div id="confirm-box">
-    <div class="confirm-icon">️</div>
+    <div class="confirm-icon">⚠️</div>
     <div class="confirm-msg" id="confirm-msg"></div>
     <div class="confirm-btns">
       <button id="confirm-cancel" data-i18n="cancel">Отмена</button>
@@ -189,18 +257,17 @@ body.light header{background:rgba(255,255,255,.9)}
   <div class="logo">SKAM</div>
   <div id="auth-title" data-i18n="login_title">Вход в аккаунт</div>
   <div id="auth-box">
-    <input id="name" type="text" placeholder="Имя (для профиля)" class="hidden" data-i18n-ph="login_name">
     <input id="email" type="email" placeholder="Email" data-i18n-ph="login_email">
     <input id="pass" type="password" placeholder="Пароль (мин. 6 символов)" data-i18n-ph="login_password">
     <button class="ac-btn" id="auth-btn" data-i18n="login_button">Войти</button>
     <div id="auth-error"></div>
-    <div class="link" id="auth-toggle" data-i18n="register_toggle">Нет аккаунта? Зарегистрироваться</div>
+    <div class="link" id="auth-open-reg" data-i18n="register_toggle">Нет аккаунта? Зарегистрироваться</div>
   </div>
 </div>
 
 <div id="otp-screen" class="hidden">
   <div class="logo">SKAM</div>
-  <div id="otp-title-text" style="color:var(--gr);font-size:14px;margin-bottom:24px" data-i18n="otp_title">Двухфакторная защита</div>
+  <div style="color:var(--gr);font-size:14px;margin-bottom:24px" data-i18n="otp_title">Двухфакторная защита</div>
   <div id="auth-box">
     <div id="otp-hint" style="color:var(--gr);font-size:13px;text-align:center;margin-bottom:12px" data-i18n="otp_hint">Мы отправили код</div>
     <input id="otp-input" type="text" inputmode="numeric" maxlength="6" placeholder="Код" data-i18n-ph="otp_input">
@@ -223,12 +290,12 @@ body.light header{background:rgba(255,255,255,.9)}
       </div>
     </div>
     <div class="search-box">
-      <input id="chat-search" type="text" placeholder=" Поиск чатов..." data-i18n-ph="search_placeholder">
+      <input id="chat-search" type="text" placeholder="🔍 Поиск чатов..." data-i18n-ph="search_placeholder">
     </div>
     <div class="chat-list">
       <div class="sec hidden" id="req-sec" data-i18n="contact_requests_sec">📩 Заявки в контакты</div>
       <div id="req-list"></div>
-      <div class="sec hidden" id="invite-sec">📨 Приглашения в чаты</div>
+      <div class="sec hidden" id="invite-sec" data-i18n="invite_sec">📨 Приглашения в чаты</div>
       <div id="invite-list"></div>
       <div class="chat-item" id="general-item">
         <div class="av" style="background:var(--green)">#</div>
@@ -247,9 +314,9 @@ body.light header{background:rgba(255,255,255,.9)}
       <button id="back-btn">‹</button>
       <div class="av hidden" id="peer-avatar" style="width:32px;height:32px;font-size:13px" title="Профиль"></div>
       <div id="chat-title" data-i18n="general_chat">Общий чат</div>
-      <button class="hbtn hidden" id="chat-leave-btn" title="Выйти из чата"></button>
+      <button class="hbtn hidden" id="chat-leave-btn" title="Выйти из чата">🚪</button>
       <button class="hbtn hidden" id="chat-delete-btn" title="Удалить чат">🗑️</button>
-      <button class="hbtn hidden" id="call-audio-btn" title="Звонок"></button>
+      <button class="hbtn hidden" id="call-audio-btn" title="Звонок">📞</button>
       <button class="hbtn hidden" id="call-video-btn" title="Видеозвонок">📹</button>
     </header>
     <div id="messages"></div>
@@ -260,7 +327,7 @@ body.light header{background:rgba(255,255,255,.9)}
       <button class="preview-remove" id="preview-remove" title="Убрать">✕</button>
     </div>
     <div class="bar" id="msg-bar">
-      <button id="attach-btn" title="">📎</button>
+      <button id="attach-btn" title="📎"></button>
       <input id="msg-input" type="text" placeholder="Сообщение..." autocomplete="off" data-i18n-ph="message_placeholder">
       <button id="send-btn">➤</button>
     </div>
@@ -295,7 +362,7 @@ body.light header{background:rgba(255,255,255,.9)}
             <input id="mp-curpass" type="password" placeholder="Текущий пароль" data-i18n-ph="current_password">
             <input id="mp-newpass" type="password" placeholder="Новый пароль (мин. 6)" data-i18n-ph="new_password">
             <button class="green-btn" id="mp-savepass" data-i18n="change_btn">Изменить</button>
-            <div style="color:var(--gr);font-size:12px;margin-top:6px" data-i18n="warning_logout">️ Все устройства будут разлогинены</div>
+            <div style="color:var(--gr);font-size:12px;margin-top:6px" data-i18n="warning_logout">⚠️ Все устройства будут разлогинены</div>
           </div>
           <div class="prof-col">
             <input id="mp-newname" placeholder="Новое имя" data-i18n-ph="new_name">
@@ -306,18 +373,19 @@ body.light header{background:rgba(255,255,255,.9)}
           <div class="prof-col twofa-col">
             <b data-i18n="twoFa_email">Код на почту (Email)</b>
             <div class="twofa-status" id="twoFa-status"></div>
-            <button class="green-btn" id="mp-toggle-2fa" data-i18n="toggle_btn">Включить/Выключить</button>
-            <div class="temp-disabled">⚠️ временно отключён</div>
+            <button class="green-btn" id="mp-toggle-2fa">Включить/Выключить</button>
           </div>
           <div class="prof-col twofa-col">
             <b data-i18n="twoFa_chat">Код в чат «SKAM 2FA»</b>
             <div class="twofa-status" id="twoFaChat-status"></div>
-            <button class="green-btn" id="mp-toggle-2fa-chat" data-i18n="toggle_btn">Включить/Выключить</button>
-            <div class="temp-disabled">⚠️ временно отключён</div>
+            <button class="green-btn" id="mp-toggle-2fa-chat">Включить/Выключить</button>
           </div>
         </div>
         <input id="mp-2fa-pass" type="password" placeholder="Пароль для подтверждения" class="hidden" data-i18n-ph="confirm_password">
         <button class="green-btn hidden" id="mp-confirm-2fa" data-i18n="confirm">Подтвердить</button>
+        <div id="recovery-connect-wrap" class="hidden" style="margin-top:14px">
+          <button class="green-btn" id="mp-connect-keys" data-i18n="connect_keys">🔑 Подключить ключ восстановления</button>
+        </div>
       </div>
       <div id="prof-view" class="hidden">
         <div class="msec" data-i18n="interface_resolution">разрешение интерфейса</div>
@@ -327,8 +395,8 @@ body.light header{background:rgba(255,255,255,.9)}
           <div class="prof-col">
             <div class="msec" data-i18n="language_sec">Язык / Language</div>
             <select class="lang-select" id="lang-select">
-              <option value="ru">🇺 Русский</option>
-              <option value="en">🇬 English</option>
+              <option value="ru">🇷🇺 Русский</option>
+              <option value="en">🇬🇧 English</option>
               <option value="es">🇪🇸 Español</option>
               <option value="fr">🇫🇷 Français</option>
               <option value="de">🇩🇪 Deutsch</option>
@@ -346,6 +414,15 @@ body.light header{background:rgba(255,255,255,.9)}
       </div>
       <button class="ac-btn gray-btn" id="mp-close" style="margin-top:16px" data-i18n="close">Закрыть</button>
     </div>
+  </div>
+</div>
+
+<div id="keys-modal" class="hidden">
+  <div class="modal-box" style="text-align:center">
+    <h3 data-i18n="wz_title_keys">🔑 Ключи восстановления</h3>
+    <div class="wz-keys" id="keys-list"></div>
+    <p class="wz-note" data-i18n="wz_note_keys">Сохраните ключи! Больше они нигде не будут показаны.</p>
+    <button class="ac-btn" id="keys-close" style="margin-top:14px" data-i18n="keys_saved">Я сохранил</button>
   </div>
 </div>
 
@@ -374,15 +451,15 @@ body.light header{background:rgba(255,255,255,.9)}
 
 <div id="leave-chat-modal" class="hidden">
   <div class="modal-box">
-    <h3>Выйти из чата</h3>
-    <p style="color:var(--gr);font-size:14px;margin-bottom:16px">Вы действительно хотите выйти из чата?</p>
+    <h3 data-i18n="leave_chat">Выйти из чата</h3>
+    <p style="color:var(--gr);font-size:14px;margin-bottom:16px" data-i18n="leave_chat_q">Вы действительно хотите выйти из чата?</p>
     <label class="checkbox-label">
       <input type="checkbox" id="delete-messages-checkbox">
-      <span>Удалить все мои сообщения</span>
+      <span data-i18n="delete_my_messages">Удалить все мои сообщения</span>
     </label>
     <div style="display:flex;gap:10px;margin-top:16px">
-      <button class="ac-btn" id="leave-chat-confirm" style="flex:1">Выйти</button>
-      <button class="ac-btn gray-btn" id="leave-chat-cancel" style="flex:1">Отмена</button>
+      <button class="ac-btn" id="leave-chat-confirm" style="flex:1" data-i18n="leave_btn">Выйти</button>
+      <button class="ac-btn gray-btn" id="leave-chat-cancel" style="flex:1" data-i18n="cancel">Отмена</button>
     </div>
   </div>
 </div>
@@ -390,10 +467,10 @@ body.light header{background:rgba(255,255,255,.9)}
 <div id="attach-modal" class="hidden">
   <div class="modal-box">
     <h3 data-i18n="attach_title">Прикрепить медиа</h3>
-    <p style="color:var(--gr);font-size:13px;margin-bottom:12px">Вставьте URL картинки или GIF. Файл будет прикреплён к сообщению и отправится вместе с текстом.</p>
+    <p style="color:var(--gr);font-size:13px;margin-bottom:12px" data-i18n="attach_hint">Вставьте URL картинки или GIF. Файл прикрепится к сообщению и отправится вместе с текстом.</p>
     <input id="attach-url" type="text" placeholder="https://example.com/image.png" data-i18n-ph="attach_placeholder">
     <button class="ac-btn" id="attach-send" data-i18n="upload_btn">📎 Прикрепить</button>
-    <button class="ac-btn gray-btn" id="attach-close" style="margin-top:8px" data-i18n="close">Отмена</button>
+    <button class="ac-btn gray-btn" id="attach-close" style="margin-top:8px" data-i18n="cancel">Отмена</button>
   </div>
 </div>
 
@@ -406,7 +483,7 @@ body.light header{background:rgba(255,255,255,.9)}
   <div class="call-controls">
     <button class="call-btn" id="flip-camera-btn" title="Фронтальная / задняя камера">🔁</button>
     <button class="call-btn" id="switch-source-btn" title="Экран / камера / чёрный">🔄</button>
-    <button class="call-btn" id="end-call-btn" title="Завершить"></button>
+    <button class="call-btn" id="end-call-btn" title="Завершить">✕</button>
   </div>
 </div>
 
@@ -431,7 +508,7 @@ body.light header{background:rgba(255,255,255,.9)}
 </div>
 
 <script type="module">
-console.log('%cSKAM • сборка 23 (фикс языка и кнопки 📎)','color:#0a84ff;font-size:16px;font-weight:bold');
+console.log('%cSKAM • сборка 27 (фикс белого экрана + переводы)','color:#0a84ff;font-size:16px;font-weight:bold');
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { 
@@ -446,6 +523,8 @@ import {
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const wait = ms => new Promise(r=>setTimeout(r,ms));
+const isSmall = () => window.innerWidth <= 768;
 
 const firebaseConfig = {
   apiKey: "AIzaSyC_Ec8nc8DRCOCaZ_STJ-TTb3vjloaCQX4",
@@ -456,23 +535,10 @@ const firebaseConfig = {
   appId: "1:90639296284:web:ba8d911d93f1029d15fcd9"
 };
 
+const EJ_SERVICE="service_44z9vci", EJ_TEMPLATE="template_8212tvh", EJ_KEY="IteXYboDD-SgUcCRL";
+
 let currentLang = localStorage.getItem('skam_lang') || 'ru';
 let currentTheme = localStorage.getItem('skam_theme') || 'dark';
-
-const fb = initializeApp(firebaseConfig);
-const auth = getAuth(fb);
-const db = getFirestore(fb);
-setPersistence(auth, browserLocalPersistence).catch(e => console.error("Persistence error:", e));
-
-const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-let reg=false, myUid=null, myName='', myEmail='', myContacts=[], myBlocked=[], channel='general', currentPeer=null, currentChatMeta=null;
-let appStarted=false, changingPass=false, deleting=false, freshLogin=false;
-let twoFaEnabled=false, twoFaChatEnabled=false, verified=false, otpCode='', otpExp=0, otpMethod='email', pending2fa='email';
-let unsubMsg=null, unsubUsers=null, unsubMine=null, unsubCalls=null, unsubChats=null, unsubReqsIn=null, unsubReqsOut=null, unsubInvites=null;
-let allUsers={}, customChats=[], incomingReqs=[], incomingInvites=[], pc=null, localStream=null, currentCall=null, iceUnsub=null, callDocUnsub=null, pendingIncoming=null, addedIce=new Set();
-let currentSource='black', currentFacing='user';
-let attachedMediaUrl = null;
 
 /* ========== ПЕРЕВОДЫ ========== */
 const LANGS = {
@@ -483,49 +549,51 @@ const LANGS = {
     otp_resend:'Отправить код ещё раз',otp_change_account:'🔄 Поменять аккаунт',
     general_chat:'Общий чат',general_chat_desc:'все пользователи',twofa_desc:'коды для входа',
     contacts_sec:'Контакты и чаты',search_placeholder:'🔍 Поиск чатов...',
-    contact_requests_sec:'📩 Заявки в контакты',
+    contact_requests_sec:'📩 Заявки в контакты',invite_sec:'📨 Приглашения в чаты',
     logout_btn:'Выйти',
     language_sec:'Язык / Language',theme_sec:'Тема / Theme',
-    theme_dark:'🌙 Тёмная',theme_light:'️ Светлая',close:'Закрыть',
+    theme_dark:'🌙 Тёмная',theme_light:'☀️ Светлая',close:'Закрыть',
     twoFa_email:'Код на почту (Email)',twoFa_chat:'Код в чат «SKAM 2FA»',
-    twoFa_on:' Включено',twoFa_off:' Выключено',toggle_btn:'Включить/Выключить',
+    twoFa_on:'🔒 Включено',twoFa_off:'🔒 Выключено',toggle_btn:'Включить/Выключить',
     confirm_password:'Пароль для подтверждения',confirm:'Подтвердить',cancel:'Отмена',ok:'OK',
     warning_logout:'⚠️ Все устройства будут разлогинены',
     delete_account:'удалить аккаунт',
     write:'💬 Написать',block:'🚫 Заблокировать',unblock:'🔓 Разблокировать',
     remove_contact:'❌ Удалить контакт',
-    create_chat:'Создать чат',chat_name:'Название чата',permissions:'Права доступа',
-    all_write:'Все пишут',author_write:'Только автор пишет',add_participants:'Добавить участников',
+    create_chat:'Создать чат',chat_name:'Название чата',add_participants:'Добавить участников',
     save_chat:'Сохранить чат',add_contact:'Добавить контакт',
-    message_placeholder:'Сообщение...',
-    twofa_hint:'🔐 Только чтение — коды удаляются через 5 минут',
-    only_author_hint:'Только автор может писать в этот чат',
+    message_placeholder:'Сообщение...',twofa_hint:'🔐 Только чтение — коды удаляются через 5 минут',
     delete_message:'Удалить это сообщение?',
     account_created:'Аккаунт создан:',current_theme:'тема:',current_lang:'язык:',
     interface_resolution:'разрешение интерфейса',change_btn:'Изменить',
     attach_title:'Прикрепить медиа',attach_placeholder:'URL картинки или GIF',upload_btn:'📎 Прикрепить',
+    attach_hint:'Вставьте URL картинки или GIF. Файл прикрепится к сообщению и отправится вместе с текстом.',
     enter_name:'Введи имя',fill_both:'Заполни оба поля',
     name_changed:'Имя изменено ✅',password_changed:'Пароль изменён.',
-    twoFa_email_on:'2FA по почте включена ✅',twoFa_email_off:'2FA по почте выключена ✅',
-    twoFa_chat_on:'2FA через чат включена ✅',twoFa_chat_off:'2FA через чат выключена ✅',
-    wrong_code:'Неверный или просроченный код',account_deleted:'Аккаунт удалён.',
-    password_changed_logout:'Пароль изменён.',no_users:'Нет пользователей',
+    wrong_code:'Неверный или просроченный код',no_users:'Нет пользователей',
     already_contact:'Уже в контактах',user_blocked:'Пользователь заблокирован',
     request_sent:'Заявка в контакты отправлена ✅',
-    calling:'Вызов…',conversation:'Разговор',
+    wants_contact:'хочет добавить тебя в контакты',
+    accept:'Принять',decline:'Отклонить',block_delete:'Заблокировать и удалить',
+    connect_keys:'🔑 Подключить ключ восстановления',keys_saved:'Я сохранил',
+    leave_chat:'Выйти из чата',leave_chat_q:'Вы действительно хотите выйти из чата?',
+    delete_my_messages:'Удалить все мои сообщения',leave_btn:'Выйти',
+    wz_next:'Далее',wz_back:'Назад',wz_skip:'Пропустить',wz_cancel:'Отмена',wz_finish:'Закончить',
+    wz_title_lang:'Выбор языка перевода',wz_title_email:'Электронная почта Gmail',
+    wz_title_name:'Имя и пароль',wz_title_keys:'Ключи восстановления',
+    wz_note_keys:'Сохраните эти ключи! С их помощью вы сможете доказать, что аккаунт ваш. Больше они нигде не будут показаны.',
+    progress_1:'Мы подготавливаемся',progress_2:'Почти готово (создание аккаунта...)',progress_3:'Подготовка главного экрана',
+    screen_share:'Демонстрация',screen:'экрана',
     video_call:'📹 Видеозвонок',audio_call:'📞 Аудиозвонок',
     cannot_call_blocked:'Нельзя позвонить: пользователь заблокирован',
     cannot_write_blocked:'Нельзя писать: пользователь заблокирован',
-    only_author_write:'Только автор может писать в этот чат',
     cannot_write_twofa:'В этот чат нельзя писать',
     error_sending:'Ошибка отправки: ',error:'Ошибка: ',
-    accept:'Принять',decline:'Отклонить',block_delete:'Заблокировать и удалить',
-    wants_contact:'хочет добавить тебя в контакты',
-    camera_switch_fail:'Не удалось переключить камеру',single_camera:'На устройстве доступна только одна камера',
-    no_permission:'Нет прав (обнови правила Firestore!)',
+    calling:'Вызов…',conversation:'Разговор',
     delete_account_confirm:'Удалить аккаунт?',remove_contact_confirm:'Удалить контакт {name}?',
     delete_chat_confirm:'Удалить чат «{name}» и все сообщения?',
-    screen_share:'Демонстрация',screen:'экрана'
+    single_camera:'На устройстве доступна только одна камера',camera_switch_fail:'Не удалось переключить камеру',
+    no_permission:'Нет прав (обнови правила Firestore!)'
   },
   en: {
     loading:'Loading...',login_title:'Sign in',login_email:'Email',login_password:'Password (min. 6 chars)',
@@ -534,7 +602,7 @@ const LANGS = {
     otp_resend:'Resend code',otp_change_account:'🔄 Change account',
     general_chat:'General chat',general_chat_desc:'all users',twofa_desc:'login codes',
     contacts_sec:'Contacts and chats',search_placeholder:'🔍 Search chats...',
-    contact_requests_sec:'📩 Contact requests',
+    contact_requests_sec:'📩 Contact requests',invite_sec:'📨 Chat invitations',
     logout_btn:'Log out',
     language_sec:'Language',theme_sec:'Theme',
     theme_dark:'🌙 Dark',theme_light:'☀️ Light',close:'Close',
@@ -545,53 +613,261 @@ const LANGS = {
     delete_account:'Delete account',
     write:'💬 Write',block:'🚫 Block',unblock:'🔓 Unblock',
     remove_contact:'❌ Remove contact',
-    create_chat:'Create chat',chat_name:'Chat name',permissions:'Permissions',
-    all_write:'Everyone writes',author_write:'Only author writes',add_participants:'Add participants',
+    create_chat:'Create chat',chat_name:'Chat name',add_participants:'Add participants',
     save_chat:'Save chat',add_contact:'Add contact',
-    message_placeholder:'Message...',
-    twofa_hint:' Read only — codes are deleted in 5 min',
-    only_author_hint:'Only the author can write in this chat',
+    message_placeholder:'Message...',twofa_hint:'🔐 Read only — codes are deleted in 5 min',
     delete_message:'Delete this message?',
     account_created:'Account created:',current_theme:'theme:',current_lang:'language:',
     interface_resolution:'Interface resolution',change_btn:'Change',
     attach_title:'Attach media',attach_placeholder:'Image or GIF URL',upload_btn:'📎 Attach',
+    attach_hint:'Paste an image or GIF URL. It will be attached to the message and sent with the text.',
     enter_name:'Enter name',fill_both:'Fill both fields',
     name_changed:'Name changed ✅',password_changed:'Password changed.',
-    twoFa_email_on:'Email 2FA enabled ✅',twoFa_email_off:'Email 2FA disabled ✅',
-    twoFa_chat_on:'Chat 2FA enabled ✅',twoFa_chat_off:'Chat 2FA disabled ✅',
-    wrong_code:'Wrong or expired code',account_deleted:'Account deleted.',
-    password_changed_logout:'Password changed.',no_users:'No users',
+    wrong_code:'Wrong or expired code',no_users:'No users',
     already_contact:'Already in contacts',user_blocked:'User is blocked',
     request_sent:'Contact request sent ✅',
-    calling:'Calling…',conversation:'Conversation',
-    video_call:'📹 Video call',audio_call:' Audio call',
+    wants_contact:'wants to add you to contacts',
+    accept:'Accept',decline:'Decline',block_delete:'Block and remove',
+    connect_keys:'🔑 Connect recovery key',keys_saved:'I saved them',
+    leave_chat:'Leave chat',leave_chat_q:'Do you really want to leave the chat?',
+    delete_my_messages:'Delete all my messages',leave_btn:'Leave',
+    wz_next:'Next',wz_back:'Back',wz_skip:'Skip',wz_cancel:'Cancel',wz_finish:'Finish',
+    wz_title_lang:'Choose translation language',wz_title_email:'Gmail email address',
+    wz_title_name:'Name and password',wz_title_keys:'Recovery keys',
+    wz_note_keys:'Save these keys! They prove the account is yours. They will not be shown again.',
+    progress_1:'We are getting ready',progress_2:'Almost ready (creating account...)',progress_3:'Preparing main screen',
+    screen_share:'Screen',screen:'sharing',
+    video_call:'📹 Video call',audio_call:'📞 Audio call',
     cannot_call_blocked:'Cannot call: user is blocked',
     cannot_write_blocked:'Cannot write: user is blocked',
-    only_author_write:'Only the author can write in this chat',
     cannot_write_twofa:'Cannot write in this chat',
     error_sending:'Send error: ',error:'Error: ',
-    accept:'Accept',decline:'Decline',block_delete:'Block and remove',
-    wants_contact:'wants to add you to contacts',
-    camera_switch_fail:'Failed to switch camera',single_camera:'Only one camera available',
-    no_permission:'No permission (update Firestore rules!)',
+    calling:'Calling…',conversation:'Conversation',
     delete_account_confirm:'Delete account?',remove_contact_confirm:'Remove contact {name}?',
     delete_chat_confirm:'Delete chat «{name}» and all messages?',
-    screen_share:'Screen',screen:'sharing'
+    single_camera:'Only one camera available',camera_switch_fail:'Failed to switch camera',
+    no_permission:'No permission (update Firestore rules!)'
+  },
+  es: {
+    loading:'Cargando...',login_title:'Iniciar sesión',login_email:'Correo',login_password:'Contraseña (mín. 6)',
+    login_name:'Nombre (perfil)',login_button:'Entrar',register_toggle:'¿Sin cuenta? Regístrate',
+    otp_title:'Autenticación de dos factores',otp_hint:'Enviamos un código',otp_input:'Código',otp_button:'Entrar',
+    otp_resend:'Reenviar código',otp_change_account:'🔄 Cambiar cuenta',
+    general_chat:'Chat general',general_chat_desc:'todos los usuarios',twofa_desc:'códigos de acceso',
+    contacts_sec:'Contactos y chats',search_placeholder:'🔍 Buscar chats...',
+    contact_requests_sec:'📩 Solicitudes de contacto',invite_sec:'📨 Invitaciones a chats',
+    logout_btn:'Salir',
+    language_sec:'Idioma',theme_sec:'Tema',
+    theme_dark:'🌙 Oscuro',theme_light:'☀️ Claro',close:'Cerrar',
+    twoFa_email:'Código por correo',twoFa_chat:'Código en chat «SKAM 2FA»',
+    twoFa_on:'🔒 Activado',twoFa_off:'🔒 Desactivado',toggle_btn:'Activar/Desactivar',
+    confirm_password:'Contraseña para confirmar',confirm:'Confirmar',cancel:'Cancelar',ok:'OK',
+    warning_logout:'⚠️ Todos los dispositivos se desconectarán',
+    delete_account:'Eliminar cuenta',
+    write:'💬 Escribir',block:'🚫 Bloquear',unblock:'🔓 Desbloquear',
+    remove_contact:'❌ Eliminar contacto',
+    create_chat:'Crear chat',chat_name:'Nombre del chat',add_participants:'Añadir participantes',
+    save_chat:'Guardar chat',add_contact:'Añadir contacto',
+    message_placeholder:'Mensaje...',twofa_hint:'🔐 Solo lectura — los códigos se eliminan en 5 min',
+    delete_message:'¿Eliminar este mensaje?',
+    account_created:'Cuenta creada:',current_theme:'tema:',current_lang:'idioma:',
+    interface_resolution:'Resolución de la interfaz',change_btn:'Cambiar',
+    attach_title:'Adjuntar media',attach_placeholder:'URL de imagen o GIF',upload_btn:'📎 Adjuntar',
+    attach_hint:'Pega una URL de imagen o GIF. Se adjuntará al mensaje y se enviará con el texto.',
+    enter_name:'Introduce el nombre',fill_both:'Rellena ambos campos',
+    name_changed:'Nombre cambiado ✅',password_changed:'Contraseña cambiada.',
+    wrong_code:'Código incorrecto o caducado',no_users:'Sin usuarios',
+    already_contact:'Ya está en contactos',user_blocked:'Usuario bloqueado',
+    request_sent:'Solicitud de contacto enviada ✅',
+    wants_contact:'quiere añadirte a contactos',
+    accept:'Aceptar',decline:'Rechazar',block_delete:'Bloquear y eliminar',
+    connect_keys:'🔑 Conectar clave de recuperación',keys_saved:'Los guardé',
+    leave_chat:'Salir del chat',leave_chat_q:'¿Seguro que quieres salir del chat?',
+    delete_my_messages:'Eliminar todos mis mensajes',leave_btn:'Salir',
+    wz_next:'Siguiente',wz_back:'Atrás',wz_skip:'Omitir',wz_cancel:'Cancelar',wz_finish:'Finalizar',
+    wz_title_lang:'Elige el idioma de traducción',wz_title_email:'Correo electrónico Gmail',
+    wz_title_name:'Nombre y contraseña',wz_title_keys:'Claves de recuperación',
+    wz_note_keys:'¡Guarda estas claves! Demuestran que la cuenta es tuya. No se mostrarán de nuevo.',
+    progress_1:'Nos estamos preparando',progress_2:'Casi listo (creando cuenta...)',progress_3:'Preparando la pantalla principal',
+    screen_share:'Compartir',screen:'pantalla',
+    video_call:'📹 Videollamada',audio_call:'📞 Llamada de voz',
+    cannot_call_blocked:'No se puede llamar: usuario bloqueado',
+    cannot_write_blocked:'No se puede escribir: usuario bloqueado',
+    cannot_write_twofa:'No se puede escribir en este chat',
+    error_sending:'Error al enviar: ',error:'Error: ',
+    calling:'Llamando…',conversation:'Conversación',
+    delete_account_confirm:'¿Eliminar cuenta?',remove_contact_confirm:'¿Eliminar contacto {name}?',
+    delete_chat_confirm:'¿Eliminar chat «{name}» y todos los mensajes?',
+    single_camera:'Solo hay una cámara en el dispositivo',camera_switch_fail:'No se pudo cambiar la cámara',
+    no_permission:'Sin permisos (¡actualiza las reglas de Firestore!)'
+  },
+  fr: {
+    loading:'Chargement...',login_title:'Connexion',login_email:'E-mail',login_password:'Mot de passe (min. 6)',
+    login_name:'Nom (profil)',login_button:'Se connecter',register_toggle:'Pas de compte ? S\'inscrire',
+    otp_title:'Authentification à deux facteurs',otp_hint:'Nous avons envoyé un code',otp_input:'Code',otp_button:'Se connecter',
+    otp_resend:'Renvoyer le code',otp_change_account:'🔄 Changer de compte',
+    general_chat:'Chat général',general_chat_desc:'tous les utilisateurs',twofa_desc:'codes de connexion',
+    contacts_sec:'Contacts et discussions',search_placeholder:'🔍 Rechercher...',
+    contact_requests_sec:'📩 Demandes de contact',invite_sec:'📨 Invitations de chat',
+    logout_btn:'Déconnexion',
+    language_sec:'Langue',theme_sec:'Thème',
+    theme_dark:'🌙 Sombre',theme_light:'☀️ Clair',close:'Fermer',
+    twoFa_email:'Code par e-mail',twoFa_chat:'Code dans le chat « SKAM 2FA »',
+    twoFa_on:'🔒 Activé',twoFa_off:'🔒 Désactivé',toggle_btn:'Activer/Désactiver',
+    confirm_password:'Mot de passe de confirmation',confirm:'Confirmer',cancel:'Annuler',ok:'OK',
+    warning_logout:'⚠️ Tous les appareils seront déconnectés',
+    delete_account:'Supprimer le compte',
+    write:'💬 Écrire',block:'🚫 Bloquer',unblock:'🔓 Débloquer',
+    remove_contact:'❌ Supprimer le contact',
+    create_chat:'Créer un chat',chat_name:'Nom du chat',add_participants:'Ajouter des participants',
+    save_chat:'Enregistrer',add_contact:'Ajouter contact',
+    message_placeholder:'Message...',twofa_hint:'🔐 Lecture seule — les codes sont supprimés en 5 min',
+    delete_message:'Supprimer ce message ?',
+    account_created:'Compte créé :',current_theme:'thème :',current_lang:'langue :',
+    interface_resolution:'Résolution de l\'interface',change_btn:'Changer',
+    attach_title:'Joindre un média',attach_placeholder:'URL d\'image ou de GIF',upload_btn:'📎 Joindre',
+    attach_hint:'Collez une URL d\'image ou de GIF. Elle sera jointe au message et envoyée avec le texte.',
+    enter_name:'Entrez le nom',fill_both:'Remplissez les deux champs',
+    name_changed:'Nom changé ✅',password_changed:'Mot de passe changé.',
+    wrong_code:'Code incorrect ou expiré',no_users:'Aucun utilisateur',
+    already_contact:'Déjà dans les contacts',user_blocked:'Utilisateur bloqué',
+    request_sent:'Demande de contact envoyée ✅',
+    wants_contact:'veut vous ajouter aux contacts',
+    accept:'Accepter',decline:'Refuser',block_delete:'Bloquer et supprimer',
+    connect_keys:'🔑 Connecter la clé de récupération',keys_saved:'Je les ai enregistrées',
+    leave_chat:'Quitter le chat',leave_chat_q:'Voulez-vous vraiment quitter le chat ?',
+    delete_my_messages:'Supprimer tous mes messages',leave_btn:'Quitter',
+    wz_next:'Suivant',wz_back:'Retour',wz_skip:'Passer',wz_cancel:'Annuler',wz_finish:'Terminer',
+    wz_title_lang:'Choisissez la langue de traduction',wz_title_email:'Adresse e-mail Gmail',
+    wz_title_name:'Nom et mot de passe',wz_title_keys:'Clés de récupération',
+    wz_note_keys:'Gardez ces clés ! Elles prouvent que le compte est à vous. Elles ne seront plus montrées.',
+    progress_1:'Nous nous préparons',progress_2:'Presque prêt (création du compte...)',progress_3:'Préparation de l\'écran principal',
+    screen_share:'Partage',screen:'d\'écran',
+    video_call:'📹 Appel vidéo',audio_call:'📞 Appel audio',
+    cannot_call_blocked:'Impossible d\'appeler : utilisateur bloqué',
+    cannot_write_blocked:'Impossible d\'écrire : utilisateur bloqué',
+    cannot_write_twofa:'Impossible d\'écrire dans ce chat',
+    error_sending:'Erreur d\'envoi : ',error:'Erreur : ',
+    calling:'Appel…',conversation:'Conversation',
+    delete_account_confirm:'Supprimer le compte ?',remove_contact_confirm:'Supprimer le contact {name} ?',
+    delete_chat_confirm:'Supprimer le chat « {name} » et tous les messages ?',
+    single_camera:'Une seule caméra disponible',camera_switch_fail:'Impossible de changer de caméra',
+    no_permission:'Pas d\'autorisation (mettez à jour les règles Firestore !)'
+  },
+  de: {
+    loading:'Laden...',login_title:'Anmelden',login_email:'E-Mail',login_password:'Passwort (min. 6)',
+    login_name:'Name (Profil)',login_button:'Anmelden',register_toggle:'Kein Konto? Registrieren',
+    otp_title:'Zwei-Faktor-Authentifizierung',otp_hint:'Wir haben einen Code gesendet',otp_input:'Code',otp_button:'Anmelden',
+    otp_resend:'Code erneut senden',otp_change_account:'🔄 Konto wechseln',
+    general_chat:'Allgemeiner Chat',general_chat_desc:'alle Benutzer',twofa_desc:'Anmeldecodes',
+    contacts_sec:'Kontakte und Chats',search_placeholder:'🔍 Chats suchen...',
+    contact_requests_sec:'📩 Kontaktanfragen',invite_sec:'📨 Chat-Einladungen',
+    logout_btn:'Abmelden',
+    language_sec:'Sprache',theme_sec:'Design',
+    theme_dark:'🌙 Dunkel',theme_light:'☀️ Hell',close:'Schließen',
+    twoFa_email:'Code per E-Mail',twoFa_chat:'Code im Chat «SKAM 2FA»',
+    twoFa_on:'🔒 Aktiviert',twoFa_off:'🔒 Deaktiviert',toggle_btn:'Aktivieren/Deaktivieren',
+    confirm_password:'Passwort zur Bestätigung',confirm:'Bestätigen',cancel:'Abbrechen',ok:'OK',
+    warning_logout:'⚠️ Alle Geräte werden abgemeldet',
+    delete_account:'Konto löschen',
+    write:'💬 Schreiben',block:'🚫 Blockieren',unblock:'🔓 Entsperren',
+    remove_contact:'❌ Kontakt entfernen',
+    create_chat:'Chat erstellen',chat_name:'Chat-Name',add_participants:'Teilnehmer hinzufügen',
+    save_chat:'Chat speichern',add_contact:'Kontakt hinzufügen',
+    message_placeholder:'Nachricht...',twofa_hint:'🔐 Nur lesen — Codes werden in 5 Min. gelöscht',
+    delete_message:'Diese Nachricht löschen?',
+    account_created:'Konto erstellt:',current_theme:'Design:',current_lang:'Sprache:',
+    interface_resolution:'Oberflächenauflösung',change_btn:'Ändern',
+    attach_title:'Medien anhängen',attach_placeholder:'Bild- oder GIF-URL',upload_btn:'📎 Anhängen',
+    attach_hint:'Füge eine Bild- oder GIF-URL ein. Sie wird an die Nachricht angehängt und mitgesendet.',
+    enter_name:'Name eingeben',fill_both:'Beide Felder ausfüllen',
+    name_changed:'Name geändert ✅',password_changed:'Passwort geändert.',
+    wrong_code:'Falscher oder abgelaufener Code',no_users:'Keine Benutzer',
+    already_contact:'Bereits in Kontakten',user_blocked:'Benutzer blockiert',
+    request_sent:'Kontaktanfrage gesendet ✅',
+    wants_contact:'möchte dich zu Kontakten hinzufügen',
+    accept:'Akzeptieren',decline:'Ablehnen',block_delete:'Blockieren und entfernen',
+    connect_keys:'🔑 Wiederherstellungsschlüssel verbinden',keys_saved:'Gespeichert',
+    leave_chat:'Chat verlassen',leave_chat_q:'Möchtest du den Chat wirklich verlassen?',
+    delete_my_messages:'Alle meine Nachrichten löschen',leave_btn:'Verlassen',
+    wz_next:'Weiter',wz_back:'Zurück',wz_skip:'Überspringen',wz_cancel:'Abbrechen',wz_finish:'Fertig',
+    wz_title_lang:'Übersetzungssprache wählen',wz_title_email:'Gmail-E-Mail-Adresse',
+    wz_title_name:'Name und Passwort',wz_title_keys:'Wiederherstellungsschlüssel',
+    wz_note_keys:'Speichere diese Schlüssel! Sie beweisen, dass das Konto dir gehört. Sie werden nicht erneut angezeigt.',
+    progress_1:'Wir bereiten vor',progress_2:'Fast fertig (Konto wird erstellt...)',progress_3:'Hauptbildschirm wird vorbereitet',
+    screen_share:'Bildschirm',screen:'freigabe',
+    video_call:'📹 Videoanruf',audio_call:'📞 Sprachanruf',
+    cannot_call_blocked:'Anruf nicht möglich: Benutzer blockiert',
+    cannot_write_blocked:'Schreiben nicht möglich: Benutzer blockiert',
+    cannot_write_twofa:'In diesem Chat kann nicht geschrieben werden',
+    error_sending:'Sendefehler: ',error:'Fehler: ',
+    calling:'Anruf…',conversation:'Gespräch',
+    delete_account_confirm:'Konto löschen?',remove_contact_confirm:'Kontakt {name} entfernen?',
+    delete_chat_confirm:'Chat «{name}» und alle Nachrichten löschen?',
+    single_camera:'Nur eine Kamera verfügbar',camera_switch_fail:'Kamera konnte nicht gewechselt werden',
+    no_permission:'Keine Berechtigung (Firestore-Regeln aktualisieren!)'
+  },
+  zh: {
+    loading:'加载中...',login_title:'登录',login_email:'电子邮件',login_password:'密码（至少6位）',
+    login_name:'姓名（个人资料）',login_button:'登录',register_toggle:'没有账号？注册',
+    otp_title:'双重认证',otp_hint:'我们已发送验证码',otp_input:'验证码',otp_button:'登录',
+    otp_resend:'重新发送验证码',otp_change_account:'🔄 切换账号',
+    general_chat:'公共聊天',general_chat_desc:'所有用户',twofa_desc:'登录验证码',
+    contacts_sec:'联系人和聊天',search_placeholder:'🔍 搜索聊天...',
+    contact_requests_sec:'📩 联系人请求',invite_sec:'📨 聊天邀请',
+    logout_btn:'退出',
+    language_sec:'语言',theme_sec:'主题',
+    theme_dark:'🌙 深色',theme_light:'☀️ 浅色',close:'关闭',
+    twoFa_email:'通过电子邮件验证码',twoFa_chat:'在 «SKAM 2FA» 聊天中验证码',
+    twoFa_on:'🔒 已启用',twoFa_off:'🔒 已禁用',toggle_btn:'启用/禁用',
+    confirm_password:'确认密码',confirm:'确认',cancel:'取消',ok:'确定',
+    warning_logout:'⚠️ 所有设备将被登出',
+    delete_account:'删除账号',
+    write:'💬 发送消息',block:'🚫 拉黑',unblock:'🔓 解除拉黑',
+    remove_contact:'❌ 删除联系人',
+    create_chat:'创建聊天',chat_name:'聊天名称',add_participants:'添加参与者',
+    save_chat:'保存聊天',add_contact:'添加联系人',
+    message_placeholder:'消息...',twofa_hint:'🔐 只读 — 验证码将在5分钟后删除',
+    delete_message:'删除此消息？',
+    account_created:'账号创建时间：',current_theme:'主题：',current_lang:'语言：',
+    interface_resolution:'界面分辨率',change_btn:'更改',
+    attach_title:'附加媒体',attach_placeholder:'图片或GIF链接',upload_btn:'📎 附加',
+    attach_hint:'粘贴图片或GIF链接。它将附加到消息并随文本一起发送。',
+    enter_name:'输入姓名',fill_both:'请填写两个字段',
+    name_changed:'姓名已更改 ✅',password_changed:'密码已更改。',
+    wrong_code:'验证码错误或已过期',no_users:'没有用户',
+    already_contact:'已在联系人中',user_blocked:'用户已被拉黑',
+    request_sent:'联系人请求已发送 ✅',
+    wants_contact:'想把你添加到联系人',
+    accept:'接受',decline:'拒绝',block_delete:'拉黑并删除',
+    connect_keys:'🔑 连接恢复密钥',keys_saved:'已保存',
+    leave_chat:'退出聊天',leave_chat_q:'确定要退出聊天吗？',
+    delete_my_messages:'删除我的所有消息',leave_btn:'退出',
+    wz_next:'下一步',wz_back:'返回',wz_skip:'跳过',wz_cancel:'取消',wz_finish:'完成',
+    wz_title_lang:'选择翻译语言',wz_title_email:'Gmail 电子邮件',
+    wz_title_name:'姓名和密码',wz_title_keys:'恢复密钥',
+    wz_note_keys:'请保存这些密钥！它们证明账号属于你。之后不会再显示。',
+    progress_1:'我们正在准备',progress_2:'即将完成（创建账号...）',progress_3:'正在准备主屏幕',
+    screen_share:'屏幕',screen:'共享',
+    video_call:'📹 视频通话',audio_call:'📞 语音通话',
+    cannot_call_blocked:'无法呼叫：用户已被拉黑',
+    cannot_write_blocked:'无法发送：用户已被拉黑',
+    cannot_write_twofa:'无法在此聊天中发言',
+    error_sending:'发送错误：',error:'错误：',
+    calling:'呼叫中…',conversation:'通话中',
+    delete_account_confirm:'删除账号？',remove_contact_confirm:'删除联系人 {name}？',
+    delete_chat_confirm:'删除聊天 «{name}» 和所有消息？',
+    single_camera:'设备上只有一个摄像头',camera_switch_fail:'无法切换摄像头',
+    no_permission:'没有权限（请更新 Firestore 规则！）'
   }
 };
 
 function t(key){ return (LANGS[currentLang] && LANGS[currentLang][key]) || LANGS.ru[key] || key; }
 
-// ✅ Функция применения переводов — работает через data-i18n и data-i18n-ph
+// ✅ Перевод всех элементов с data-i18n / data-i18n-ph
 function applyTranslations(){
-  document.querySelectorAll('[data-i18n]').forEach(el=>{ 
-    const key = el.dataset.i18n;
-    el.textContent = t(key); 
-  });
-  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ 
-    const key = el.dataset.i18nPh;
-    el.placeholder = t(key); 
-  });
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
   document.documentElement.lang = currentLang;
   $('lang-select').value = currentLang;
   $('theme-select').value = currentTheme;
@@ -601,29 +877,64 @@ function applyTranslations(){
   updateTwoFaUI();
 }
 
-// ✅ Функция применения темы
 function applyTheme(){
   if(currentTheme==='light') document.body.classList.add('light');
   else document.body.classList.remove('light');
   document.querySelector('meta[name="theme-color"]').content = currentTheme==='light' ? '#f5f5f7' : '#000000';
 }
-
 async function savePreferences(){
   localStorage.setItem('skam_lang', currentLang);
   localStorage.setItem('skam_theme', currentTheme);
-  if(myUid){
-    try{ await setDoc(doc(db,'profiles',myUid),{language:currentLang,theme:currentTheme},{merge:true}); }
-    catch(e){ console.warn('Не удалось сохранить настройки:', e); }
-  }
+  if(myUid){ try{ await setDoc(doc(db,'profiles',myUid),{language:currentLang,theme:currentTheme},{merge:true}); }catch(e){} }
 }
-
-// ✅ Обработчики смены языка и темы
 $('lang-select').onchange = async (e) => { currentLang = e.target.value; applyTranslations(); await savePreferences(); fillAbout(); };
 $('theme-select').onchange = async (e) => { currentTheme = e.target.value; applyTheme(); await savePreferences(); fillAbout(); };
 
-/* ========== EmailJS ОТКЛЮЧЁН ========== */
+/* ✅ ГИФКИ */
+document.querySelectorAll('.wz-gif').forEach(img=>{
+  const alts=(img.dataset.alts||'').split('|').filter(Boolean);
+  img.addEventListener('error',()=>{
+    if(alts.length){ img.src=alts.shift(); }
+    else{ img.style.display='none'; img.dataset.dead='1'; }
+  });
+  img.addEventListener('load',()=>{ img.dataset.good=img.src; });
+  img.dataset.src=img.src;
+});
+function restartGif(step){
+  const img=$('wz-step-'+step).querySelector('.wz-gif');
+  if(img && !img.dataset.dead){ img.src = img.dataset.good || img.dataset.src; }
+}
+
+const fb = initializeApp(firebaseConfig);
+const auth = getAuth(fb);
+const db = getFirestore(fb);
+setPersistence(auth, browserLocalPersistence).catch(e => console.error("Persistence error:", e));
+
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+let myUid=null, myName='', myEmail='', myContacts=[], myBlocked=[], channel='general', currentPeer=null, currentChatMeta=null;
+let appStarted=false, changingPass=false, deleting=false, freshLogin=false, regPending=false;
+let twoFaEnabled=false, twoFaChatEnabled=false, verified=false, otpCode='', otpExp=0, otpMethod='email', pending2fa='email';
+let hasRecoveryKeys=false;
+let unsubMsg=null, unsubUsers=null, unsubMine=null, unsubCalls=null, unsubChats=null, unsubReqsIn=null, unsubReqsOut=null, unsubInvites=null;
+let allUsers={}, customChats=[], incomingReqs=[], incomingInvites=[], pc=null, localStream=null, currentCall=null, iceUnsub=null, callDocUnsub=null, pendingIncoming=null, addedIce=new Set();
+let currentSource='black', currentFacing='user';
+let attachedMediaUrl = null;
+
+/* ✅ EmailJS — отправитель SKAM */
 async function sendEmail(to, subject, message){
-  console.log('[EmailJS отключён] Письмо не отправлено:', {to, subject});
+  try{
+    await fetch("https://api.emailjs.com/api/v1.0/email/send",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        service_id:EJ_SERVICE,
+        template_id:EJ_TEMPLATE,
+        user_id:EJ_KEY,
+        template_params:{ to_email:to, from_name:"SKAM", subject:subject, message:message }
+      })
+    });
+  }catch(e){ console.warn('Email error:', e); }
 }
 
 /* ========== 2FA ========== */
@@ -651,9 +962,6 @@ async function sendCodeChat(){
     });
   }catch(e){console.error('2FA chat error:',e);}
 }
-async function purgeCodes(){
-  try{ const snap=await getDocs(collection(db,'chats',twofaChan(),'messages')); snap.forEach(d=>deleteDoc(d.ref)); }catch(e){}
-}
 setInterval(async ()=>{
   if(!myUid||!twoFaChatEnabled)return;
   try{ const snap=await getDocs(collection(db,'chats',twofaChan(),'messages')); snap.forEach(d=>{ if((d.data().expiresAt||0)<Date.now()) deleteDoc(d.ref); }); }catch(e){}
@@ -665,46 +973,167 @@ $('otp-btn').onclick=async()=>{
     const p=await getDoc(doc(db,'profiles',myUid));
     localStorage.setItem('skam_sv_'+myUid,String(p.exists()?(p.data().sessionVersion||1):1));
     $('otp-screen').classList.add('hidden');$('app').classList.remove('hidden'); startApp();
-    if(otpMethod==='chat')purgeCodes();
-    else sendEmail(myEmail,' SKAM login',`${new Date().toLocaleString()}`);
+    if(otpMethod==='chat'){ try{ const s=await getDocs(collection(db,'chats',twofaChan(),'messages')); s.forEach(d=>deleteDoc(d.ref)); }catch(e){} }
+    else sendEmail(myEmail,'🔐 SKAM login',`${new Date().toLocaleString()}`);
   }else{$('otp-error').textContent=t('wrong_code');}
 };
 $('otp-resend').onclick=()=>{ otpMethod==='chat'?sendCodeChat():sendCode(); };
 $('otp-change-account').onclick=async()=>{ $('otp-error').textContent=''; await signOut(auth); };
 
-/* ========== AUTH ========== */
-$('auth-toggle').onclick=()=>{reg=!reg;$('name').classList.toggle('hidden',!reg);
-  $('auth-btn').textContent=t(reg?'register_toggle':'login_button').split('?')[0].trim() || (reg?'Register':'Sign in');
-  $('auth-title').textContent=t(reg?'register_toggle':'login_title').split('?')[0].trim() || (reg?'Register':'Sign in');
-  $('auth-toggle').textContent=t(reg?'login_title':'register_toggle');
-};
+/* ========== ВХОД ========== */
 $('auth-btn').onclick=async()=>{
-  const email=$('email').value.trim(),pass=$('pass').value,name=$('name').value.trim();
+  const email=$('email').value.trim(),pass=$('pass').value;
   $('auth-error').textContent='';
-  try{if(reg){if(!name)return $('auth-error').textContent=t('enter_name');
-    freshLogin=true;
-    const cred=await createUserWithEmailAndPassword(auth,email,pass);
-    await updateProfile(cred.user,{displayName:name});
-    await setDoc(doc(db,'profiles',cred.user.uid),{uid:cred.user.uid,name,email,contacts:[],blocked:[],sessionVersion:1,twoFactorEnabled:false,twoFaChatEnabled:false,createdAt:Date.now()});
-  }else{
+  try{
     freshLogin=true;
     await signInWithEmailAndPassword(auth,email,pass);
-  }}catch(e){
+  }catch(e){
     const errors = {
-      'auth/invalid-credential': 'Неверный email или пароль',
-      'auth/user-not-found': 'Аккаунт не найден. Зарегистрируйтесь',
-      'auth/wrong-password': 'Неверный пароль',
-      'auth/email-already-in-use': 'Этот email уже занят',
-      'auth/weak-password': 'Пароль должен быть минимум 6 символов',
-      'auth/invalid-email': 'Некорректный email',
-      'auth/too-many-requests': 'Слишком много попыток. Подождите'
+      'auth/invalid-credential': t('wrong_code'),
+      'auth/user-not-found': t('register_toggle'),
+      'auth/wrong-password': t('wrong_code'),
+      'auth/weak-password': t('login_password'),
+      'auth/invalid-email': t('login_email'),
+      'auth/too-many-requests': '...'
     };
-    $('auth-error').textContent = errors[e.code] || 'Ошибка: ' + e.code;
+    $('auth-error').textContent = errors[e.code] || t('error') + e.code;
     freshLogin=false;
   }
 };
 async function fullLogout(){if(myUid){localStorage.removeItem('skam_sv_'+myUid);localStorage.removeItem('skam_verified_'+myUid);}verified=false;await signOut(auth);}
 $('logout').onclick=fullLogout;
+$('auth-open-reg').onclick=()=>{ openWizard(); };
+
+/* ========== ВИЗАРД ========== */
+const WZ_LANGS=[['ru','🇷🇺 Русский'],['en','🇬🇧 English'],['es','🇪🇸 Español'],['fr','🇫🇷 Français'],['de','🇩🇪 Deutsch'],['zh','🇨🇳 中文']];
+let wzStep=1, regEmail='', regPass='', regName='', regKeys=[], emailSkipped=false;
+
+function buildLangList(){
+  const l=$('wz-lang-list'); l.innerHTML='';
+  WZ_LANGS.forEach(([code,label])=>{
+    const item=document.createElement('label');
+    item.className='wz-lang-item'+(code===currentLang?' sel':'');
+    item.innerHTML=`<input type="radio" name="wz-lang" value="${code}" ${code===currentLang?'checked':''}><span>${label}</span>`;
+    item.querySelector('input').onchange=()=>{
+      l.querySelectorAll('.wz-lang-item').forEach(i=>i.classList.remove('sel'));
+      item.classList.add('sel');
+    };
+    l.appendChild(item);
+  });
+}
+
+function openWizard(){
+  wzStep=1; regEmail=''; regPass=''; regName=''; regKeys=[]; emailSkipped=false;
+  $('wz-email').value=''; $('wz-name').value=''; $('wz-pass').value='';
+  $('wz-email-err').textContent=''; $('wz-name-err').textContent='';
+  buildLangList();
+  for(let i=1;i<=4;i++) $('wz-step-'+i).classList.toggle('hidden', i!==1);
+  wzFooter();
+  $('reg-wizard').classList.remove('hidden');
+}
+
+function wzFooter(){
+  $('wz-back').classList.toggle('hidden', wzStep===1);
+  $('wz-skip').classList.toggle('hidden', wzStep!==2);
+  $('wz-next').classList.toggle('hidden', wzStep===4);
+  $('wz-finish').classList.toggle('hidden', wzStep!==4);
+}
+
+function wzGoto(n){
+  const cur=$('wz-step-'+wzStep);
+  cur.classList.add('leaving');
+  setTimeout(()=>{
+    cur.classList.add('hidden'); cur.classList.remove('leaving');
+    wzStep=n;
+    $('wz-step-'+n).classList.remove('hidden');
+    restartGif(n);
+    if(n===4) enterStep4();
+    wzFooter();
+  },350);
+}
+
+$('wz-back').onclick=()=>{ if(wzStep>1) wzGoto(wzStep-1); };
+
+function genKey(){
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let k=''; for(let i=0;i<8;i++) k+=chars[Math.floor(Math.random()*chars.length)];
+  return k;
+}
+function genKeys(){ return [genKey(),genKey(),genKey()]; }
+function genEmail(){ return 'skam.user.'+Math.random().toString(36).slice(2,8)+'@skam-58cef.web.app'; }
+
+function enterStep4(){
+  regKeys=genKeys();
+  $('wz-keys').innerHTML=regKeys.map(k=>`<div class="key-row">${k}</div>`).join('');
+  $('wz-email-show').textContent=t('login_email')+': '+regEmail;
+}
+
+$('wz-cancel').onclick=()=>{ $('reg-wizard').classList.add('hidden'); };
+
+$('wz-next').onclick=async()=>{
+  if(wzStep===1){
+    const sel=document.querySelector('input[name="wz-lang"]:checked');
+    if(sel) currentLang=sel.value;
+    applyTranslations();
+    wzGoto(2);
+  }
+  else if(wzStep===2){
+    const email=$('wz-email').value.trim();
+    const re=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if(!re.test(email)){ $('wz-email-err').textContent=t('login_email')+'?'; return; }
+    try{
+      const dup=await getDocs(query(collection(db,'profiles'),where('email','==',email)));
+      if(!dup.empty){ $('wz-email-err').textContent=t('already_contact'); return; }
+    }catch(e){}
+    regEmail=email; emailSkipped=false;
+    wzGoto(3);
+  }
+  else if(wzStep===3){
+    const name=$('wz-name').value.trim(), pass=$('wz-pass').value;
+    if(!name){ $('wz-name-err').textContent=t('enter_name'); return; }
+    if(pass.length<6){ $('wz-name-err').textContent=t('login_password'); return; }
+    regName=name; regPass=pass;
+    wzGoto(4);
+  }
+};
+
+$('wz-skip').onclick=()=>{
+  if(wzStep===2){ emailSkipped=true; regEmail=genEmail(); wzGoto(3); }
+};
+
+$('wz-finish').onclick=async()=>{
+  $('reg-wizard').classList.add('hidden');
+  $('reg-progress').classList.remove('hidden');
+  $('reg-progress-text').textContent=t('progress_1');
+  await wait(3000);
+  $('reg-progress-text').textContent=t('progress_2');
+  regPending=true;
+  try{
+    const cred=await createUserWithEmailAndPassword(auth,regEmail,regPass);
+    await updateProfile(cred.user,{displayName:regName});
+    await setDoc(doc(db,'profiles',cred.user.uid),{
+      uid:cred.user.uid,name:regName,email:regEmail,contacts:[],blocked:[],
+      sessionVersion:1,twoFactorEnabled:false,twoFaChatEnabled:false,
+      language:currentLang,theme:currentTheme,
+      recoveryKeys:regKeys, emailSkipped:emailSkipped,
+      createdAt:Date.now()
+    });
+  }catch(e){
+    regPending=false;
+    $('reg-progress').classList.add('hidden');
+    $('reg-wizard').classList.remove('hidden');
+    wzStep=2; for(let i=1;i<=4;i++) $('wz-step-'+i).classList.toggle('hidden',i!==2); wzFooter();
+    $('wz-email-err').textContent = e.code==='auth/email-already-in-use' ? t('already_contact') : t('error')+e.code;
+    return;
+  }
+  await wait(3000);
+  $('reg-progress-text').textContent=t('progress_3');
+  await wait(2000);
+  $('reg-progress').classList.add('hidden');
+  regPending=false;
+  hasRecoveryKeys=true;
+  startApp();
+};
 
 /* ========== ЛОГИКА ЗАГРУЗКИ ========== */
 onAuthStateChanged(auth, async user => {
@@ -723,14 +1152,20 @@ onAuthStateChanged(auth, async user => {
     
     if (mine.data().language) currentLang = mine.data().language;
     if (mine.data().theme) currentTheme = mine.data().theme;
-    applyTheme();
-    applyTranslations();
+    hasRecoveryKeys = !!(mine.data().recoveryKeys && mine.data().recoveryKeys.length);
+    applyTheme(); applyTranslations();
     
     myName = mine.data().name || myName || user.email.split('@')[0];
     twoFaEnabled = !!mine.data().twoFactorEnabled;
     twoFaChatEnabled = !!mine.data().twoFaChatEnabled;
     $('my-avatar').textContent = myName[0].toUpperCase();
     $('auth-screen').classList.add('hidden');
+
+    if (regPending) {
+      $('loading-screen').classList.add('fade-out');
+      setTimeout(()=>$('loading-screen').classList.add('hidden'),400);
+      return;
+    }
     
     const need2fa = freshLogin && (twoFaChatEnabled || twoFaEnabled);
     freshLogin = false;
@@ -739,32 +1174,37 @@ onAuthStateChanged(auth, async user => {
       $('loading-screen').classList.add('fade-out');
       setTimeout(() => {
         $('loading-screen').classList.add('hidden');
-        if (need2fa) {
-          verified = false;
-          twoFaChatEnabled ? sendCodeChat() : sendCode();
-        } else {
-          verified = true;
-          $('otp-screen').classList.add('hidden');
-          $('app').classList.remove('hidden');
-          startApp();
-        }
+        if (need2fa) { verified=false; twoFaChatEnabled ? sendCodeChat() : sendCode(); }
+        else { verified=true; $('otp-screen').classList.add('hidden'); $('app').classList.remove('hidden'); startApp(); }
       }, 400);
     }, 800);
 
   } else {
     $('loading-screen').classList.add('hidden');
     $('loading-screen').classList.remove('fade-out');
-    
-    myUid = null; verified = false; twoFaEnabled = false; twoFaChatEnabled = false; 
+    myUid = null; verified = false; twoFaEnabled = false; twoFaChatEnabled = false; hasRecoveryKeys=false;
     appStarted = false; freshLogin = false; incomingReqs = []; incomingInvites = [];
     [unsubMsg, unsubUsers, unsubMine, unsubCalls, unsubChats, unsubReqsIn, unsubReqsOut, unsubInvites, iceUnsub, callDocUnsub].forEach(u => u && u());
     $('app').classList.add('hidden');
     $('otp-screen').classList.add('hidden');
     $('auth-screen').classList.remove('hidden');
+    applyTranslations();
   }
 });
 
-function startApp(){if(appStarted)return;appStarted=true;watchUsers();watchMine();watchCustomChats();watchIncoming();watchContactRequests();watchInvites();openChat('general',t('general_chat'),null,null);}
+// ✅ ФИКС: startApp теперь всегда показывает #app (убирает белый экран)
+function startApp(){
+  if(appStarted) return;
+  appStarted=true;
+  $('app').classList.remove('hidden');
+  watchUsers();watchMine();watchCustomChats();watchIncoming();watchContactRequests();watchInvites();
+  if(isSmall()){
+    $('app').classList.remove('chat-open');
+    channel='general';
+  } else {
+    openChat('general',t('general_chat'),null,null);
+  }
+}
 
 function isBlockedWith(uid){
   if(myBlocked.includes(uid))return true;
@@ -774,12 +1214,13 @@ function isBlockedWith(uid){
 
 function watchUsers(){unsubUsers=onSnapshot(collection(db,'profiles'),snap=>{allUsers={};snap.forEach(d=>allUsers[d.id]=d.data());renderContacts();renderModal();renderInviteUsers();},err=>console.error(err));}
 function watchMine(){unsubMine=onSnapshot(doc(db,'profiles',myUid),s=>{
-  if(!s.exists()){alert('Аккаунт удалён.');fullLogout();return;}
+  if(!s.exists()){showAlert(t('account_deleted')+' ❌');fullLogout();return;}
   const d=s.data();myContacts=d.contacts||[];myBlocked=d.blocked||[];if(d.name)myName=d.name;
   twoFaEnabled=!!d.twoFactorEnabled;twoFaChatEnabled=!!d.twoFaChatEnabled;
+  hasRecoveryKeys=!!(d.recoveryKeys&&d.recoveryKeys.length);
   const sv=d.sessionVersion||1,key='skam_sv_'+myUid,stored=localStorage.getItem(key);
   if(stored===null)localStorage.setItem(key,String(sv));
-  else if(parseInt(stored)!==sv&&!changingPass){alert('Пароль изменён.');fullLogout();return;}
+  else if(parseInt(stored)!==sv&&!changingPass){showAlert(t('password_changed'));fullLogout();return;}
   renderContacts();renderModal();renderInviteUsers();
 },err=>console.error(err));}
 
@@ -789,31 +1230,29 @@ function watchCustomChats(){
   },err=>console.error(err));
 }
 
-/* ========== ПРИГЛАШЕНИЯ В ЧАТЫ ========== */
 function watchInvites(){
   unsubInvites=onSnapshot(query(collection(db,'contact_requests'),where('to','==',myUid),where('type','==','chat_invite'),where('status','==','pending')),snap=>{
     incomingInvites=snap.docs.map(d=>({id:d.id,...d.data()}));
     renderInvites();
   },err=>console.error(err));
 }
-
 function renderInvites(){
   const l=$('invite-list');l.innerHTML='';
   $('invite-sec').classList.toggle('hidden',!incomingInvites.length);
   incomingInvites.forEach(inv=>{
     const el=document.createElement('div');el.className='chat-item';el.style.cursor='default';
     el.innerHTML=`<div class="av" style="background:var(--ac)">📨</div>
-      <div class="ci-txt"><b>${esc(inv.chatName||'Чат')}</b><span>${esc(inv.fromName||'')} приглашает вас</span></div>
+      <div class="ci-txt"><b>${esc(inv.chatName||'Чат')}</b><span>${esc(inv.fromName||'')} </span></div>
       <div class="req-btns">
         <button class="req-btn" style="background:var(--green)" title="${t('accept')}">✓</button>
         <button class="req-btn" style="background:var(--sf2);color:var(--tx)" title="${t('decline')}">✕</button>
-        <button class="req-btn" style="background:var(--red)" title="${t('block_delete')}"></button>
+        <button class="req-btn" style="background:var(--red)" title="${t('block_delete')}">🚫</button>
       </div>`;
     const [bAcc,bDec,bBlk]=el.querySelectorAll('button');
     bAcc.onclick=async()=>{
       await updateDoc(doc(db,'custom_chats',inv.chatId),{members:arrayUnion(myUid)});
       await updateDoc(doc(db,'contact_requests',inv.id),{status:'accepted'});
-      alert('Вы добавлены в чат ✅');
+      alert('✅');
     };
     bDec.onclick=async()=>{ await updateDoc(doc(db,'contact_requests',inv.id),{status:'declined'}); };
     bBlk.onclick=async()=>{
@@ -823,18 +1262,15 @@ function renderInvites(){
     l.appendChild(el);
   });
 }
-
 async function inviteToChat(chatId,chatName,userId){
   try{
     await setDoc(doc(db,'contact_requests',myUid+'_'+userId+'_chat_'+chatId),{
-      from:myUid, to:userId, fromName:myName,
-      type:'chat_invite', chatId, chatName,
+      from:myUid, to:userId, fromName:myName, type:'chat_invite', chatId, chatName,
       status:'pending', createdAt:serverTimestamp()
     });
     return true;
-  }catch(e){console.error('Invite error:',e);return false;}
+  }catch(e){return false;}
 }
-
 function renderInviteUsers(){
   const ul=$('cc-users');if(!ul)return;
   ul.innerHTML='';
@@ -847,7 +1283,6 @@ function renderInviteUsers(){
   if(!ul.children.length)ul.innerHTML=`<div style="color:var(--gr);font-size:13px">${t('no_users')}</div>`;
 }
 
-/* ========== ЗАЯВКИ В КОНТАКТЫ ========== */
 function watchContactRequests(){
   unsubReqsIn=onSnapshot(query(collection(db,'contact_requests'),where('to','==',myUid),where('status','==','pending'),where('type','==','contact')),snap=>{
     incomingReqs=snap.docs.map(d=>({id:d.id,...d.data()}));
@@ -857,17 +1292,12 @@ function watchContactRequests(){
     snap.forEach(async d=>{
       const r=d.data();
       if(r.status==='accepted'){
-        if(r.type==='contact'){
-          await setDoc(doc(db,'profiles',myUid),{contacts:arrayUnion(r.to)},{merge:true});
-        }
+        if(r.type==='contact'){ await setDoc(doc(db,'profiles',myUid),{contacts:arrayUnion(r.to)},{merge:true}); }
         await deleteDoc(d.ref);
-      }else if(r.status==='declined'){
-        await deleteDoc(d.ref);
-      }
+      }else if(r.status==='declined'){ await deleteDoc(d.ref); }
     });
   },err=>console.error(err));
 }
-
 function renderRequests(){
   const l=$('req-list');l.innerHTML='';
   $('req-sec').classList.toggle('hidden',!incomingReqs.length);
@@ -877,7 +1307,7 @@ function renderRequests(){
       <div class="ci-txt"><b>${esc(r.fromName||'')}</b><span>${t('wants_contact')}</span></div>
       <div class="req-btns">
         <button class="req-btn" style="background:var(--green)" title="${t('accept')}">✓</button>
-        <button class="req-btn" style="background:var(--sf2);color:var(--tx)" title="${t('decline')}"></button>
+        <button class="req-btn" style="background:var(--sf2);color:var(--tx)" title="${t('decline')}">✕</button>
         <button class="req-btn" style="background:var(--red)" title="${t('block_delete')}">🚫</button>
       </div>`;
     const [bAcc,bDec,bBlk]=el.querySelectorAll('button');
@@ -904,9 +1334,8 @@ function renderContacts(){
     if(q&&!c.name.toLowerCase().includes(q))return;
     const isOwner=c.owner===myUid;
     const el=document.createElement('div');el.className='chat-item'+(channel===c.id?' active':'');
-    el.innerHTML=`<div class="av" style="background:var(--sf2)">💬</div><div class="ci-txt"><b>${esc(c.name)}</b><span>чат</span></div>`;
+    el.innerHTML=`<div class="av" style="background:var(--sf2)">💬</div><div class="ci-txt"><b>${esc(c.name)}</b><span>${t('general_chat_desc')}</span></div>`;
     el.onclick=()=>openChat(c.id,c.name,null,c);
-    
     if(isOwner){
       const inviteBtn=document.createElement('button');
       inviteBtn.innerHTML='+';
@@ -914,7 +1343,6 @@ function renderContacts(){
       inviteBtn.onclick=(e)=>{e.stopPropagation();openInviteModal(c.id,c.name);};
       el.appendChild(inviteBtn);
     }
-    
     l.appendChild(el);
   });
   myContacts.forEach(uid=>{
@@ -953,54 +1381,41 @@ $('add-contact-btn').onclick=()=>$('modal').classList.remove('hidden');
 $('modal-close').onclick=()=>$('modal').classList.add('hidden');
 const chanId=uid=>[uid,myUid].sort().join('_');
 
-/* ✅ СОЗДАНИЕ ЧАТА И ПРИГЛАШЕНИЯ */
 let currentInviteChatId=null;
-
 $('edit-chat-btn').onclick=()=>{
   currentInviteChatId=null;
   $('cc-title').textContent=t('create_chat');
-  $('cc-name').value='';
-  $('cc-name').classList.remove('hidden');
+  $('cc-name').value=''; $('cc-name').classList.remove('hidden');
   $('cc-users-label').textContent=t('add_participants');
   renderInviteUsers();
   $('cc-save').textContent=t('save_chat');
   $('create-chat-modal').classList.remove('hidden');
 };
-
 function openInviteModal(chatId,chatName){
   currentInviteChatId=chatId;
-  $('cc-title').textContent='Пригласить в «'+chatName+'»';
-  $('cc-name').value='';
+  $('cc-title').textContent='📨 '+chatName;
   $('cc-name').classList.add('hidden');
-  $('cc-users-label').textContent='Выберите контакты для приглашения';
+  $('cc-users-label').textContent=t('add_participants');
   renderInviteUsers();
-  $('cc-save').textContent='Пригласить';
+  $('cc-save').textContent='📨';
   $('create-chat-modal').classList.remove('hidden');
 }
-
 $('cc-save').onclick=async()=>{
   const selected=[];
   $('cc-users').querySelectorAll('input[type="checkbox"]:checked').forEach(cb=>selected.push(cb.value));
-  
   if(currentInviteChatId){
-    if(!selected.length)return alert('Выберите хотя бы одного пользователя');
+    if(!selected.length)return alert(t('add_participants'));
     const chatName=currentChatMeta?.name||'Чат';
-    let success=0;
-    for(const uid of selected){
-      const ok=await inviteToChat(currentInviteChatId,chatName,uid);
-      if(ok)success++;
-    }
-    alert(`Приглашения отправлены: ${success}/${selected.length} ✅`);
-    $('create-chat-modal').classList.add('hidden');
-    currentInviteChatId=null;
+    let ok=0; for(const uid of selected){ if(await inviteToChat(currentInviteChatId,chatName,uid)) ok++; }
+    alert(t('request_sent')+' '+ok+'/'+selected.length);
+    $('create-chat-modal').classList.add('hidden'); currentInviteChatId=null;
   }else{
     const name=$('cc-name').value.trim();
     if(!name)return alert(t('enter_name'));
-    const members=[myUid,...selected];
     try{
-      await addDoc(collection(db,'custom_chats'),{name,owner:myUid,members,createdAt:serverTimestamp()});
+      await addDoc(collection(db,'custom_chats'),{name,owner:myUid,members:[myUid,...selected],createdAt:serverTimestamp()});
       $('create-chat-modal').classList.add('hidden');
-      alert('Чат создан ✅');
+      alert('✅');
     }catch(e){alert(t('error')+e.message);}
   }
 };
@@ -1013,10 +1428,8 @@ function showProfTab(v){
   $('prof-view').classList.toggle('hidden',v!=='view');
 }
 $('prof-tab').onchange=e=>showProfTab(e.target.value);
-
 function updateRes(){const r=$('mp-resolution');if(r)r.textContent=window.innerWidth+'x'+window.innerHeight;}
 window.addEventListener('resize',updateRes);
-
 function fillAbout(){
   const u=auth.currentUser;
   $('mp-created').textContent=(u&&u.metadata&&u.metadata.creationTime)?new Date(u.metadata.creationTime).toLocaleString():'…';
@@ -1024,14 +1437,12 @@ function fillAbout(){
   const lo=$('lang-select').querySelector('option[value="'+currentLang+'"]');
   $('mp-lang').textContent=lo?lo.textContent:currentLang;
 }
-
 function updateTwoFaUI(){
   const s1=$('twoFa-status');
   if(s1){s1.textContent=twoFaEnabled?t('twoFa_on'):t('twoFa_off');s1.style.color=twoFaEnabled?'var(--green)':'var(--red)';}
   const s2=$('twoFaChat-status');
   if(s2){s2.textContent=twoFaChatEnabled?t('twoFa_on'):t('twoFa_off');s2.style.color=twoFaChatEnabled?'var(--green)':'var(--red)';}
 }
-
 $('my-avatar').onclick=()=>{
   $('mp-avatar').textContent=myName[0].toUpperCase();
   $('mp-name').textContent=myName;
@@ -1039,37 +1450,49 @@ $('my-avatar').onclick=()=>{
   $('mp-newname').value='';$('mp-curpass').value='';$('mp-newpass').value='';$('mp-delpass').value='';$('mp-2fa-pass').value='';
   $('mp-2fa-pass').classList.add('hidden');$('mp-confirm-2fa').classList.add('hidden');
   updateTwoFaUI();updateRes();fillAbout();
+  $('recovery-connect-wrap').classList.toggle('hidden', hasRecoveryKeys);
   $('prof-tab').value='about';showProfTab('about');
   $('myprof-modal').classList.remove('hidden');
 };
 $('mp-close').onclick=()=>$('myprof-modal').classList.add('hidden');
 
+$('mp-connect-keys').onclick=async()=>{
+  const keys=genKeys();
+  try{
+    await setDoc(doc(db,'profiles',myUid),{recoveryKeys:keys},{merge:true});
+    hasRecoveryKeys=true;
+    $('recovery-connect-wrap').classList.add('hidden');
+    $('keys-list').innerHTML=keys.map(k=>`<div class="key-row">${k}</div>`).join('');
+    $('keys-modal').classList.remove('hidden');
+  }catch(e){alert(t('error')+e.message);}
+};
+$('keys-close').onclick=()=>$('keys-modal').classList.add('hidden');
+
 $('mp-toggle-2fa').onclick=()=>{pending2fa='email';$('mp-2fa-pass').classList.remove('hidden');$('mp-confirm-2fa').classList.remove('hidden');$('mp-2fa-pass').focus();};
 $('mp-toggle-2fa-chat').onclick=()=>{pending2fa='chat';$('mp-2fa-pass').classList.remove('hidden');$('mp-confirm-2fa').classList.remove('hidden');$('mp-2fa-pass').focus();};
-$('mp-confirm-2fa').onclick=async()=>{const pass=$('mp-2fa-pass').value;if(!pass)return alert('Введите пароль');
+$('mp-confirm-2fa').onclick=async()=>{const pass=$('mp-2fa-pass').value;if(!pass)return alert(t('confirm_password'));
   try{const cred=EmailAuthProvider.credential(myEmail,pass);await reauthenticateWithCredential(auth.currentUser,cred);
     if(pending2fa==='email'){
       const nv=!twoFaEnabled;await setDoc(doc(db,'profiles',myUid),{twoFactorEnabled:nv},{merge:true});twoFaEnabled=nv;
-      alert(nv?t('twoFa_email_on'):t('twoFa_email_off'));
+      alert(nv?'2FA ✅':t('twoFa_off'));
     }else{
       const nv=!twoFaChatEnabled;await setDoc(doc(db,'profiles',myUid),{twoFaChatEnabled:nv},{merge:true});twoFaChatEnabled=nv;
-      alert(nv?t('twoFa_chat_on'):t('twoFa_chat_off'));
+      alert(nv?'2FA ✅':t('twoFa_off'));
     }
     updateTwoFaUI();
     $('mp-2fa-pass').value='';$('mp-2fa-pass').classList.add('hidden');$('mp-confirm-2fa').classList.add('hidden');
-  }catch(e){alert('Ошибка: '+e.code);}};
+  }catch(e){alert(t('error')+e.code);}};
 $('mp-savename').onclick=async()=>{const n=$('mp-newname').value.trim();if(!n)return alert(t('enter_name'));
   await updateProfile(auth.currentUser,{displayName:n});await setDoc(doc(db,'profiles',myUid),{name:n},{merge:true});
   myName=n;$('my-avatar').textContent=n[0].toUpperCase();$('mp-name').textContent=n;$('mp-avatar').textContent=n[0].toUpperCase();alert(t('name_changed'));};
 $('mp-savepass').onclick=async()=>{const cur=$('mp-curpass').value,nw=$('mp-newpass').value;if(!cur||!nw)return alert(t('fill_both'));
   try{const cred=EmailAuthProvider.credential(myEmail,cur);await reauthenticateWithCredential(auth.currentUser,cred);await updatePassword(auth.currentUser,nw);
     changingPass=true;const p=await getDoc(doc(db,'profiles',myUid));await setDoc(doc(db,'profiles',myUid),{sessionVersion:((p.data().sessionVersion||1)+1)},{merge:true});
-    alert(t('password_changed'));await fullLogout();}catch(e){alert('Ошибка: '+e.code);}};
-$('mp-delete').onclick=async()=>{const pass=$('mp-delpass').value;if(!pass)return alert('Введите пароль');
-  const ok = confirm(t('delete_account_confirm'));
-  if(!ok)return;
+    alert(t('password_changed'));await fullLogout();}catch(e){alert(t('error')+e.code);}};
+$('mp-delete').onclick=async()=>{const pass=$('mp-delpass').value;if(!pass)return alert(t('confirm_password'));
+  if(!confirm(t('delete_account_confirm')))return;
   try{const cred=EmailAuthProvider.credential(myEmail,pass);await reauthenticateWithCredential(auth.currentUser,cred);deleting=true;
-    await deleteDoc(doc(db,'profiles',myUid));await deleteUser(auth.currentUser);await fullLogout();}catch(e){alert('Ошибка: '+e.code);}};
+    await deleteDoc(doc(db,'profiles',myUid));await deleteUser(auth.currentUser);await fullLogout();}catch(e){alert(t('error')+e.code);}};
 
 function openPeerProfile(peer){
   $('pp-avatar').textContent=(peer.name||'?')[0].toUpperCase();$('pp-name').textContent=peer.name;$('pp-email').textContent=peer.email||'';
@@ -1077,8 +1500,7 @@ function openPeerProfile(peer){
   $('pp-block').textContent=blocked?t('unblock'):t('block');
   $('pp-write').onclick=()=>{$('peerprof-modal').classList.add('hidden');openChat(chanId(peer.uid),peer.name,peer,null);};
   $('pp-remove').onclick=async()=>{
-    const ok = confirm(t('remove_contact_confirm').replace('{name}',peer.name));
-    if(!ok)return;
+    if(!confirm(t('remove_contact_confirm').replace('{name}',peer.name)))return;
     try{
       await setDoc(doc(db,'profiles',myUid),{contacts:arrayRemove(peer.uid)},{merge:true});
       await setDoc(doc(db,'profiles',peer.uid),{contacts:arrayRemove(myUid)},{merge:true});
@@ -1099,112 +1521,69 @@ $('general-item').onclick=()=>openChat('general',t('general_chat'),null,null);
 $('send-btn').onclick=sendText;
 $('msg-input').addEventListener('keypress',e=>{if(e.key==='Enter')sendText();});
 
-$('attach-btn').onclick=()=>{ 
-  $('attach-url').value=''; 
-  $('attach-modal').classList.remove('hidden'); 
-};
+$('attach-btn').onclick=()=>{ $('attach-url').value=''; $('attach-modal').classList.remove('hidden'); };
 $('attach-close').onclick=()=>$('attach-modal').classList.add('hidden');
-
 $('attach-send').onclick=()=>{
   const url=$('attach-url').value.trim();
-  if(!url){alert('Введите URL');return;}
+  if(!url){alert('URL?');return;}
   if(channel.startsWith('twofa_')){alert(t('cannot_write_twofa'));return;}
   if(currentPeer&&isBlockedWith(currentPeer.uid)){alert(t('cannot_write_blocked'));return;}
-  
-  const isImage = /\.(png|jpe?g|gif|webp|svg|bmp|avif)(\?.*)?$/i.test(url) || url.includes('giphy') || url.includes('tenor');
-  if(!isImage && !url.startsWith('http')){
-    if(!confirm('URL не похож на картинку/GIF. Всё равно прикрепить?'))return;
-  }
-  
-  attachedMediaUrl = url;
-  $('preview-img').src = url;
-  $('preview-info').textContent = url.length > 40 ? url.substring(0,40)+'...' : url;
+  attachedMediaUrl=url;
+  $('preview-img').src=url;
+  $('preview-info').textContent=url.length>40?url.substring(0,40)+'...':url;
   $('attach-preview').classList.add('visible');
   $('attach-modal').classList.add('hidden');
   $('msg-input').focus();
 };
-
 $('preview-remove').onclick=()=>{
-  attachedMediaUrl = null;
-  $('preview-img').src = '';
-  $('attach-preview').classList.remove('visible');
+  attachedMediaUrl=null; $('preview-img').src=''; $('attach-preview').classList.remove('visible');
 };
 
 async function sendText(){
   const text=$('msg-input').value.trim();
-  
   if(!text && !attachedMediaUrl) return;
-  
   if(channel.startsWith('twofa_'))return alert(t('cannot_write_twofa'));
   if(currentPeer&&isBlockedWith(currentPeer.uid)){alert(t('cannot_write_blocked'));return;}
-  
-  const msgData = {
-    uid: myUid,
-    author: myName || '?',
-    createdAt: serverTimestamp()
-  };
-  
-  if(attachedMediaUrl){
-    msgData.kind = 'image';
-    msgData.url = attachedMediaUrl;
-    if(text) msgData.caption = text;
-  } else {
-    msgData.kind = 'text';
-    msgData.text = text;
-  }
-  
+  const msgData={ uid:myUid, author:myName||'?', createdAt:serverTimestamp() };
+  if(attachedMediaUrl){ msgData.kind='image'; msgData.url=attachedMediaUrl; if(text) msgData.caption=text; }
+  else{ msgData.kind='text'; msgData.text=text; }
   try{
     await addDoc(collection(db,'chats',channel,'messages'), msgData);
-    $('msg-input').value='';
-    attachedMediaUrl = null;
-    $('preview-img').src = '';
-    $('attach-preview').classList.remove('visible');
-  }catch(e){
-    alert(t('error_sending')+e.message);
-  }
+    $('msg-input').value=''; attachedMediaUrl=null; $('preview-img').src=''; $('attach-preview').classList.remove('visible');
+  }catch(e){ alert(t('error_sending')+e.message); }
 }
 
 $('messages').addEventListener('click',e=>{
   const el=e.target.closest('.msg.me');
   if(!el||!el.dataset.mid)return;
   if(channel.startsWith('twofa_'))return;
-  const ok = confirm(t('delete_message'));
-  if(ok) deleteDoc(doc(db,'chats',channel,'messages',el.dataset.mid)).catch(err=>alert(err.message));
+  if(confirm(t('delete_message'))) deleteDoc(doc(db,'chats',channel,'messages',el.dataset.mid)).catch(err=>alert(err.message));
 });
 
-/* ✅ ВЫХОД ИЗ ЧАТА */
 $('chat-leave-btn').onclick=()=>{$('leave-chat-modal').classList.remove('hidden');};
 $('leave-chat-cancel').onclick=()=>{$('leave-chat-modal').classList.add('hidden');};
 $('leave-chat-confirm').onclick=async()=>{
-  const deleteMessages=$('delete-messages-checkbox').checked;
+  const del=$('delete-messages-checkbox').checked;
   $('leave-chat-modal').classList.add('hidden');
-  
-  if(deleteMessages && channel!=='general' && !channel.startsWith('twofa_')){
+  if(del && channel!=='general' && !channel.startsWith('twofa_')){
     const snap=await getDocs(collection(db,'chats',channel,'messages'));
-    for(const d of snap.docs){
-      const m=d.data();
-      if(m.uid===myUid) await deleteDoc(d.ref);
-    }
+    for(const d of snap.docs){ if(d.data().uid===myUid) await deleteDoc(d.ref); }
   }
-  
   if(channel!=='general' && !channel.startsWith('twofa_') && currentChatMeta && currentChatMeta.members){
     await updateDoc(doc(db,'custom_chats',channel),{members:arrayRemove(myUid)});
   }
-  
-  openChat('general',t('general_chat'),null,null);
+  $('app').classList.remove('chat-open');
+  if(!isSmall()) openChat('general',t('general_chat'),null,null);
 };
-
-/* ✅ УДАЛЕНИЕ ЧАТА */
 $('chat-delete-btn').onclick=async()=>{
   if(!currentChatMeta || currentChatMeta.owner!==myUid || currentChatMeta.twofa) return;
-  const ok = confirm(t('delete_chat_confirm').replace('{name}',currentChatMeta.name));
-  if(!ok) return;
+  if(!confirm(t('delete_chat_confirm').replace('{name}',currentChatMeta.name))) return;
   try{
     const snap=await getDocs(collection(db,'chats',currentChatMeta.id,'messages'));
     for(const d of snap.docs) await deleteDoc(d.ref);
     await deleteDoc(doc(db,'custom_chats',currentChatMeta.id));
     openChat('general',t('general_chat'),null,null);
-    alert('Чат удалён ✅');
+    alert('✅');
   }catch(e){alert(t('error')+e.message);}
 };
 
@@ -1221,12 +1600,8 @@ function openChat(ch,title,peer,meta){
   $('msg-bar').classList.toggle('disabled',!canWrite);
   $('bar-hint').classList.toggle('hidden',canWrite);
   $('bar-hint').textContent=meta?.twofa?t('twofa_hint'):'';
-  $('msg-input').placeholder=canWrite?t('message_placeholder'):'Только чтение';
-  
-  attachedMediaUrl = null;
-  $('preview-img').src = '';
-  $('attach-preview').classList.remove('visible');
-  
+  $('msg-input').placeholder=canWrite?t('message_placeholder'):'…';
+  attachedMediaUrl=null; $('preview-img').src=''; $('attach-preview').classList.remove('visible');
   if(unsubMsg)unsubMsg();
   unsubMsg=onSnapshot(collection(db,'chats',ch,'messages'),{serverTimestamps:'estimate'},snap=>{
     let arr=[];snap.forEach(d=>arr.push({id:d.id,...d.data()}));
@@ -1238,13 +1613,13 @@ function openChat(ch,title,peer,meta){
     $('messages').innerHTML=arr.map(m=>{
       if(m.kind==='code')return `<div class="msg code">🔐 ${esc(m.text)}<div class="meta">${t('twofa_desc')}</div></div>`;
       if(m.kind==='image'){
-        const caption = m.caption ? `<div style="margin-top:6px;font-size:14px">${esc(m.caption)}</div>` : '';
-        return `<div class="msg ${m.uid===myUid?'me':'other'}" ${m.uid===myUid?`data-mid="${m.id}" title="${t('delete_message')}"`:''}>
+        const caption=m.caption?`<div style="margin-top:6px;font-size:14px">${esc(m.caption)}</div>`:'';
+        return `<div class="msg ${m.uid===myUid?'me':'other'}" ${m.uid===myUid?`data-mid="${m.id}"`:''}>
           <img class="msg-img" src="${esc(m.url)}" alt="" onerror="this.style.display='none'">
           ${caption}
           <div class="meta">${m.createdAt?.toDate?.()?.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})||'…'}</div></div>`;
       }
-      return `<div class="msg ${m.uid===myUid?'me':'other'}" ${m.uid===myUid?`data-mid="${m.id}" title="${t('delete_message')}"`:''}>
+      return `<div class="msg ${m.uid===myUid?'me':'other'}" ${m.uid===myUid?`data-mid="${m.id}"`:''}>
         ${m.uid===myUid?'':'<b style="font-size:12px;color:var(--gr)">'+esc(m.author||'?')+'</b><br>'}
         ${esc(m.text||'')}<div class="meta">${m.createdAt?.toDate?.()?.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})||'…'}</div></div>`;
     }).join('');
@@ -1253,6 +1628,7 @@ function openChat(ch,title,peer,meta){
   $('app').classList.add('chat-open');renderContacts();
 }
 
+/* ========== ЗВОНКИ ========== */
 const RTC={iceServers:[
   {urls:'stun:stun.l.google.com:19302'},
   {urls:'turn:openrelay.metered.ca:80',username:'openrelayproject',credential:'openrelayproject'},
@@ -1263,23 +1639,15 @@ $('call-audio-btn').onclick=()=>startCall('audio');
 $('call-video-btn').onclick=()=>startCall('video');
 $('end-call-btn').onclick=async()=>{if(currentCall)await updateDoc(doc(db,'calls',currentCall.id),{status:'ended'});endCallLocal();};
 $('remote-video').addEventListener('click',()=>$('remote-video').play().catch(()=>{}));
-
 function getBlackVideoStream(){
   const canvas=document.createElement('canvas');canvas.width=640;canvas.height=480;
   const ctx=canvas.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(0,0,640,480);
   return canvas.captureStream(5);
 }
 async function startScreenShare(){
-  return await navigator.mediaDevices.getDisplayMedia({
-    video:true,audio:false,
-    selfBrowserSurface:'exclude',
-    systemAudio:'exclude',
-    surfaceSwitching:'include'
-  });
+  return await navigator.mediaDevices.getDisplayMedia({video:true,audio:false,selfBrowserSurface:'exclude',systemAudio:'exclude',surfaceSwitching:'include'});
 }
-async function getCameraStream(){
-  return await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false});
-}
+async function getCameraStream(){ return await navigator.mediaDevices.getUserMedia({video:{facingMode:currentFacing},audio:false}); }
 async function acquireMedia(type, preferScreen){
   const tracks=[];let source='black';
   if(type==='video'){
@@ -1293,7 +1661,6 @@ async function acquireMedia(type, preferScreen){
   try{const as=await navigator.mediaDevices.getUserMedia({audio:true});tracks.push(...as.getAudioTracks());}catch(e){}
   return {stream:new MediaStream(tracks),source};
 }
-
 function updateSourceBtn(){$('switch-source-btn').textContent=currentSource==='screen'?'🖥':(currentSource==='camera'?'📷':'');}
 function updateLocalPreview(){
   const vid=currentCall&&currentCall.type==='video';
@@ -1307,11 +1674,9 @@ function updateCallButtons(){
   $('flip-camera-btn').classList.toggle('hidden',!(vid&&currentSource==='camera'&&isMobile));
   updateSourceBtn();updateLocalPreview();
 }
-
 $('flip-camera-btn').onclick=async()=>{
   if(!pc||!currentCall||currentSource!=='camera')return;
-  const old=currentFacing;
-  const target=old==='user'?'environment':'user';
+  const old=currentFacing, target=old==='user'?'environment':'user';
   if(localStream)localStream.getVideoTracks().forEach(t=>t.stop());
   let vs=null;
   try{vs=await navigator.mediaDevices.getUserMedia({video:{facingMode:{exact:target}},audio:false});}
@@ -1322,32 +1687,10 @@ $('flip-camera-btn').onclick=async()=>{
     const nt=vs.getVideoTracks()[0];
     const sender=pc.getSenders().find(s=>s.track&&s.track.kind==='video');
     if(sender)await sender.replaceTrack(nt);
-    const audioTracks=localStream?localStream.getAudioTracks():[];
-    localStream=new MediaStream([nt,...audioTracks]);
+    localStream=new MediaStream([nt,...(localStream?localStream.getAudioTracks():[])]);
     $('local-video').srcObject=localStream;
-  }else{
-    try{
-      const back=await navigator.mediaDevices.getUserMedia({video:{facingMode:old},audio:false});
-      const nt=back.getVideoTracks()[0];
-      const sender=pc.getSenders().find(s=>s.track&&s.track.kind==='video');
-      if(sender)await sender.replaceTrack(nt);
-      const audioTracks=localStream?localStream.getAudioTracks():[];
-      localStream=new MediaStream([nt,...audioTracks]);
-      $('local-video').srcObject=localStream;
-      alert(t('single_camera'));
-    }catch(e){
-      const bs=getBlackVideoStream();const nt=bs.getVideoTracks()[0];
-      const sender=pc.getSenders().find(s=>s.track&&s.track.kind==='video');
-      if(sender)await sender.replaceTrack(nt);
-      const audioTracks=localStream?localStream.getAudioTracks():[];
-      localStream=new MediaStream([nt,...audioTracks]);
-      $('local-video').srcObject=localStream;
-      currentSource='black';updateCallButtons();
-      alert(t('camera_switch_fail'));
-    }
-  }
+  }else{ alert(t('camera_switch_fail')); }
 };
-
 function attachScreenEnd(){
   if(!localStream)return;
   localStream.getVideoTracks().forEach(t=>{
@@ -1356,27 +1699,22 @@ function attachScreenEnd(){
       const bs=getBlackVideoStream();const nt=bs.getVideoTracks()[0];
       const sender=pc.getSenders().find(s=>s.track&&s.track.kind==='video');
       if(sender)await sender.replaceTrack(nt);
-      const audioTracks=localStream?localStream.getAudioTracks():[];
-      localStream=new MediaStream([nt,...audioTracks]);
-      currentSource='black';
-      updateCallButtons();
+      localStream=new MediaStream([nt,...(localStream?localStream.getAudioTracks():[])]);
+      currentSource='black';updateCallButtons();
     };
   });
 }
-
 async function replaceVideoTrack(newStream,ns){
   const nt=newStream.getVideoTracks()[0];
   const sender=pc.getSenders().find(s=>s.track&&s.track.kind==='video');
   if(sender)await sender.replaceTrack(nt);
   if(localStream)localStream.getVideoTracks().forEach(t=>t.stop());
-  const audioTracks=localStream?localStream.getAudioTracks():[];
-  localStream=new MediaStream([nt,...audioTracks]);
+  localStream=new MediaStream([nt,...(localStream?localStream.getAudioTracks():[])]);
   $('local-video').srcObject=localStream;
   currentSource=ns;
   if(ns==='screen')attachScreenEnd();
   updateCallButtons();
 }
-
 $('switch-source-btn').onclick=async()=>{
   if(!pc||!currentCall||currentCall.type!=='video')return;
   try{
@@ -1394,7 +1732,6 @@ $('switch-source-btn').onclick=async()=>{
     }
   }catch(e){console.warn('Switch failed:',e);}
 };
-
 function setupPC(){
   pc=new RTCPeerConnection(RTC);
   pc.onicecandidate=e=>{if(e.candidate)addDoc(collection(db,'calls',currentCall.id,'ice'),{from:myUid,candidate:e.candidate.toJSON()});};
@@ -1403,7 +1740,6 @@ function setupPC(){
 }
 function watchIce(id){iceUnsub=onSnapshot(collection(db,'calls',id,'ice'),snap=>{
   snap.forEach(async d=>{const c=d.data();if(c.from!==myUid&&!addedIce.has(d.id)){addedIce.add(d.id);try{await pc.addIceCandidate(c.candidate);}catch(e){}}});});}
-
 async function startCall(type){
   if(!currentPeer)return;
   if(isBlockedWith(currentPeer.uid))return alert(t('cannot_call_blocked'));
@@ -1421,20 +1757,17 @@ async function startCall(type){
     if(d.status==='ended'||d.status==='declined')endCallLocal();});
   watchIce(callRef.id);
 }
-
 function watchIncoming(){unsubCalls=onSnapshot(query(collection(db,'calls'),where('to','==',myUid),where('status','==','calling')),snap=>{
   const docs=snap.docs.map(d=>({id:d.id,...d.data()}));
   docs.forEach(d=>{if(isBlockedWith(d.from))updateDoc(doc(db,'calls',d.id),{status:'declined'});});
   const valid=docs.filter(d=>!isBlockedWith(d.from));
   if(pendingIncoming){if(!valid.find(d=>d.id===pendingIncoming.id))hideIncoming();}
   else if(valid.length)showIncoming(valid[0]);},err=>console.error(err));}
-
 function showIncoming(c){pendingIncoming=c;$('incoming-name').textContent=c.fromName;
   $('incoming-type').textContent=c.type==='video'?t('video_call'):t('audio_call');
   $('incoming-avatar').textContent=(c.fromName||'?')[0].toUpperCase();$('incoming-overlay').classList.remove('hidden');navigator.vibrate?.([600,300,600]);}
 function hideIncoming(){pendingIncoming=null;$('incoming-overlay').classList.add('hidden');navigator.vibrate?.(0);}
 $('decline-btn').onclick=async()=>{if(pendingIncoming)await updateDoc(doc(db,'calls',pendingIncoming.id),{status:'declined'});hideIncoming();};
-
 $('accept-btn').onclick=async()=>{
   const c=pendingIncoming;hideIncoming();
   const callRef=doc(db,'calls',c.id);const snap=await getDoc(callRef);const d=snap.data();
@@ -1448,7 +1781,6 @@ $('accept-btn').onclick=async()=>{
   await updateDoc(callRef,{answer:{sdp:ans.sdp,type:ans.type},status:'active'});
   callDocUnsub=onSnapshot(callRef,s=>{if(s.data()?.status==='ended')endCallLocal();});watchIce(c.id);
 };
-
 function showCallUI(){
   $('call-name').textContent=currentCall.peer.name;$('call-status').textContent=currentCall.isCaller?t('calling'):t('conversation');
   const vid=currentCall.type==='video';
@@ -1459,7 +1791,6 @@ function showCallUI(){
   updateCallButtons();
   $('call-overlay').classList.remove('hidden');
 }
-
 function endCallLocal(){
   [iceUnsub,callDocUnsub].forEach(u=>u&&u());iceUnsub=callDocUnsub=null;
   if(localStream)localStream.getTracks().forEach(t=>{t.onended=null;t.stop();});
@@ -1469,7 +1800,6 @@ function endCallLocal(){
   $('call-overlay').classList.add('hidden');
 }
 
-// ✅ Применяем тему и язык при загрузке
 applyTheme();
 applyTranslations();
 </script>
