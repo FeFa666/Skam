@@ -143,7 +143,7 @@ body.light header{background:rgba(255,255,255,.9)}
 .ibtns{display:flex;gap:20px}
 .ibtns button{width:60px;height:60px;border-radius:50%;font-size:24px;color:#fff}
 #accept-btn{background:var(--green)} #decline-btn{background:var(--red)}
-#modal,#peerprof-modal,#create-chat-modal,#attach-modal,#leave-chat-modal,#keys-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:90;display:flex;align-items:center;justify-content:center}
+#modal,#peerprof-modal,#create-chat-modal,#attach-modal,#leave-chat-modal,#keys-modal,#overload-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:90;display:flex;align-items:center;justify-content:center}
 .modal-box{background:var(--sf);border-radius:20px;padding:20px;width:90%;max-width:340px;max-height:80%;overflow-y:auto}
 .modal-box h3{margin-bottom:14px}
 .urow{display:flex;align-items:center;gap:10px;padding:10px 0}
@@ -327,7 +327,7 @@ body.light header{background:rgba(255,255,255,.9)}
       <button class="preview-remove" id="preview-remove" title="Убрать">✕</button>
     </div>
     <div class="bar" id="msg-bar">
-      <button id="attach-btn" title="📎"></button>
+      <button id="attach-btn" title="📎">📎</button>
       <input id="msg-input" type="text" placeholder="Сообщение..." autocomplete="off" data-i18n-ph="message_placeholder">
       <button id="send-btn">➤</button>
     </div>
@@ -474,6 +474,16 @@ body.light header{background:rgba(255,255,255,.9)}
   </div>
 </div>
 
+<!-- ✅ РЕГИСТРАЦИЯ ВРЕМЕННО ЗАКРЫТА -->
+<div id="overload-modal" class="hidden">
+  <div class="modal-box" style="text-align:center">
+    <div style="font-size:52px;margin-bottom:12px">🛠️</div>
+    <h3 style="font-size:20px">SKAM временно перегружен</h3>
+    <p style="color:var(--gr);font-size:14px;margin:10px 0 18px;line-height:1.5">Попробуйте снова через неделю</p>
+    <button class="ac-btn" id="overload-close">Закрыть</button>
+  </div>
+</div>
+
 <div id="call-overlay" class="overlay hidden">
   <video id="remote-video" autoplay playsinline></video>
   <div class="call-top"><b id="call-name"></b><div id="call-status"></div></div>
@@ -508,7 +518,7 @@ body.light header{background:rgba(255,255,255,.9)}
 </div>
 
 <script type="module">
-console.log('%cSKAM • сборка 27 (фикс белого экрана + переводы)','color:#0a84ff;font-size:16px;font-weight:bold');
+console.log('%cSKAM • сборка 28 (регистрация закрыта: перегружен)','color:#0a84ff;font-size:16px;font-weight:bold');
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { 
@@ -864,7 +874,6 @@ const LANGS = {
 
 function t(key){ return (LANGS[currentLang] && LANGS[currentLang][key]) || LANGS.ru[key] || key; }
 
-// ✅ Перевод всех элементов с data-i18n / data-i18n-ph
 function applyTranslations(){
   document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
@@ -1002,9 +1011,12 @@ $('auth-btn').onclick=async()=>{
 };
 async function fullLogout(){if(myUid){localStorage.removeItem('skam_sv_'+myUid);localStorage.removeItem('skam_verified_'+myUid);}verified=false;await signOut(auth);}
 $('logout').onclick=fullLogout;
-$('auth-open-reg').onclick=()=>{ openWizard(); };
 
-/* ========== ВИЗАРД ========== */
+// ✅ РЕГИСТРАЦИЯ ЗАКРЫТА: вместо визарда — окно "SKAM временно перегружен"
+$('auth-open-reg').onclick=()=>{ $('overload-modal').classList.remove('hidden'); };
+$('overload-close').onclick=()=>{ $('overload-modal').classList.add('hidden'); };
+
+/* ========== ВИЗАРД (сейчас не открывается, но код сохранён) ========== */
 const WZ_LANGS=[['ru','🇷🇺 Русский'],['en','🇬🇧 English'],['es','🇪🇸 Español'],['fr','🇫🇷 Français'],['de','🇩🇪 Deutsch'],['zh','🇨🇳 中文']];
 let wzStep=1, regEmail='', regPass='', regName='', regKeys=[], emailSkipped=false;
 
@@ -1192,7 +1204,6 @@ onAuthStateChanged(auth, async user => {
   }
 });
 
-// ✅ ФИКС: startApp теперь всегда показывает #app (убирает белый экран)
 function startApp(){
   if(appStarted) return;
   appStarted=true;
